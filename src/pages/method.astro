@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+// SITE-04@v1: The method removes memory from the correctness of engineering decisions.
+// SITE-05@v1: A principle becomes operational through its index, dependencies, reviews, and CLI.
+---
+
+<BaseLayout title="The method" description="Learn how PDD rebuilds current engineering judgment without depending on developer or agent memory.">
+  <section class="method-hero container">
+    <span class="eyebrow">The method</span>
+    <div class="hero-grid">
+      <h1 class="display">Do not transfer context.<br /><em>Rebuild the decision.</em></h1>
+      <p class="lede">PDD removes memory from engineering correctness. Each contributor rebuilds the same judgment from current repository evidence.</p>
+    </div>
+  </section>
+
+  <section class="definition">
+    <div class="container definition-grid">
+      <span class="section-index">Definition / 01</span>
+      <blockquote>“No agent must remember what the repository can prove.”</blockquote>
+      <div>
+        <p>Memory is private and incomplete. It changes during every summary and handoff.</p>
+        <p>PDD stores current rules and their active dependencies. A new agent can rebuild the decision without earlier context.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="anatomy container">
+    <div class="section-intro">
+      <span class="eyebrow">The system</span>
+      <h2 class="section-title">The rule works through four repository links.</h2>
+    </div>
+    <div class="system-map">
+      <div class="map-core"><span>Authoritative rule</span><strong>PDD-02<span>@v1</span></strong><small>Rule · benefit · failure · changes · exceptions · history</small></div>
+      <div class="map-node index"><span>01</span><strong>Agent index</strong><p>Routes each decision to the full rule.</p></div>
+      <div class="map-node cites"><span>02</span><strong>Pinned citations</strong><p>Mark code and reviews that depend on it.</p></div>
+      <div class="map-node change"><span>03</span><strong>Change protocol</strong><p>Requires the rule to change before the code.</p></div>
+      <div class="map-node ci"><span>04</span><strong>PDD CLI</strong><p>Finds every dependency after a version change.</p></div>
+    </div>
+  </section>
+
+  <section class="comparison">
+    <div class="container">
+      <div class="section-intro">
+        <span class="eyebrow">Its place in the stack</span>
+        <h2 class="section-title">Not documentation. Not another memory.</h2>
+      </div>
+      <div class="comparison-table" role="table" aria-label="Comparison of repository artifacts">
+        <div class="table-row heading" role="row"><span>Artifact</span><span>Question</span><span>Lifetime</span><span>Enforcement</span></div>
+        <div class="table-row" role="row"><strong>Agent memory</strong><span>What context did I receive?</span><span>One session or handoff</span><span>None</span></div>
+        <div class="table-row" role="row"><strong>Task plan</strong><span>What do we do next?</span><span>One change</span><span>Completion</span></div>
+        <div class="table-row" role="row"><strong>Test</strong><span>What must the code do?</span><span>Until behavior changes</span><span>Test runner</span></div>
+        <div class="table-row" role="row"><strong>Architecture record</strong><span>Why did we choose this?</span><span>Historical</span><span>Review</span></div>
+        <div class="table-row featured" role="row"><strong>PDD system</strong><span>How must any contributor choose?</span><span>Until meaning changes</span><span>Tokens and CLI</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lifecycle container">
+    <div class="section-intro">
+      <span class="eyebrow">The lifecycle</span>
+      <h2 class="section-title">Rules evolve without quiet drift.</h2>
+    </div>
+    <ol>
+      <li><span>01</span><div><h3>Find the judgment</h3><p>A repeated problem or costly trade can reveal durable judgment. Gather evidence before you write a principle.</p></div></li>
+      <li><span>02</span><div><h3>Adopt deliberately</h3><p>Write the rule and its limits. Add a stable token and an entry in the agent index.</p></div></li>
+      <li><span>03</span><div><h3>Rely explicitly</h3><p>Pin code comments and review decisions to the current version. Do not copy the full rule.</p></div></li>
+      <li><span>04</span><div><h3>Amend at the source</h3><p>Change the principle before dependent code. Increment the version when meaning changes.</p></div></li>
+      <li><span>05</span><div><h3>Re-prove every site</h3><p>Let the CLI expose old pins. Review each dependency before its citation receives the new version.</p></div></li>
+    </ol>
+  </section>
+
+  <section class="tests">
+    <div class="container tests-grid">
+      <div><span class="eyebrow light">The principle test</span><h2 class="section-title">A good principle has consequences.</h2></div>
+      <div class="test-list">
+        <article><span>Earned</span><p>Evidence from the codebase supports it. Personal taste does not.</p></article>
+        <article><span>Decisive</span><p>It rules out at least one plausible implementation.</p></article>
+        <article><span>Durable</span><p>It applies across features and survives one task.</p></article>
+        <article><span>Bounded</span><p>Its implications and exceptions make its limits clear.</p></article>
+        <article><span>Changeable</span><p>A visible process can amend or retire it.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="next container">
+    <p class="eyebrow">Ready to remove the handoff?</p>
+    <h2>Build one decision<br />that any agent can reconstruct.</h2>
+    <a class="button primary" href="/blueprint">Open the blueprint ↗</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .method-hero { padding: clamp(5rem, 10vw, 9rem) 0 clamp(6rem, 11vw, 10rem); }
+  .hero-grid { display: grid; grid-template-columns: 1.55fr 0.45fr; gap: 4rem; align-items: end; margin-top: 2.4rem; }
+  .hero-grid .display { font-size: clamp(3rem, 6.6vw, 6.5rem); }
+  .definition { padding: clamp(5rem, 9vw, 8rem) 0; color: var(--white); background: var(--forest); }
+  .definition-grid { display: grid; grid-template-columns: 0.35fr 1.3fr 0.65fr; gap: 3rem; align-items: start; }
+  .section-index { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  blockquote { font-family: var(--serif); font-size: clamp(2.3rem, 5vw, 4.8rem); letter-spacing: -0.045em; line-height: 1.05; }
+  .definition-grid div p { color: #b6c5bc; font-size: 0.95rem; }
+  .definition-grid div p + p { margin-top: 1rem; }
+  .anatomy, .lifecycle { padding: clamp(6rem, 11vw, 10rem) 0; }
+  .section-intro { display: grid; gap: 1.5rem; }
+  .system-map { position: relative; display: grid; grid-template-columns: 1fr 1.35fr 1fr; grid-template-areas: 'index core cites' 'change core ci'; gap: 1rem; margin-top: 5rem; }
+  .map-core { grid-area: core; display: flex; min-height: 450px; flex-direction: column; justify-content: center; padding: 2rem; border-radius: 50% 50% 48% 52%; color: var(--white); background: var(--forest); text-align: center; }
+  .map-core > span { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .map-core strong { margin: 1rem 0; font-family: var(--serif); font-size: clamp(3rem, 6vw, 5rem); font-weight: 400; letter-spacing: -0.05em; }
+  .map-core strong span { color: var(--signal); }
+  .map-core small { max-width: 280px; margin-inline: auto; color: #b4c2b9; line-height: 1.5; }
+  .map-node { padding: 1.3rem; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+  .map-node > span { color: var(--forest-light); font-family: var(--mono); font-size: 0.68rem; }
+  .map-node strong { display: block; margin: 2rem 0 0.5rem; font-family: var(--serif); font-size: 1.45rem; font-weight: 400; }
+  .map-node p { color: var(--muted); font-size: 0.88rem; }
+  .map-node.index { grid-area: index; } .map-node.cites { grid-area: cites; } .map-node.change { grid-area: change; } .map-node.ci { grid-area: ci; }
+  .comparison { padding: clamp(6rem, 10vw, 9rem) 0; background: var(--white); }
+  .comparison-table { margin-top: 4rem; border-top: 1px solid var(--line); }
+  .table-row { display: grid; grid-template-columns: 0.7fr 1.25fr 1fr 0.7fr; gap: 1.5rem; align-items: center; padding: 1.35rem; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; }
+  .table-row.heading { font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .table-row strong { color: var(--ink); font-family: var(--serif); font-size: 1.25rem; font-weight: 400; }
+  .table-row.featured { color: #dce7df; background: var(--forest); }
+  .table-row.featured strong { color: var(--signal); }
+  .lifecycle ol { margin: 4rem 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+  .lifecycle li { display: grid; grid-template-columns: 0.3fr 1fr; gap: 2rem; padding: 1.6rem 0; border-bottom: 1px solid var(--line); }
+  .lifecycle li > span { color: var(--forest-light); font-family: var(--mono); font-size: 0.7rem; }
+  .lifecycle li div { display: grid; grid-template-columns: 0.8fr 1fr; gap: 3rem; }
+  .lifecycle h3 { font-family: var(--serif); font-size: clamp(1.5rem, 2.5vw, 2.1rem); font-weight: 400; }
+  .lifecycle p { color: var(--muted); }
+  .tests { padding: clamp(6rem, 10vw, 9rem) 0; color: var(--white); background: #12251c; }
+  .tests-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+  .tests h2 { margin-top: 1.5rem; }
+  .test-list { border-top: 1px solid rgba(255,255,255,0.18); }
+  .test-list article { display: grid; grid-template-columns: 0.45fr 1fr; gap: 1.5rem; padding: 1.25rem 0; border-bottom: 1px solid rgba(255,255,255,0.18); }
+  .test-list span { color: var(--signal); font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; }
+  .test-list p { color: #b4c3ba; font-size: 0.9rem; }
+  .next { padding: clamp(6rem, 12vw, 11rem) 0; text-align: center; }
+  .next .eyebrow { justify-content: center; }
+  .next h2 { margin: 2rem 0; font-family: var(--serif); font-size: clamp(3rem, 7vw, 6.5rem); font-weight: 400; letter-spacing: -0.05em; line-height: 0.95; }
+  @media (max-width: 850px) { .hero-grid, .definition-grid, .tests-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 700px) { .system-map { grid-template-columns: 1fr; grid-template-areas: 'core' 'index' 'cites' 'change' 'ci'; } .map-core { min-height: 350px; } .table-row { grid-template-columns: 1fr 1fr; } .table-row.heading { display: none; } .lifecycle li, .lifecycle li div { grid-template-columns: 1fr; gap: 0.8rem; } }
+</style>

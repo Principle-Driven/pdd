@@ -1,0 +1,29 @@
+---
+import type { Principle } from '../lib/principles';
+
+interface Props { principle: Principle; }
+const { principle } = Astro.props;
+const { token, title, summary, category, version } = principle.data;
+---
+
+<article class="principle-card">
+  <a class="card-link" href={`/principles/${principle.id}`} aria-label={`Read ${title}`}>
+    <div class="meta"><span>{token}</span><span>{version}</span></div>
+    <h3>{title}</h3>
+    <p>{summary}</p>
+    <div class="card-footer"><span>{category}</span><span class="round-arrow" aria-hidden="true">↗</span></div>
+  </a>
+</article>
+
+<style>
+  .principle-card { min-height: 320px; border: 1px solid var(--line); border-radius: 16px; background: rgba(255, 253, 248, 0.54); transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease; }
+  .principle-card:hover { transform: translateY(-5px); background: var(--white); box-shadow: 0 18px 50px rgba(31, 51, 40, 0.09); }
+  .card-link { display: flex; height: 100%; flex-direction: column; padding: 1.4rem; }
+  .meta, .card-footer { display: flex; align-items: center; justify-content: space-between; font-family: var(--mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .meta { color: var(--forest-light); }
+  h3 { max-width: 330px; margin-top: 2.6rem; font-family: var(--serif); font-size: clamp(1.75rem, 2.7vw, 2.3rem); font-weight: 400; letter-spacing: -0.035em; line-height: 1.03; }
+  p { margin: 1rem 0 2.4rem; color: var(--muted); font-size: 0.94rem; }
+  .card-footer { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--muted); }
+  .round-arrow { display: grid; width: 33px; height: 33px; place-items: center; border-radius: 50%; color: var(--white); background: var(--forest); font-size: 1rem; transition: transform 180ms ease; }
+  .principle-card:hover .round-arrow { transform: rotate(45deg); color: var(--forest); background: var(--signal); }
+</style>

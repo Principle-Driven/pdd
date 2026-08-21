@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PrincipleCard from '../../components/PrincipleCard.astro';
+import { byOrder } from '../../lib/principles';
+
+const principles = (await getCollection('principles')).sort(byOrder);
+const categories = [...new Set(principles.map((item) => item.data.category))];
+// SITE-06@v1: The launch catalog excludes advanced work that has no current release plan.
+---
+
+<BaseLayout title="Principle catalog" description="Downloadable engineering principles for agent-led and human-led software development.">
+  <section class="page-hero container">
+    <span class="eyebrow">Open principle catalog</span>
+    <div class="hero-grid">
+      <h1 class="display">Borrow the shape.<br /><em>Earn the rule.</em></h1>
+      <div>
+        <p class="lede">This first catalog stays small. Each rule is broadly useful or explains how PDD works. Adopt only what your codebase has earned.</p>
+        <a class="button primary" href="/principles/download.md" download>Download all as Markdown ↓</a>
+      </div>
+    </div>
+  </section>
+  <section class="catalog container">
+    <div class="catalog-tools">
+      <p><strong>{principles.length}</strong> launch principles</p>
+      <div class="filters" aria-label="Available categories">
+        {categories.map((category) => <span>{category}</span>)}
+      </div>
+    </div>
+    <div class="card-grid">
+      {principles.map((principle) => <PrincipleCard principle={principle} />)}
+    </div>
+  </section>
+  <section class="catalog-note container">
+    <div><span class="eyebrow">A principle is a dependency</span><h2>Do not paste and forget.</h2></div>
+    <p>Change the rule, benefit, failure pattern, effects, exceptions, and token. Then connect it to the index, comments, and CLI.</p>
+    <a class="button ghost" href="/blueprint">Use the blueprint →</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero { padding: clamp(5rem, 10vw, 9rem) 0 clamp(4rem, 8vw, 7rem); }
+  .hero-grid { display: grid; grid-template-columns: 1.45fr 0.55fr; gap: 4rem; align-items: end; margin-top: 2.5rem; }
+  .hero-grid .display { font-size: clamp(3rem, 6.7vw, 6.5rem); }
+  .hero-grid .button { margin-top: 2rem; }
+  .catalog { padding-bottom: clamp(6rem, 10vw, 10rem); }
+  .catalog-tools { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: 1.2rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--muted); font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; }
+  .catalog-tools p { line-height: 1; }
+  .catalog-tools strong { color: var(--forest); font-size: 1.2rem; }
+  .filters { display: flex; flex-wrap: wrap; justify-content: end; gap: 0.5rem; }
+  .filters span { padding: 0.35rem 0.55rem; border: 1px solid var(--line); border-radius: 999px; }
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; }
+  .catalog-note { display: grid; grid-template-columns: 1fr 1fr auto; gap: 3rem; align-items: end; margin-bottom: clamp(6rem, 10vw, 9rem); padding: 3rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .catalog-note h2 { margin-top: 1rem; font-family: var(--serif); font-size: clamp(2.2rem, 4vw, 4rem); font-weight: 400; letter-spacing: -0.04em; }
+  .catalog-note p { color: var(--muted); }
+  @media (max-width: 900px) { .hero-grid, .catalog-note { grid-template-columns: 1fr; } .card-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 650px) { .card-grid { grid-template-columns: 1fr; } .catalog-tools { align-items: start; flex-direction: column; } .filters { justify-content: start; } }
+</style>

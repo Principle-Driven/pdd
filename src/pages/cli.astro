@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CopyButton from '../components/CopyButton.astro';
+// SITE-05@v1: The CLI verifies the links that make a repository principle operational.
+
+const installCommand = `npm install --save-dev @principle-driven/cli
+npx pdd check`;
+
+const configExample = `{
+  "prefix": "PDD",
+  "principlesDir": "docs/principles",
+  "agentFiles": ["AGENTS.md"],
+  "acceptedRiskPrinciple": "PDD-06",
+  "ignore": []
+}`;
+
+const ciExample = `- name: Check decision system
+  run: npx pdd check`;
+
+const failureExample = `$ pdd check
+
+src/jobs/reconcile.ts:48 [PDD106]
+PDD-02@v1 is stale; review this site against PDD-02@v2
+
+src/models/restore.ts:91 [PDD202]
+ACCEPTED-RISK marker needs PDD-06@v1 within four lines
+
+pdd check: FAILED (2 problems)`;
+---
+
+<BaseLayout title="CLI" description="Check principle definitions, agent indexes, pinned citations, comments, and version sweeps with the PDD CLI.">
+  <section class="cli-hero container">
+    <span class="eyebrow">The enforcement layer</span>
+    <div class="hero-grid">
+      <h1 class="display">Prove the system.<br /><em>Do not trust memory.</em></h1>
+      <div>
+        <p class="lede">The <code>pdd</code> CLI reads current repository evidence. It checks each rule, index entry, citation, comment, and accepted-risk marker.</p>
+        <a class="button primary" href="#install">Install the CLI ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="terminal-section">
+    <div class="container terminal-grid">
+      <div>
+        <span class="eyebrow light">A version change becomes work</span>
+        <h2 class="section-title">Old assumptions cannot hide.</h2>
+        <p>The CLI turns every old pin into a review item. Update the token only after the code is valid under the new rule.</p>
+      </div>
+      <div class="terminal">
+        <div class="terminal-head"><span></span><span></span><span></span><small>pdd check</small></div>
+        <pre><code>{failureExample}</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="install" class="install container">
+    <div class="section-head">
+      <span class="eyebrow">Install</span>
+      <h2 class="section-title">One command checks the shared decision system.</h2>
+    </div>
+    <div class="code-block"><CopyButton /><pre><code>{installCommand}</code></pre></div>
+    <div class="command-grid">
+      <article><code>pdd check</code><h3>Check the system</h3><p>Find invalid definitions, missing index entries, and citation problems.</p></article>
+      <article><code>pdd list</code><h3>List current rules</h3><p>Show each current token, title, and authority file.</p></article>
+      <article><code>pdd refs PDD-02</code><h3>Find dependencies</h3><p>List every repository site that relies on one principle.</p></article>
+    </div>
+  </section>
+
+  <section class="checks">
+    <div class="container checks-grid">
+      <div><span class="eyebrow">What it proves</span><h2 class="section-title">The rule and its use stay connected.</h2></div>
+      <ol>
+        <li><span>01</span><div><strong>Definitions</strong><p>Filenames, headings, tokens, versions, and history entries agree.</p></div></li>
+        <li><span>02</span><div><strong>Agent indexes</strong><p>Each configured <code>AGENTS.md</code> contains every current principle.</p></div></li>
+        <li><span>03</span><div><strong>Pinned citations</strong><p>Bare, unknown, malformed, lowercase, and old tokens fail.</p></div></li>
+        <li><span>04</span><div><strong>Named rules</strong><p>A principle title in prose needs its pinned token nearby.</p></div></li>
+        <li><span>05</span><div><strong>Accepted risks</strong><p>Each marker cites the current rule within four lines.</p></div></li>
+        <li><span>06</span><div><strong>Version sweeps</strong><p>A meaning change reports every code site that needs review.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="configure container">
+    <div class="config-copy">
+      <span class="eyebrow">Configure</span>
+      <h2 class="section-title">Use the vocabulary of your repository.</h2>
+      <p>Place <code>pdd.config.json</code> at the repository root. The defaults use <code>PDD</code>, one root agent index, and <code>docs/principles</code>.</p>
+      <a class="download" href="/starter/pdd.config.json" download>Download the config →</a>
+    </div>
+    <div class="code-block"><CopyButton /><pre><code>{configExample}</code></pre></div>
+  </section>
+
+  <section class="ci container">
+    <div>
+      <span class="eyebrow">Run on every pull request</span>
+      <h2>Documentation changes can change code assumptions.</h2>
+    </div>
+    <div>
+      <div class="code-block"><CopyButton /><pre><code>{ciExample}</code></pre></div>
+      <p>Do not add a path filter. A principle-only change must still run the version sweep.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .cli-hero { padding: clamp(5rem, 10vw, 9rem) 0 clamp(6rem, 11vw, 10rem); }
+  .hero-grid { display: grid; grid-template-columns: 1.45fr 0.55fr; gap: 4rem; align-items: end; margin-top: 2.4rem; }
+  .hero-grid .display { font-size: clamp(3rem, 6.5vw, 6.4rem); }
+  .hero-grid .button { margin-top: 2rem; }
+  .terminal-section { padding: clamp(5rem, 9vw, 8rem) 0; color: var(--white); background: var(--forest); }
+  .terminal-grid { display: grid; grid-template-columns: 0.75fr 1fr; gap: 5rem; align-items: center; }
+  .terminal-grid h2 { margin: 1.5rem 0; }
+  .terminal-grid > div:first-child p { color: #b7c6bc; }
+  .terminal { overflow: hidden; border: 1px solid rgba(255,255,255,0.16); border-radius: 14px; background: #0d1913; box-shadow: 0 25px 70px rgba(0,0,0,0.24); }
+  .terminal-head { display: flex; align-items: center; gap: 0.4rem; padding: 0.8rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.12); }
+  .terminal-head span { width: 8px; height: 8px; border-radius: 50%; background: #688176; }
+  .terminal-head span:first-child { background: var(--signal); }
+  .terminal-head small { margin-left: auto; color: #82968b; font-family: var(--mono); }
+  .terminal pre { overflow-x: auto; margin: 0; padding: 1.5rem; color: #cad6ce; font-family: var(--mono); font-size: 0.74rem; line-height: 1.8; }
+  .install { padding: clamp(6rem, 11vw, 10rem) 0; }
+  .section-head { display: grid; grid-template-columns: 0.45fr 1fr; gap: 3rem; align-items: end; }
+  .code-block { position: relative; margin-top: 2.5rem; }
+  .code-block pre { overflow-x: auto; margin: 0; padding: 1.5rem 5rem 1.5rem 1.5rem; border-radius: 12px; color: #e6eee8; background: #12251c; font-family: var(--mono); font-size: 0.8rem; line-height: 1.7; }
+  .command-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem; }
+  .command-grid article { min-height: 245px; padding: 1.3rem; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+  .command-grid code { color: var(--forest-light); font-size: 0.72rem; }
+  .command-grid h3 { margin: 3rem 0 0.7rem; font-family: var(--serif); font-size: 1.6rem; font-weight: 400; }
+  .command-grid p { color: var(--muted); font-size: 0.9rem; }
+  .checks { padding: clamp(6rem, 10vw, 9rem) 0; background: var(--white); }
+  .checks-grid { display: grid; grid-template-columns: 0.8fr 1fr; gap: 5rem; }
+  .checks-grid h2 { margin-top: 1.5rem; }
+  .checks ol { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+  .checks li { display: grid; grid-template-columns: 40px 1fr; gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
+  .checks li > span { color: var(--forest-light); font-family: var(--mono); font-size: 0.68rem; }
+  .checks strong { font-family: var(--serif); font-size: 1.22rem; font-weight: 400; }
+  .checks p { margin-top: 0.35rem; color: var(--muted); font-size: 0.88rem; }
+  .configure { display: grid; grid-template-columns: 0.8fr 1fr; gap: 5rem; align-items: center; padding: clamp(6rem, 11vw, 10rem) 0; }
+  .configure h2 { margin: 1.5rem 0; }
+  .config-copy > p { color: var(--muted); }
+  .download { display: inline-flex; margin-top: 1.5rem; border-bottom: 1px solid currentColor; font-size: 0.85rem; font-weight: 750; }
+  .configure .code-block { margin-top: 0; }
+  .ci { display: grid; grid-template-columns: 1fr 0.75fr; gap: 5rem; margin-bottom: clamp(6rem, 10vw, 9rem); padding: clamp(3rem, 6vw, 5rem); border: 1px solid var(--line); border-radius: 18px; background: var(--white); }
+  .ci h2 { margin-top: 1.5rem; font-family: var(--serif); font-size: clamp(2.3rem, 4.8vw, 4.5rem); font-weight: 400; letter-spacing: -0.045em; line-height: 1; }
+  .ci .code-block { margin-top: 0; }
+  .ci > div:last-child p { margin-top: 1rem; color: var(--muted); font-size: 0.9rem; }
+  @media (max-width: 850px) { .hero-grid, .terminal-grid, .section-head, .checks-grid, .configure, .ci { grid-template-columns: minmax(0, 1fr); } .command-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .command-grid { grid-template-columns: 1fr; } .code-block pre { padding-top: 3.75rem; padding-right: 1.5rem; } }
+</style>

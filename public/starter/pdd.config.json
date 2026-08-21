@@ -1,0 +1,7 @@
+{
+  "prefix": "PDD",
+  "principlesDir": "docs/principles",
+  "agentFiles": ["AGENTS.md"],
+  "acceptedRiskPrinciple": null,
+  "ignore": []
+}

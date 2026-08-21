@@ -1,0 +1,7 @@
+{
+  "prefix": "SITE",
+  "principlesDir": "docs/principles",
+  "agentFiles": ["AGENTS.md"],
+  "acceptedRiskPrinciple": null,
+  "ignore": []
+}

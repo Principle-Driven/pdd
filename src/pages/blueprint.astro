@@ -1,0 +1,225 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CopyButton from '../components/CopyButton.astro';
+// SITE-04@v1: A new agent must rebuild the decision without an earlier context handoff.
+// SITE-05@v1: The blueprint installs the complete decision system, including CLI enforcement.
+
+const tree = `your-repository/
+├── AGENTS.md
+├── pdd.config.json
+├── docs/
+│   └── principles/
+│       ├── change-protocol.md
+│       └── pdd-01-example.md
+└── scripts/
+    └── check-principles.sh`;
+
+const indexExample = `## Principles
+
+- **PDD-01@v1 — Use Ubiquitous Language** —
+  Use one domain vocabulary in discussion, tests, and code.
+  → \`docs/principles/pdd-01-ubiquitous-language.md\``;
+
+const citationExample = `// PDD-02@v1: Permission is authoritative at use.
+// The earlier check only gives fast feedback.
+downloadExport(request);`;
+
+const riskExample = `// ACCEPTED-RISK: A restore can reveal one bit about a
+// hidden unique field. Integrity has priority. Revisit when
+// restore quarantine can make the outcome actor-neutral. PDD-06@v1`;
+
+const workflowExample = `- name: Check decision system
+  run: npx pdd check`;
+
+const installExample = `npm install --save-dev @principle-driven/cli
+npx pdd check`;
+---
+
+<BaseLayout title="Adoption blueprint" description="Build a shared decision system that does not depend on developer or agent memory.">
+  <section class="blueprint-hero container">
+    <span class="eyebrow">Adoption blueprint · about one afternoon</span>
+    <div class="hero-grid">
+      <h1 class="display">Turn tacit judgment into a <em>shared decision system.</em></h1>
+      <div>
+        <p class="lede">A new agent must rebuild the current decision without a context handoff. These five steps create that system.</p>
+        <a class="button primary" href="#step-1">Begin the blueprint ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <nav class="progress" aria-label="Blueprint steps">
+    <div class="container">
+      <a href="#step-1"><span>01</span> Create</a>
+      <a href="#step-2"><span>02</span> Write</a>
+      <a href="#step-3"><span>03</span> Index</a>
+      <a href="#step-4"><span>04</span> Cite</a>
+      <a href="#step-5"><span>05</span> Enforce</a>
+    </div>
+  </nav>
+
+  <section class="blueprint container">
+    <article id="step-1" class="step">
+      <div class="step-meta"><span>01</span><p>10 minutes</p></div>
+      <div class="step-main">
+        <p class="eyebrow">Create the registry</p>
+        <h2>Give the decision system one authoritative home.</h2>
+        <p class="step-lede">Keep full rules in one directory. Put the short routing index and CLI configuration at the repository root.</p>
+        <div class="code-block"><CopyButton /><pre><code>{tree}</code></pre></div>
+        <div class="note"><strong>Why this shape?</strong><p>The root index stays short. Full rules stay one link away and have independent history.</p></div>
+      </div>
+    </article>
+
+    <article id="step-2" class="step">
+      <div class="step-meta"><span>02</span><p>30 minutes</p></div>
+      <div class="step-main">
+        <p class="eyebrow">Write one earned rule</p>
+        <h2>Record judgment that a new agent cannot infer safely.</h2>
+        <p class="step-lede">Use a repeated review finding, production lesson, or costly trade. Do not begin with a list of preferences.</p>
+        <div class="anatomy-list">
+          <div><span>A</span><strong>Rule</strong><p>The choice that the principle requires.</p></div>
+          <div><span>B</span><strong>Benefit</strong><p>The time, complexity, or risk that the rule removes.</p></div>
+          <div><span>C</span><strong>Costly failure</strong><p>The repeated behavior that earned the rule.</p></div>
+          <div><span>D</span><strong>Changes</strong><p>The concrete effects on writers, readers, and reviews.</p></div>
+          <div><span>E</span><strong>Exceptions</strong><p>The narrow cases that use a different rule.</p></div>
+          <div><span>F</span><strong>History</strong><p>The date, version, and reason for each meaning change.</p></div>
+        </div>
+        <a class="download-row" href="/starter/principle-template.md" download><span><i>MD</i><strong>Principle template</strong></span><span>Download ↓</span></a>
+        <a class="download-row" href="/starter/pdd-01-example.md" download><span><i>MD</i><strong>Complete example</strong></span><span>Download ↓</span></a>
+      </div>
+    </article>
+
+    <article id="step-3" class="step">
+      <div class="step-meta"><span>03</span><p>10 minutes</p></div>
+      <div class="step-main">
+        <p class="eyebrow">Index for agents</p>
+        <h2>Route every contributor to the same current rule.</h2>
+        <p class="step-lede">Put the token, title, essence, and file path in <code>AGENTS.md</code>. No handoff is necessary.</p>
+        <div class="code-block"><CopyButton /><pre><code>{indexExample}</code></pre></div>
+        <div class="rule-cards">
+          <div><span>Keep</span><p>One sentence that distinguishes this rule from every other principle.</p></div>
+          <div><span>Remove</span><p>Detailed rationale, examples, and exceptions. They belong in the authoritative file.</p></div>
+        </div>
+        <a class="download-row" href="/starter/AGENTS.md" download><span><i>MD</i><strong>Starter AGENTS.md</strong></span><span>Download ↓</span></a>
+      </div>
+    </article>
+
+    <article id="step-4" class="step">
+      <div class="step-meta"><span>04</span><p>20 minutes</p></div>
+      <div class="step-main">
+        <p class="eyebrow">Cite the dependency</p>
+        <h2>Make each dependency visible in the code.</h2>
+        <p class="step-lede">Cite a token where the rule carries real weight. State the local dependency, not the complete rule.</p>
+        <div class="code-block"><CopyButton /><pre><code>{citationExample}</code></pre></div>
+        <h3>Make deliberate risk searchable.</h3>
+        <p>Use one marker format for accepted risks. Include the scenario, reason, and condition for a new decision.</p>
+        <div class="code-block"><CopyButton /><pre><code>{riskExample}</code></pre></div>
+      </div>
+    </article>
+
+    <article id="step-5" class="step">
+      <div class="step-meta"><span>05</span><p>20 minutes</p></div>
+      <div class="step-main">
+        <p class="eyebrow">Enforce with the CLI</p>
+        <h2>Turn a version change into a complete review queue.</h2>
+        <p class="step-lede">When the first code citation appears, install the CLI. Run it on every pull request, including principle-only changes.</p>
+        <div class="code-block small"><CopyButton /><pre><code>{installExample}</code></pre></div>
+        <div class="code-block small"><CopyButton /><pre><code>{workflowExample}</code></pre></div>
+        <div class="sweep">
+          <div><span>v1</span><p>A meaning change increments the principle to <code>v2</code>.</p></div>
+          <div class="sweep-arrow">→</div>
+          <div><span class="stale">v1</span><p>The checker reports each citation that still depends on <code>v1</code>.</p></div>
+          <div class="sweep-arrow">→</div>
+          <div><span class="fresh">v2</span><p>A person or agent reviews the code before it updates the pin.</p></div>
+        </div>
+        <a class="download-row" href="/starter/pdd.config.json" download><span><i>JSON</i><strong>CLI configuration</strong></span><span>Download ↓</span></a>
+        <a class="download-row" href="/starter/check-principles.sh" download><span><i>SH</i><strong>Portable shell checker</strong></span><span>Download ↓</span></a>
+        <a class="download-row" href="/starter/change-protocol.md" download><span><i>MD</i><strong>Change protocol</strong></span><span>Download ↓</span></a>
+      </div>
+    </article>
+  </section>
+
+  <section class="first-week">
+    <div class="container week-grid">
+      <div><span class="eyebrow light">Your first week</span><h2 class="section-title">Keep the registry small enough to trust.</h2></div>
+      <ul>
+        <li><span>01</span>Adopt one to three rules with current evidence.</li>
+        <li><span>02</span>Give a new agent no earlier context. Ask it to plan with the repository alone.</li>
+        <li><span>03</span>Remove any principle that does not affect a decision.</li>
+        <li><span>04</span>Review every “working as designed” claim for a token.</li>
+        <li><span>05</span>Run one practice version change and inspect the CLI review queue.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="starter container">
+    <span class="eyebrow">The next useful thing</span>
+    <h2>Choose your first principle.</h2>
+    <p>Use the catalog for structure and language. Rewrite every rule until it is true for your codebase.</p>
+    <a class="button primary" href="/principles">Browse the catalog →</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .blueprint-hero { padding: clamp(5rem, 10vw, 9rem) 0 clamp(5rem, 9vw, 8rem); }
+  .hero-grid { display: grid; grid-template-columns: 1.45fr 0.55fr; gap: 4rem; align-items: end; margin-top: 2.4rem; }
+  .hero-grid .display { font-size: clamp(3.1rem, 6.6vw, 6.5rem); }
+  .hero-grid .button { margin-top: 2rem; }
+  .progress { position: sticky; z-index: 5; top: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(15px); }
+  .progress .container { display: grid; grid-template-columns: repeat(5, 1fr); }
+  .progress a { display: flex; gap: 0.6rem; padding: 1rem; border-right: 1px solid var(--line); font-size: 0.75rem; font-weight: 700; }
+  .progress a:first-child { border-left: 1px solid var(--line); }
+  .progress a:hover { color: var(--white); background: var(--forest); }
+  .progress span { font-family: var(--mono); color: var(--forest-light); }
+  .progress a:hover span { color: var(--signal); }
+  .blueprint { padding-bottom: 8rem; }
+  .step { display: grid; grid-template-columns: 0.38fr 1fr; gap: 4rem; padding: clamp(5rem, 10vw, 9rem) 0; border-bottom: 1px solid var(--line); scroll-margin-top: 55px; }
+  .step-meta { display: flex; gap: 1rem; align-items: start; }
+  .step-meta > span { display: grid; width: 58px; height: 58px; place-items: center; border-radius: 50%; color: var(--white); background: var(--forest); font-family: var(--serif); font-size: 1.5rem; }
+  .step-meta p { padding-top: 0.55rem; color: var(--muted); font-family: var(--mono); font-size: 0.66rem; text-transform: uppercase; }
+  .step-main { max-width: 790px; }
+  .step-main h2 { max-width: 760px; margin: 1.3rem 0; font-family: var(--serif); font-size: clamp(2.6rem, 5.8vw, 5.2rem); font-weight: 400; letter-spacing: -0.05em; line-height: 0.98; }
+  .step-main h3 { margin: 3.5rem 0 0.8rem; font-family: var(--serif); font-size: 2rem; font-weight: 400; letter-spacing: -0.03em; }
+  .step-main > p:not(.eyebrow), .step-lede { max-width: 650px; color: var(--muted); font-size: 1.06rem; }
+  .code-block { position: relative; margin-top: 2.2rem; }
+  .code-block pre { overflow-x: auto; margin: 0; padding: 1.5rem; border-radius: 12px; color: #e6eee8; background: #12251c; line-height: 1.65; }
+  .code-block code { font-family: var(--mono); font-size: 0.8rem; }
+  .note { display: grid; grid-template-columns: 0.35fr 1fr; gap: 1.5rem; margin-top: 1rem; padding: 1.2rem; border-left: 3px solid var(--signal); background: var(--white); }
+  .note strong { font-family: var(--serif); font-size: 1.15rem; font-weight: 400; }
+  .note p { color: var(--muted); font-size: 0.88rem; }
+  .anatomy-list { margin-top: 2.5rem; border-top: 1px solid var(--line); }
+  .anatomy-list div { display: grid; grid-template-columns: 45px 0.65fr 1fr; gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
+  .anatomy-list span { color: var(--forest-light); font-family: var(--mono); font-size: 0.68rem; }
+  .anatomy-list strong { font-family: var(--serif); font-size: 1.18rem; font-weight: 400; }
+  .anatomy-list p { color: var(--muted); font-size: 0.9rem; }
+  .download-row { display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; padding: 1rem; border: 1px solid var(--line); border-radius: 9px; background: var(--white); font-size: 0.78rem; font-weight: 700; transition: border-color 160ms ease, transform 160ms ease; }
+  .download-row:hover { transform: translateX(4px); border-color: var(--forest); }
+  .download-row > span:first-child { display: flex; align-items: center; gap: 0.8rem; }
+  .download-row i { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 5px; color: var(--white); background: var(--forest); font-family: var(--mono); font-size: 0.64rem; font-style: normal; }
+  .rule-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+  .rule-cards div { padding: 1.2rem; border: 1px solid var(--line); border-radius: 9px; }
+  .rule-cards span { color: var(--forest-light); font-family: var(--mono); font-size: 0.67rem; text-transform: uppercase; }
+  .rule-cards p { margin-top: 0.7rem; color: var(--muted); font-size: 0.88rem; }
+  .sweep { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 0.8rem; align-items: center; margin-top: 2rem; }
+  .sweep > div:not(.sweep-arrow) { min-height: 170px; padding: 1.2rem; border: 1px solid var(--line); border-radius: 10px; background: var(--white); }
+  .sweep span { display: inline-block; padding: 0.3rem 0.5rem; border-radius: 4px; color: var(--white); background: var(--forest); font-family: var(--mono); font-size: 0.72rem; }
+  .sweep span.stale { color: #744; background: #f1d0c6; text-decoration: line-through; }
+  .sweep span.fresh { color: var(--ink); background: var(--signal); }
+  .sweep p { margin-top: 1.4rem; color: var(--muted); font-size: 0.8rem; line-height: 1.5; }
+  .sweep-arrow { color: var(--forest-light); }
+  .first-week { padding: clamp(6rem, 10vw, 9rem) 0; color: var(--white); background: var(--forest); }
+  .week-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+  .week-grid h2 { margin-top: 1.5rem; }
+  .week-grid ul { margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(255,255,255,0.18); }
+  .week-grid li { display: grid; grid-template-columns: 35px 1fr; gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid rgba(255,255,255,0.18); color: #ced9d2; line-height: 1.5; }
+  .week-grid li span { color: var(--signal); font-family: var(--mono); font-size: 0.68rem; }
+  .starter { padding: clamp(6rem, 11vw, 10rem) 0; text-align: center; }
+  .starter .eyebrow { justify-content: center; }
+  .starter h2 { margin: 1.8rem 0 1rem; font-family: var(--serif); font-size: clamp(3rem, 7vw, 6.5rem); font-weight: 400; letter-spacing: -0.05em; }
+  .starter p { max-width: 570px; margin: 0 auto 2rem; color: var(--muted); }
+  @media (max-width: 850px) {
+    .hero-grid, .week-grid, .step { grid-template-columns: minmax(0, 1fr); }
+    .step { gap: 2rem; }
+    .step > *, .step-main, .code-block, .code-block pre { min-width: 0; max-width: 100%; }
+  }
+  @media (max-width: 650px) { .progress .container { overflow-x: auto; } .progress a { min-width: 100px; } .rule-cards, .anatomy-list div { grid-template-columns: 1fr; } .sweep { grid-template-columns: 1fr; } .sweep-arrow { justify-self: center; transform: rotate(90deg); } }
+</style>

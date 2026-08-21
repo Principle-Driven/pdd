@@ -1,0 +1,27 @@
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <a class="footer-brand" href="/">Principle Driven Development</a>
+      <p>Current engineering judgment without a context handoff.</p>
+    </div>
+    <div class="footer-links">
+      <a href="/method">Method</a>
+      <a href="/blueprint">Blueprint</a>
+      <a href="/principles">Principles</a>
+      <a href="/cli">CLI</a>
+      <a href="/principles/download.md" download>Download all</a>
+    </div>
+    <p class="fine">Open for teams, tools, and agents.</p>
+  </div>
+</footer>
+
+<style>
+  footer { padding: 5rem 0 2.2rem; color: #dce5de; background: var(--forest); }
+  .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 3rem; }
+  .footer-brand { font-family: var(--serif); font-size: clamp(1.8rem, 4vw, 3rem); letter-spacing: -0.04em; }
+  footer p { max-width: 440px; margin-top: 0.7rem; color: #aebeb4; }
+  .footer-links { display: grid; grid-template-columns: repeat(2, minmax(100px, 1fr)); gap: 0.8rem; align-content: start; font-size: 0.88rem; font-weight: 650; }
+  .footer-links a:hover { color: var(--signal); }
+  .fine { grid-column: 1 / -1; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.14); font-family: var(--mono); font-size: 0.73rem; letter-spacing: 0.03em; }
+  @media (max-width: 650px) { .footer-grid { grid-template-columns: 1fr; } .fine { grid-column: 1; } }
+</style>

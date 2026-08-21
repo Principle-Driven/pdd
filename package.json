@@ -1,0 +1,23 @@
+{
+  "name": "principle-driven-development",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "astro dev",
+    "build": "npm run principles:check && npm run test:cli && astro check && astro build",
+    "preview": "astro preview",
+    "check": "npm run principles:check && npm run test:cli && astro check",
+    "principles:check": "node packages/cli/src/cli.mjs check",
+    "pdd": "node packages/cli/src/cli.mjs",
+    "test:cli": "node --test packages/cli/test/*.test.mjs"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.6",
+    "astro": "^7.2.4",
+    "typescript": "^5.9.2"
+  }
+}
