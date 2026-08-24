@@ -5,11 +5,12 @@ The index line gives the essence. The linked file is authoritative.
 
 Read the full file before you write, review, or depart from content that it covers.
 
-Three obligations apply:
+Four obligations apply:
 
 1. Judge every change against these principles.
 2. When a change departs from a principle, change the principle first. Include both changes in the same pull request.
 3. When a comment relies on a principle, cite its pinned token and state only the local dependency.
+4. Before you add a principle, read every current principle. If a proposal changes judgment in a current principle, advance that principle.
 
 A “working as designed” decision must cite a pinned token, such as `SITE-01@v1`.
 
@@ -27,6 +28,8 @@ A “working as designed” decision must cite a pinned token, such as `SITE-01@
 Change a principle before published content departs from it. Include both changes in the same pull request.
 
 If a change alters a principle’s meaning, increment its version. Then review every site that cites the old version.
+
+Add a new token only for an independent decision with repository evidence.
 
 ## Prose
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "PDD Principles"
+  short_description: "Classify, add, or advance a PDD principle"
+  default_prompt: "Use $pdd-principles to classify this principle proposal and implement the correct result."

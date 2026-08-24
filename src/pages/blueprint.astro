@@ -33,6 +33,11 @@ const workflowExample = `- name: Check decision system
 
 const installExample = `npm install --save-dev @principle-driven/cli
 npx pdd check`;
+
+const skillInstallExample = `npx skills add Principle-Driven/pdd --skill pdd-principles`;
+
+const skillPromptExample = `Use $pdd-principles to classify this principle proposal.
+Implement the correct result.`;
 ---
 
 <BaseLayout title="Adoption blueprint" description="Build a shared decision system that does not depend on developer or agent memory.">
@@ -85,6 +90,13 @@ npx pdd check`;
         </div>
         <a class="download-row" href="/starter/principle-template.md" download><span><i>MD</i><strong>Principle template</strong></span><span>Download ↓</span></a>
         <a class="download-row" href="/starter/pdd-01-example.md" download><span><i>MD</i><strong>Complete example</strong></span><span>Download ↓</span></a>
+        <h3>Keep one decision in one principle.</h3>
+        <p>The portable PDD skill compares each proposal with every current principle before it adds a token.</p>
+        <p>The package uses the <a href="https://agentskills.io/specification">Agent Skills format</a> across supported harnesses.</p>
+        <div class="code-block small"><CopyButton /><pre><code>{skillInstallExample}</code></pre></div>
+        <p>The installer detects supported harnesses. Use <code>--agent</code> or <code>--global</code> to select a different target.</p>
+        <div class="code-block small"><CopyButton /><pre><code>{skillPromptExample}</code></pre></div>
+        <a class="download-row" href="https://github.com/Principle-Driven/pdd/tree/main/skills/pdd-principles"><span><i>SKILL</i><strong>Agent Skills package</strong></span><span>View ↗</span></a>
       </div>
     </article>
 

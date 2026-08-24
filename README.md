@@ -40,6 +40,24 @@ Each principle includes:
 - Its established lineage or standard, when one exists.
 - A stable token and version history.
 
+## Principle skill
+
+The PDD skill keeps one decision in one principle. It compares each proposal with every current principle before it adds a token.
+
+Install the skill in a supported coding harness:
+
+```sh
+npx skills add Principle-Driven/pdd --skill pdd-principles
+```
+
+Then give the harness a principle proposal:
+
+```text
+Use $pdd-principles to classify this principle proposal. Implement the correct result.
+```
+
+The package uses the [Agent Skills format](https://agentskills.io/specification). Read the [skill source](skills/pdd-principles/SKILL.md) for its complete procedure.
+
 ## CLI
 
 Install the enforcement layer:
@@ -72,6 +90,7 @@ src/
 └── components/          # Shared interface components
 packages/cli/             # Principle scanner and tests
 public/starter/          # Portable files for adopters
+skills/pdd-principles/   # Portable principle-management skill
 ```
 
 ## Run locally
@@ -91,7 +110,22 @@ The local website opens at `http://localhost:4321`.
 npm run build
 ```
 
-Astro writes the static website to `dist/`. The GitHub Pages workflow deploys that directory from `main`.
+Astro writes the static website to `dist/`.
+
+## Deploy with Cloudflare Pages
+
+Cloudflare Pages can build and deploy this static site directly from `main`.
+
+Connect this repository in the Cloudflare dashboard. Use these build values:
+
+- Production branch: `main`
+- Build command: `npm run build`
+- Build directory: `dist`
+- Root directory: leave this field empty
+
+The `.node-version` file selects Node.js 24. The static site does not need Wrangler or the Cloudflare Astro adapter.
+
+Cloudflare creates a production deployment for each push to `main`. It creates a preview deployment for each pull request.
 
 ## Contribute a principle
 
