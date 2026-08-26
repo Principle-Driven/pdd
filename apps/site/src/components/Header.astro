@@ -1,4 +1,6 @@
 ---
+import { siteConfig } from '../../site.config.mjs';
+
 const path = Astro.url.pathname;
 const links = [
   { href: '/method', label: 'Method' },
@@ -19,7 +21,10 @@ const links = [
         <a href={link.href} aria-current={path.startsWith(link.href) ? 'page' : undefined}>{link.label}</a>
       ))}
     </nav>
-    <a class="start" href="/blueprint">Start here <span aria-hidden="true">↗</span></a>
+    <div class="nav-actions">
+      <a class="github" href={siteConfig.repository}>GitHub <span aria-hidden="true">↗</span></a>
+      <a class="start" href="/blueprint">Start here <span aria-hidden="true">↗</span></a>
+    </div>
   </div>
 </header>
 
@@ -33,12 +38,15 @@ const links = [
   nav a::after { position: absolute; right: 0; bottom: -0.55rem; left: 0; height: 2px; transform: scaleX(0); background: var(--forest); content: ''; transition: transform 160ms ease; }
   nav a:hover, nav a[aria-current='page'] { color: var(--ink); }
   nav a:hover::after, nav a[aria-current='page']::after { transform: scaleX(1); }
-  .start { justify-self: end; font-size: 0.83rem; font-weight: 750; }
+  .nav-actions { display: flex; justify-self: end; align-items: center; gap: 1rem; }
+  .github { color: var(--muted); font-size: 0.83rem; font-weight: 650; }
+  .github:hover { color: var(--ink); }
+  .start { font-size: 0.83rem; font-weight: 750; }
   @media (max-width: 650px) {
     .nav-wrap { min-height: 72px; grid-template-columns: auto 1fr; gap: 1rem; }
     .brand > span:last-child { display: none; }
     nav { justify-content: end; gap: 0.9rem; }
     nav a { font-size: 0.72rem; }
-    .start { display: none; }
+    .nav-actions { display: none; }
   }
 </style>
