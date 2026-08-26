@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#f3f0e7"/>
-  <circle cx="1050" cy="85" r="260" fill="#b8e24d" opacity=".28"/>
-  <path d="M0 510h1200v120H0z" fill="#173f31"/>
-  <text x="74" y="92" fill="#173f31" font-family="Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="4">PRINCIPLE DRIVEN DEVELOPMENT</text>
-  <text x="70" y="245" fill="#18211c" font-family="Georgia,serif" font-size="90">Build without</text>
-  <text x="70" y="345" fill="#28634c" font-family="Georgia,serif" font-size="90" font-style="italic">agent memory.</text>
-  <text x="74" y="570" fill="#f3f0e7" font-family="Arial,sans-serif" font-size="25">Reconstructable decisions for every developer and agent.</text>
-</svg>

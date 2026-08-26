@@ -7,6 +7,8 @@ benefit: People and agents get one meaning from instructions, commits, comments,
 prevents: Agents do not hide requirements in long sentences, weak modal verbs, changing terms, or vague references.
 category: Communication
 version: v1
+published: 2026-08-24
+updated: 2026-08-24
 order: 3
 useWhen: People or agents write technical text that another contributor must understand correctly.
 tradeoff: The writing can feel repetitive, and formal compliance requires the official dictionary and trained review.

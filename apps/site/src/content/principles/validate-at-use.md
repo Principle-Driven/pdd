@@ -6,6 +6,8 @@ benefit: One use-time check can replace many locks, cleanup jobs, and state tran
 prevents: Agents do not chase every time-of-check/time-of-use gap with new architecture.
 category: Reliability
 version: v1
+published: 2026-08-24
+updated: 2026-08-24
 order: 2
 useWhen: A permission, token, preview, cache, or queued job can become invalid before use.
 tradeoff: The use boundary must read the current facts before it acts.

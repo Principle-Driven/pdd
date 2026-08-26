@@ -13,6 +13,8 @@ const principles = defineCollection({
     prevents: z.string(),
     category: z.enum(['Reliability', 'Modeling', 'Communication', 'Simplicity', 'Governance', 'Product']),
     version: z.string(),
+    published: z.coerce.date(),
+    updated: z.coerce.date(),
     order: z.number(),
     useWhen: z.string(),
     tradeoff: z.string(),

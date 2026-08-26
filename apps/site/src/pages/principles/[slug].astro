@@ -14,15 +14,38 @@ const { Content } = await render(entry);
 const principles = (await getCollection('principles')).sort(byOrder);
 const currentIndex = principles.findIndex((item) => item.id === entry.id);
 const next = principles[(currentIndex + 1) % principles.length];
+const publishedDate = entry.data.published.toISOString().slice(0, 10);
+const modifiedDate = entry.data.updated.toISOString().slice(0, 10);
+const dateFormat = new Intl.DateTimeFormat('en', { dateStyle: 'long', timeZone: 'UTC' });
+const publishedLabel = dateFormat.format(entry.data.published);
+const modifiedLabel = dateFormat.format(entry.data.updated);
+const sourceURL = `https://github.com/Principle-Driven/pdd/blob/main/apps/site/src/content/principles/${entry.id}.md`;
 ---
 
-<BaseLayout title={entry.data.title} description={entry.data.summary}>
+<BaseLayout
+  title={entry.data.title}
+  description={entry.data.summary}
+  schemaType="TechArticle"
+  publishedDate={publishedDate}
+  modifiedDate={modifiedDate}
+  articleSection={entry.data.category}
+  alternateMarkdown={`/principles/${entry.id}.md`}
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Principles', path: '/principles' },
+    { name: entry.data.title, path: `/principles/${entry.id}` },
+  ]}
+>
   <article>
     <header class="principle-hero container">
       <a class="back" href="/principles">← All principles</a>
       <div class="meta"><span>{entry.data.token}</span><span>{entry.data.category}</span><span>{entry.data.version}</span></div>
       <h1>{entry.data.title}</h1>
       <p class="lede">{entry.data.summary}</p>
+      <p class="publication">
+        Published by <a href="https://github.com/Principle-Driven">Principle Driven Development</a> on <time datetime={publishedDate}>{publishedLabel}</time>.
+        {modifiedDate !== publishedDate && <> Updated <time datetime={modifiedDate}>{modifiedLabel}</time>.</>}
+      </p>
       <a class="button primary" href={`/principles/${entry.id}.md`} download>Download Markdown ↓</a>
     </header>
     <section class="outcome container" aria-label="Principle outcome">
@@ -41,6 +64,7 @@ const next = principles[(currentIndex + 1) % principles.length];
         <div><span>Tradeoff</span><p>{entry.data.tradeoff}</p></div>
         {entry.data.lineage && <div><span>Recognized as</span><p>{entry.data.lineage}</p></div>}
         {entry.data.reference && <div><span>Reference</span><p><a href={entry.data.reference}>Official standard ↗</a></p></div>}
+        <div><span>Source</span><p><a href={sourceURL}>View on GitHub ↗</a></p></div>
       </aside>
       <div class="prose"><Content /></div>
     </div>
@@ -59,6 +83,8 @@ const next = principles[(currentIndex + 1) % principles.length];
   .meta span { padding: 0.35rem 0.55rem; border: 1px solid var(--line); border-radius: 999px; color: var(--forest-light); font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.06em; text-transform: uppercase; }
   h1 { max-width: 940px; margin: 2rem 0 1.5rem; font-family: var(--serif); font-size: clamp(3.8rem, 9vw, 8.5rem); font-weight: 400; letter-spacing: -0.06em; line-height: 0.9; }
   .principle-hero .lede { margin-bottom: 2rem; }
+  .publication { margin: -0.8rem 0 2rem; color: var(--muted); font-size: 0.82rem; }
+  .publication a { border-bottom: 1px solid currentColor; }
   .outcome { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .outcome > div { padding: clamp(1.5rem, 4vw, 3rem); }
   .outcome > div + div { border-left: 1px solid var(--line); }

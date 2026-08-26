@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page not found"
+  description="This address does not match a page on the Principle Driven Development website."
+  noindex
+>
+  <section class="not-found container">
+    <span class="eyebrow">404</span>
+    <h1 class="display">This page does not exist.</h1>
+    <p>The method, setup guide, principle catalog, and CLI guide remain available.</p>
+    <a class="button primary" href="/">Open the home page →</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found { min-height: 70vh; padding: clamp(5rem, 10vw, 9rem) 0; }
+  .not-found h1 { margin-top: 2rem; }
+  .not-found p { max-width: 620px; margin-top: 2rem; color: var(--muted); }
+  .not-found .button { margin-top: 2rem; }
+</style>

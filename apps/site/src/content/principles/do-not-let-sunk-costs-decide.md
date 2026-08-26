@@ -6,6 +6,8 @@ benefit: The codebase stays small, current, and free from unused work that looks
 prevents: Agents do not fill the repository with unused drafts, speculative abstractions, and abandoned compatibility paths.
 category: Simplicity
 version: v1
+published: 2026-08-24
+updated: 2026-08-24
 order: 4
 useWhen: A file, feature, abstraction, or draft has no current user and no committed plan.
 tradeoff: A later need can require the team to rebuild deleted work from current requirements.

@@ -6,6 +6,8 @@ benefit: A meaning change produces a complete list of code that needs a new revi
 prevents: Agents do not leave old rule text in comments, tests, and tool descriptions after the source changes.
 category: Governance
 version: v1
+published: 2026-08-24
+updated: 2026-08-24
 order: 5
 useWhen: A comment, test, tool, or review decision depends on a repository principle.
 tradeoff: A meaning change requires a review of every code site that cites the old version.

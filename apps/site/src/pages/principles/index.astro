@@ -9,7 +9,11 @@ const categories = [...new Set(principles.map((item) => item.data.category))];
 // SITE-06@v1: The launch catalog excludes advanced work that has no current release plan.
 ---
 
-<BaseLayout title="Principle catalog" description="Downloadable engineering principles for agent-led and human-led software development.">
+<BaseLayout
+  title="Engineering Principle Catalog"
+  description="Download engineering principles for software development with people and coding agents."
+  schemaType="CollectionPage"
+>
   <section class="page-hero container">
     <span class="eyebrow">Open principle catalog</span>
     <div class="hero-grid">

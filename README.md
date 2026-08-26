@@ -80,22 +80,23 @@ Use `pdd refs PDD-02` to list every repository site that depends on one rule.
 
 ## Repository structure
 
-This repository is the public home for the method and website.
-The content collection in `src/content/principles/` generates the catalog pages and Markdown downloads.
+This repository is the public home for the method, website, CLI, starter kit, and agent skill.
+The Astro application has its own workspace in `apps/site/`.
 
 ```text
-src/
-├── content/principles/  # Authoritative catalog entries
-├── pages/               # Method, blueprint, and catalog pages
-└── components/          # Shared interface components
+apps/site/                # Astro website workspace
+├── public/starter/       # Portable files for adopters
+└── src/
+    ├── content/principles/  # Authoritative catalog entries
+    ├── pages/               # Method, setup, and catalog pages
+    └── components/          # Shared interface components
 packages/cli/             # Principle scanner and tests
-public/starter/          # Portable files for adopters
 skills/pdd-principles/   # Portable principle-management skill
 ```
 
 ## Run locally
 
-Install Node.js 24 or later. Then run:
+Install Node.js 24. Use the npm version in `packageManager`. Then run:
 
 ```sh
 npm install
@@ -110,7 +111,7 @@ The local website opens at `http://localhost:4321`.
 npm run build
 ```
 
-Astro writes the static website to `dist/`.
+Astro writes the static website to `apps/site/dist/`.
 
 ## Deploy with Cloudflare Pages
 
@@ -120,18 +121,22 @@ Connect this repository in the Cloudflare dashboard. Use these build values:
 
 - Production branch: `main`
 - Build command: `npm run build`
-- Build directory: `dist`
+- Build directory: `apps/site/dist`
 - Root directory: leave this field empty
 
-The `.node-version` file selects Node.js 24. The static site does not need Wrangler or the Cloudflare Astro adapter.
+Keep the root directory empty. The root build checks the website, CLI, and principle system before Astro creates the static files.
+
+The `.node-version` file selects Node.js 24. The static website does not need Wrangler or the Cloudflare Astro adapter.
 
 Cloudflare creates a production deployment for each push to `main`. It creates a preview deployment for each pull request.
 
 ## Contribute a principle
 
-Open a pull request that adds one Markdown file to `src/content/principles/`.
+Open a pull request that adds one Markdown file to `apps/site/src/content/principles/`.
 Explain the benefit, the costly failure, and the evidence that earned the rule.
 Do not promote a repeated instruction by default. Show the judgment it preserves and the context where it does not apply.
+
+Set `published` and `updated` when you add a catalog entry. Change `updated` when you change its public content.
 
 Use the structural rules of [ASD-STE100 Simplified Technical English](https://www.asd-ste100.org/).
 Define a necessary technical term before it carries the explanation.

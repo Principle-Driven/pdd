@@ -6,6 +6,8 @@ benefit: A future reader can understand the trade without repeating old investig
 prevents: Agents do not reopen the same accepted finding or hide unfinished work behind a vague risk comment.
 category: Governance
 version: v1
+published: 2026-08-24
+updated: 2026-08-24
 order: 6
 useWhen: A design deliberately accepts a rare race, weak edge case, information leak, or operating limit.
 tradeoff: Every accepted risk becomes easy to find and open to review.

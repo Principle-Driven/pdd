@@ -62,11 +62,11 @@ Use this prompt after installation:
 Use $pdd-principles to classify this principle proposal. Implement the correct result.
 ```
 
-If a harness cannot load skills, use the [principle change protocol](public/starter/change-protocol.md) directly.
+If a harness cannot load skills, use the [principle change protocol](apps/site/public/starter/change-protocol.md) directly.
 
 ## 4. Write each principle
 
-Copy the [principle template](public/starter/principle-template.md) into `docs/principles/`.
+Copy the [principle template](apps/site/public/starter/principle-template.md) into `docs/principles/`.
 
 Create one Markdown file for each earned rule. Use a lowercase filename, such as `pdd-01-check-at-use.md`.
 
@@ -126,7 +126,7 @@ Install the CLI as a development dependency:
 npm install --save-dev @principle-driven/cli
 ```
 
-Copy the [starter configuration](public/starter/pdd.config.json) to the repository root:
+Copy the [starter configuration](apps/site/public/starter/pdd.config.json) to the repository root:
 
 ```json
 {
@@ -251,7 +251,7 @@ Tasks:
 1. Before you edit the repository, inspect it.
 2. Find one to three decisions that caused repeated rework, risk, or unnecessary complexity.
 3. Record the repository evidence for each decision.
-4. If network access exists, review https://github.com/Principle-Driven/pdd/tree/main/src/content/principles.
+4. If network access exists, review https://github.com/Principle-Driven/pdd/tree/main/apps/site/src/content/principles.
 5. Before you adopt a published principle, make sure that it is true for this repository.
 6. If PDD conflicts with an existing prefix, choose another short uppercase prefix.
 7. Otherwise, use PDD as the token prefix.

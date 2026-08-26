@@ -3,21 +3,18 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "npm@10.9.2",
   "workspaces": [
+    "apps/*",
     "packages/*"
   ],
   "scripts": {
-    "dev": "astro dev",
-    "build": "npm run principles:check && npm run test:cli && astro check && astro build",
-    "preview": "astro preview",
-    "check": "npm run principles:check && npm run test:cli && astro check",
+    "dev": "npm run dev --workspace @principle-driven/site",
+    "build": "npm run principles:check && npm run test:cli && npm run build --workspace @principle-driven/site",
+    "preview": "npm run preview --workspace @principle-driven/site",
+    "check": "npm run principles:check && npm run test:cli && npm run check --workspace @principle-driven/site",
     "principles:check": "node packages/cli/src/cli.mjs check",
     "pdd": "node packages/cli/src/cli.mjs",
     "test:cli": "node --test packages/cli/test/*.test.mjs"
-  },
-  "dependencies": {
-    "@astrojs/check": "^0.9.6",
-    "astro": "^7.2.4",
-    "typescript": "^5.9.2"
   }
 }

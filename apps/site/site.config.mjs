@@ -1,0 +1,13 @@
+export const siteConfig = {
+  name: 'Principle Driven Development',
+  shortName: 'PDD',
+  homeTitle: 'Principle Driven Development for Coding Agents',
+  description: 'Give developers and coding agents the same current principles for consistent decisions across a codebase.',
+  url: 'https://principledriven.dev',
+  language: 'en',
+  locale: 'en_US',
+  publisher: 'Principle Driven Development',
+  repository: 'https://github.com/Principle-Driven/pdd',
+  socialImage: '/social-card.png',
+  socialImageAlt: 'Principle Driven Development: Build without agent memory.',
+};

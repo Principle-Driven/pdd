@@ -1,0 +1,155 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { siteConfig } from '../../site.config.mjs';
+import '../styles/global.css';
+
+interface Breadcrumb {
+  name: string;
+  path: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  imageAlt?: string;
+  schemaType?: 'WebPage' | 'AboutPage' | 'CollectionPage' | 'TechArticle';
+  publishedDate?: string;
+  modifiedDate?: string;
+  articleSection?: string;
+  alternateMarkdown?: string;
+  breadcrumbs?: Breadcrumb[];
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = siteConfig.socialImage,
+  imageAlt = siteConfig.socialImageAlt,
+  schemaType = 'WebPage',
+  publishedDate,
+  modifiedDate = publishedDate,
+  articleSection,
+  alternateMarkdown,
+  breadcrumbs = [],
+  noindex = false,
+} = Astro.props;
+
+const siteURL = Astro.site ?? new URL(siteConfig.url);
+const canonicalURL = new URL(Astro.url.pathname, siteURL);
+const imageURL = new URL(image, siteURL);
+const markdownURL = alternateMarkdown ? new URL(alternateMarkdown, siteURL) : undefined;
+const pageTitle = title === siteConfig.name ? siteConfig.homeTitle : `${title} | ${siteConfig.name}`;
+const organizationId = new URL('/#organization', siteURL).href;
+const websiteId = new URL('/#website', siteURL).href;
+const webpageId = `${canonicalURL.href}#webpage`;
+const breadcrumbId = `${canonicalURL.href}#breadcrumb`;
+
+const pageSchema = {
+  '@type': schemaType,
+  '@id': webpageId,
+  url: canonicalURL.href,
+  name: pageTitle,
+  description,
+  inLanguage: siteConfig.language,
+  isPartOf: { '@id': websiteId },
+  publisher: { '@id': organizationId },
+  image: imageURL.href,
+  ...(schemaType === 'TechArticle' && {
+    headline: title,
+    mainEntityOfPage: { '@id': webpageId },
+    author: { '@id': organizationId },
+    datePublished: publishedDate,
+    dateModified: modifiedDate,
+    articleSection,
+  }),
+  ...(breadcrumbs.length > 0 && { breadcrumb: { '@id': breadcrumbId } }),
+};
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': organizationId,
+      name: siteConfig.publisher,
+      url: siteURL.href,
+      logo: {
+        '@type': 'ImageObject',
+        url: new URL('/favicon-512.png', siteURL).href,
+        width: 512,
+        height: 512,
+      },
+      sameAs: [siteConfig.repository],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': websiteId,
+      url: siteURL.href,
+      name: siteConfig.name,
+      alternateName: siteConfig.shortName,
+      description: siteConfig.description,
+      inLanguage: siteConfig.language,
+      publisher: { '@id': organizationId },
+    },
+    pageSchema,
+    ...(breadcrumbs.length > 0 ? [{
+      '@type': 'BreadcrumbList',
+      '@id': breadcrumbId,
+      itemListElement: breadcrumbs.map((item, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.name,
+        item: new URL(item.path, siteURL).href,
+      })),
+    }] : []),
+  ],
+};
+
+const structuredDataJSON = JSON.stringify(structuredData).replaceAll('<', '\\u003c');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="author" content={siteConfig.publisher} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta name="theme-color" content="#173f31" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
+    <link rel="apple-touch-icon" href="/favicon-512.png" />
+    <link rel="canonical" href={canonicalURL} />
+    {markdownURL && <link rel="alternate" type="text/markdown" href={markdownURL} title={`${title} as Markdown`} />}
+    <meta property="og:type" content={schemaType === 'TechArticle' ? 'article' : 'website'} />
+    <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:locale" content={siteConfig.locale} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content={imageAlt} />
+    {publishedDate && <meta property="article:published_time" content={publishedDate} />}
+    {modifiedDate && <meta property="article:modified_time" content={modifiedDate} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageURL} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+    <script type="application/ld+json" set:html={structuredDataJSON} is:inline />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <Header />
+    <main><slot /></main>
+    <Footer />
+  </body>
+</html>

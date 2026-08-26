@@ -6,6 +6,8 @@ benefit: People and agents can connect the code to Domain-Driven Design and exam
 prevents: Agents do not treat domain terms as local labels or add translation layers inside one model.
 category: Modeling
 version: v1
+published: 2026-08-24
+updated: 2026-08-24
 order: 1
 useWhen: The code represents a business domain, product workflow, or shared model.
 tradeoff: A good rename can change many files and require migration work.
