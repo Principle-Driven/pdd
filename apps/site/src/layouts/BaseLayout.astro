@@ -57,6 +57,7 @@ const pageSchema = {
   isPartOf: { '@id': websiteId },
   publisher: { '@id': organizationId },
   image: imageURL.href,
+  license: siteConfig.licenseURL,
   ...(schemaType === 'TechArticle' && {
     headline: title,
     mainEntityOfPage: { '@id': webpageId },

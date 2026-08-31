@@ -2,12 +2,27 @@
   "name": "@principle-driven/cli",
   "version": "0.1.0",
   "description": "Check versioned engineering principles and every repository site that depends on them.",
+  "license": "MIT",
+  "keywords": [
+    "coding-agents",
+    "engineering-principles",
+    "principle-driven-development"
+  ],
+  "homepage": "https://principledriven.dev/cli",
+  "bugs": {
+    "url": "https://github.com/Principle-Driven/pdd/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Principle-Driven/pdd.git",
+    "directory": "packages/cli"
+  },
   "type": "module",
   "files": [
     "src"
   ],
   "bin": {
-    "pdd": "./src/cli.mjs"
+    "pdd": "src/cli.mjs"
   },
   "engines": {
     "node": ">=20"

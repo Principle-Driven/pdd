@@ -9,6 +9,14 @@ It does not load or transfer session memory.
 npm install --save-dev @principle-driven/cli
 ```
 
+This install pins the CLI version in the repository lock file.
+
+Run the scoped package directly for a one-time check:
+
+```sh
+npx --yes @principle-driven/cli check
+```
+
 ## Check a repository
 
 ```sh
@@ -52,3 +60,13 @@ Add `pdd.config.json` to the repository root:
 ```
 
 If the repository has no accepted-risk rule, set `acceptedRiskPrinciple` to `null`.
+
+## Links
+
+- [Setup guide](https://github.com/Principle-Driven/pdd/blob/main/SETUP.md)
+- [CLI documentation](https://principledriven.dev/cli)
+- [Source repository](https://github.com/Principle-Driven/pdd)
+
+## License
+
+The PDD CLI is available under the [MIT License](LICENSE).

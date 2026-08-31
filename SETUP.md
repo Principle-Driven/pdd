@@ -126,6 +126,8 @@ Install the CLI as a development dependency:
 npm install --save-dev @principle-driven/cli
 ```
 
+This install adds the `pdd` command and pins its version in the repository lock file.
+
 Copy the [starter configuration](apps/site/public/starter/pdd.config.json) to the repository root:
 
 ```json

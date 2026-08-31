@@ -5,6 +5,7 @@ import CopyButton from '../components/CopyButton.astro';
 
 const installCommand = `npm install --save-dev @principle-driven/cli
 npx pdd check`;
+const tryCommand = `npx --yes @principle-driven/cli check`;
 
 const configExample = `{
   "prefix": "PDD",
@@ -60,6 +61,9 @@ pdd check: FAILED (2 problems)`;
       <h2 class="section-title">One command checks the shared decision system.</h2>
     </div>
     <div class="code-block"><CopyButton /><pre><code>{installCommand}</code></pre></div>
+    <p class="install-note">Install the package in a repository so its lock file pins the CLI version.</p>
+    <h3 class="try-title">Try the CLI without adding a dependency.</h3>
+    <div class="code-block small"><CopyButton /><pre><code>{tryCommand}</code></pre></div>
     <div class="command-grid">
       <article><code>pdd check</code><h3>Check the system</h3><p>Find invalid definitions, missing index entries, and citation problems.</p></article>
       <article><code>pdd list</code><h3>List current rules</h3><p>Show each current token, title, and authority file.</p></article>
@@ -122,6 +126,9 @@ pdd check: FAILED (2 problems)`;
   .section-head { display: grid; grid-template-columns: 0.45fr 1fr; gap: 3rem; align-items: end; }
   .code-block { position: relative; margin-top: 2.5rem; }
   .code-block pre { overflow-x: auto; margin: 0; padding: 1.5rem 5rem 1.5rem 1.5rem; border-radius: 12px; color: #e6eee8; background: #12251c; font-family: var(--mono); font-size: 0.8rem; line-height: 1.7; }
+  .install-note { margin-top: 1rem; color: var(--muted); }
+  .try-title { margin-top: 2.5rem; font-family: var(--serif); font-size: 1.55rem; font-weight: 400; }
+  .try-title + .code-block { margin-top: 1rem; }
   .command-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem; }
   .command-grid article { min-height: 245px; padding: 1.3rem; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
   .command-grid code { color: var(--forest-light); font-size: 0.72rem; }

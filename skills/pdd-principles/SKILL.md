@@ -1,6 +1,7 @@
 ---
 name: pdd-principles
 description: Classify and implement principle proposals in an existing PDD repository. Use for durable judgment that can require a new or changed principle.
+license: MIT
 ---
 
 # Classify, Add, or Advance PDD Principles

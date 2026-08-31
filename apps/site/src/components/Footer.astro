@@ -1,3 +1,7 @@
+---
+import { siteConfig } from '../../site.config.mjs';
+---
+
 <footer>
   <div class="container footer-grid">
     <div>
@@ -11,6 +15,7 @@
       <a href="/cli">CLI</a>
       <a href="/principles/download.md" download>Download all</a>
       <a href="https://github.com/Principle-Driven/pdd">Source on GitHub ↗</a>
+      <a href={siteConfig.licenseURL}>{siteConfig.license} License ↗</a>
     </div>
     <p class="fine">Open for teams, tools, and agents.</p>
   </div>

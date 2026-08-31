@@ -60,11 +60,19 @@ The package uses the [Agent Skills format](https://agentskills.io/specification)
 
 ## CLI
 
-Install the enforcement layer:
+Install the enforcement layer as a development dependency:
 
 ```sh
 npm install --save-dev @principle-driven/cli
 npx pdd check
+```
+
+This install pins the CLI version in the repository lock file.
+
+Run the scoped package directly for a one-time check:
+
+```sh
+npx --yes @principle-driven/cli check
 ```
 
 Use `pdd refs PDD-02` to list every repository site that depends on one rule.
@@ -76,6 +84,7 @@ Use `pdd refs PDD-02` to list every repository site that depends on one rule.
 - [Use the adoption blueprint](https://principledriven.dev/blueprint)
 - [Browse downloadable principles](https://principledriven.dev/principles)
 - [Use the CLI](https://principledriven.dev/cli)
+- [View the CLI package on npm](https://www.npmjs.com/package/@principle-driven/cli)
 - [Download the starter files](https://principledriven.dev/blueprint)
 
 ## Repository structure
@@ -142,3 +151,7 @@ Use the structural rules of [ASD-STE100 Simplified Technical English](https://ww
 Define a necessary technical term before it carries the explanation.
 
 Catalog principles are starting points. A team must adapt each one before it governs a codebase.
+
+## License
+
+Principle Driven Development is available under the [MIT License](LICENSE).
