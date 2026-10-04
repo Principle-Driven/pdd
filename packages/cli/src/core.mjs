@@ -239,7 +239,9 @@ async function scannedFiles(root, config) {
 
   return existingFiles
     .map(toPosix)
-    .filter((file) => !ignore(file))
+    // The config file is machine-validated by loadConfig. Its token values
+    // are settings, not citations, so it stays out of citation scanning.
+    .filter((file) => file !== 'pdd.config.json' && !ignore(file))
     .sort();
 }
 
@@ -333,10 +335,17 @@ function scanRiskMarkers(entries, principles, config) {
   if (config.acceptedRiskPrinciple === null) return [];
 
   const diagnostics = [];
-  const principle = principles.find((item) => item.id === config.acceptedRiskPrinciple);
+  // The setting accepts a bare token or a pinned token. A pin keeps the
+  // config aligned with a specific meaning of the risk rule.
+  const [riskId, pinnedVersion] = config.acceptedRiskPrinciple.split('@v');
+  const principle = principles.find((item) => item.id === riskId);
 
   if (!principle) {
     return [diagnostic('PDD201', `acceptedRiskPrinciple ${config.acceptedRiskPrinciple} does not exist`, 'pdd.config.json')];
+  }
+
+  if (pinnedVersion !== undefined && Number(pinnedVersion) !== principle.version) {
+    return [diagnostic('PDD203', `acceptedRiskPrinciple ${config.acceptedRiskPrinciple} is stale; review the markers against ${principle.token}`, 'pdd.config.json')];
   }
 
   for (const entry of entries) {

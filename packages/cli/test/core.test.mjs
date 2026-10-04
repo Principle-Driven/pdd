@@ -87,6 +87,38 @@ test('requires an accepted-risk marker to cite its current rule', async (t) => {
   const result = await scanRepository(root);
 
   assert.ok(result.diagnostics.some((item) => item.code === 'PDD202'));
+  assert.ok(!result.diagnostics.some((item) => item.code === 'PDD104'));
+});
+
+test('passes with the accepted-risk feature enabled and a pinned marker', async (t) => {
+  const root = await makeRepository(t, {
+    risk: 'PDD-01',
+    code: '// ACCEPTED-RISK: A rare duplicate can remain. PDD-01@v1 accepted until the 2027 review.\n',
+  });
+  const result = await scanRepository(root);
+
+  assert.equal(result.ok, true);
+});
+
+test('accepts a pinned token in acceptedRiskPrinciple', async (t) => {
+  const root = await makeRepository(t, {
+    risk: 'PDD-01@v1',
+    code: '// ACCEPTED-RISK: A rare duplicate can remain. PDD-01@v1 accepted until the 2027 review.\n',
+  });
+  const result = await scanRepository(root);
+
+  assert.equal(result.ok, true);
+});
+
+test('reports a stale pin in acceptedRiskPrinciple', async (t) => {
+  const root = await makeRepository(t, {
+    version: 2,
+    risk: 'PDD-01@v1',
+    code: '// ACCEPTED-RISK: A rare duplicate can remain. PDD-01@v2 accepted until the 2027 review.\n',
+  });
+  const result = await scanRepository(root);
+
+  assert.ok(result.diagnostics.some((item) => item.code === 'PDD203'));
 });
 
 test('requires a title-form reference to have a nearby pin', async (t) => {
