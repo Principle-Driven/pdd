@@ -16,6 +16,13 @@ const COMMON_IGNORES = new Set([
   'coverage',
   'dist',
   'node_modules',
+  'Cargo.lock',
+  'composer.lock',
+  'Gemfile.lock',
+  'package-lock.json',
+  'poetry.lock',
+  'pnpm-lock.yaml',
+  'yarn.lock',
 ]);
 
 function escapeRegExp(value) {

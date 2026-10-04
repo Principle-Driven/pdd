@@ -121,6 +121,14 @@ test('reports a stale pin in acceptedRiskPrinciple', async (t) => {
   assert.ok(result.diagnostics.some((item) => item.code === 'PDD203'));
 });
 
+test('does not scan lockfiles for citations', async (t) => {
+  const root = await makeRepository(t);
+  await writeFile(path.join(root, 'package-lock.json'), '{"name": "pdd-sandbox", "dep": "PDD-01"}\n');
+  const result = await scanRepository(root);
+
+  assert.equal(result.ok, true);
+});
+
 test('requires a title-form reference to have a nearby pin', async (t) => {
   const root = await makeRepository(t, {
     code: '// One owner controls this design.\n',
