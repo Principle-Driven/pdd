@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CodeBlock from '../components/CodeBlock.astro';
+import { setupIndex as index, setupCitation as citation, ubiquitousLanguage } from '../lib/examples';
 
-// SITE-04@v1: Setup lets a new agent find current judgment without a handoff.
-// SITE-05@v1: Setup installs the rules, routing index, citations, reviews, and CLI check.
+// PDD-04@v1: Setup lets a new agent find current judgment without a handoff.
+// PDD-05@v1: Setup installs the rules, routing index, citations, reviews, and CLI check.
 const tree = `your-repository/
 ├── AGENTS.md
 ├── pdd.config.json
@@ -14,21 +15,6 @@ const tree = `your-repository/
 const skillInstall = `npx skills add Principle-Driven/pdd --skill pdd-principles`;
 const skillPrompt = `Use $pdd-principles to classify this principle proposal.
 Implement the correct result.`;
-const index = `## Principles
-
-- **PDD-01@v1 — Use Ubiquitous Language** —
-  Use one domain vocabulary in discussion, tests, and code.
-  → \`docs/principles/pdd-01-ubiquitous-language.md\`
-
-Read the full principle before you change covered code.
-Judge every change against the applicable principles.
-Change a principle before dependent code departs from it.
-Cite a current token for each “working as designed” decision.
-Before you add a principle, read every current principle.`;
-const citation = `// PDD-02@v1: This download checks current permission before use.
-// The preview check only gives early feedback.
-await requireDownloadPermission(userId, exportId);
-return readExport(exportId);`;
 const install = `npm install --save-dev @principle-driven/cli
 npx pdd check`;
 const ci = `- name: Check decision system
@@ -69,7 +55,7 @@ const toc = [
     <li>Copy the <a href="/starter/principle-template.md" download>principle template</a> into <code>docs/principles/</code>.</li>
     <li>Name the file with its token and title, such as <code>pdd-01-ubiquitous-language.md</code>.</li>
     <li>Choose one short, uppercase prefix for tokens.</li>
-    <li>Give the rule a token and version, such as <code>PDD-01@v1</code>.</li>
+    <li>Give the rule a token and version, such as <code>{ubiquitousLanguage.v1}</code>.</li>
     <li>State the rule, benefit, costly failure, effects, exceptions, and history.</li>
   </ol>
   <p>Use <a href="/starter/pdd-01-example.md" download>the complete example file</a> for structure. Adapt each rule until it is true for your codebase.</p>
@@ -95,7 +81,8 @@ const toc = [
   <h2 id="add-the-cli">5. Add the CLI check</h2>
   <p>Install the CLI as a development dependency. The repository lock file pins its version.</p>
   <CodeBlock code={install} lang="shell" />
-  <p>Use <a href="/cli#configuration"><code>pdd.config.json</code></a> to configure your prefix, principle directory, and agent indexes.</p>
+  <p>Use <a href="/cli#configuration"><code>pdd.config.json</code></a> to configure your prefix, principle directory, agent indexes, and ignored paths.</p>
+  <p>Exclude standalone examples and fixtures that use another project’s tokens. Keep actual governing citations in the scanned scope.</p>
   <p>Run the check on every pull request, including changes that only affect principles.</p>
   <CodeBlock code={ci} lang="yaml" filename="CI workflow step" />
   <p>Do not add a path filter. A principle-only change can make existing code citations stale.</p>

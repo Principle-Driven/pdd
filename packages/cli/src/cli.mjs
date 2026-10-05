@@ -4,12 +4,13 @@ import path from 'node:path';
 import process from 'node:process';
 import { scanRepository } from './core.mjs';
 
+// PDD-03@v2: CLI guidance uses short instructions and one term for each concept.
 const HELP = `Principle Driven Development CLI
 
 Usage:
   pdd check [path] [--json]
   pdd list [path] [--json]
-  pdd refs <PDD-NN[@vN]> [path] [--json]
+  pdd refs <TOKEN[@vN]> [path] [--json]
 
 Commands:
   check  Check principle files, agent indexes, citations, comments, and risk markers.
@@ -48,7 +49,7 @@ async function main() {
 
   const refToken = command === 'refs' ? args[1] : null;
   if (command === 'refs' && (!refToken || refToken.startsWith('--'))) {
-    console.error('refs needs a principle token, such as PDD-02');
+    console.error('refs needs a principle token. Run pdd list to find one.');
     process.exitCode = 2;
     return;
   }

@@ -1,8 +1,5 @@
 # Set up Principle Driven Development
 
-<!-- SITE-04@v1: This guide makes current repository evidence the source of engineering judgment. -->
-<!-- SITE-05@v1: The setup includes the index, rules, citations, review process, and CLI. -->
-
 This guide adds a shared decision system to an existing repository. It does not add agent memory.
 
 After setup, each contributor can rebuild a decision from current repository evidence.
@@ -141,6 +138,12 @@ Copy the [starter configuration](apps/site/public/starter/pdd.config.json) to th
 ```
 
 If the repository has an accepted-risk principle, set `acceptedRiskPrinciple` to its token.
+
+Set `prefix` to your project’s token prefix. For example, `SITE` uses uppercase tokens and lowercase filenames that start with `site-`.
+
+Use `ignore` for standalone examples, fixtures, or templates. Paths are relative to the repository root. Use `*` within a directory and `**` across directories.
+
+An ignored file contributes no citation, title-reference, or accepted-risk checks. Keep actual governing citations in files that the CLI scans.
 
 Add this package script:
 

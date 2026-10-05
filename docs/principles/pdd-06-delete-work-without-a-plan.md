@@ -1,5 +1,5 @@
-# SITE-06 — Delete work without a plan
-Token: SITE-06
+# PDD-06 — Delete work without a plan
+Token: PDD-06
 Version: v1
 
 ## Statement

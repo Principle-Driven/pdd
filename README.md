@@ -1,7 +1,7 @@
 # Principle Driven Development
 
-<!-- SITE-04@v1: The public story removes transferred memory from decision correctness. -->
-<!-- SITE-05@v1: The method includes routing, citations, reviews, and CLI enforcement. -->
+<!-- PDD-04@v1: The public story removes transferred memory from decision correctness. -->
+<!-- PDD-05@v1: The method includes routing, citations, reviews, and CLI enforcement. -->
 
 **Build software without depending on developer or agent memory.**
 
@@ -75,7 +75,10 @@ Run the scoped package directly for a one-time check:
 npx --yes @principle-driven/cli check
 ```
 
-Use `pdd refs PDD-02` to list every repository site that depends on one rule.
+Use `pdd refs PDD-05@v1` to list this repository’s dependencies on its decision-system rule.
+
+Each project can choose its token prefix and ignored paths in [pdd.config.json](pdd.config.json).
+Read the [CLI configuration guide](https://principledriven.dev/cli#configuration) for the available fields and scan limits.
 
 ## Explore
 

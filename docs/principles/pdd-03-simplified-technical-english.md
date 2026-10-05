@@ -1,5 +1,5 @@
-# SITE-03 — Use Simplified Technical English
-Token: SITE-03
+# PDD-03 — Use Simplified Technical English
+Token: PDD-03
 Version: v2
 
 ## Statement
