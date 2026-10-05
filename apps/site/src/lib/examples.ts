@@ -97,4 +97,8 @@ export const cliRisk = `// ACCEPTED-RISK: A restore can reveal one bit about a
 // hidden unique field. Integrity has priority. Revisit when
 // restore quarantine can make the outcome actor-neutral. PDD-06@v1`;
 
+export const cliRiskConfig = `{
+  "acceptedRiskPrinciple": "PDD-06@v1"
+}`;
+
 export const cliRefsCommand = 'pdd refs PDD-02';

@@ -137,7 +137,8 @@ Copy the [starter configuration](apps/site/public/starter/pdd.config.json) to th
 }
 ```
 
-If the repository has an accepted-risk principle, set `acceptedRiskPrinciple` to its token.
+If the repository has an accepted-risk principle, set `acceptedRiskPrinciple` to its identifier or current pinned token.
+CLI version `0.1.1` supports both forms. A pinned value requires a new review after the rule changes.
 
 Set `prefix` to your project’s token prefix. For example, `SITE` uses uppercase tokens and lowercase filenames that start with `site-`.
 

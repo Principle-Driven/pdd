@@ -64,6 +64,12 @@ Add `pdd.config.json` to the repository root:
 
 If the repository has no accepted-risk rule, set `acceptedRiskPrinciple` to `null`.
 
+CLI version `0.1.1` accepts the rule's identifier or current pinned token. The value must use the configured prefix and a number.
+The optional version must use `@v` followed by digits. A pinned value requires a new review after the rule changes.
+
+Malformed values stop the command with exit code `2`. Unknown rules and old pins fail `check` with exit code `1`.
+An old configuration pin does not stop checks for markers that lack the current token.
+
 The CLI reads this file from the target repository root. Without a configuration file, it uses the defaults shown here with an empty `ignore` list.
 
 Set `prefix` to one uppercase word, such as `PDD` or `SITE`. Tokens use that prefix. Principle filenames use its lowercase form.
@@ -71,6 +77,9 @@ Set `prefix` to one uppercase word, such as `PDD` or `SITE`. Tokens use that pre
 All paths are relative to the target repository root. In `ignore`, `*` matches within a directory and `**` matches across directories.
 
 Ignored files contribute no citation, title-reference, or accepted-risk checks. Principle definitions and configured agent indexes still receive their own checks.
+
+The CLI validates `pdd.config.json` as configuration. It does not scan this file for citations.
+Content scans also skip `Cargo.lock`, `composer.lock`, `Gemfile.lock`, `package-lock.json`, `poetry.lock`, `pnpm-lock.yaml`, `uv.lock`, and `yarn.lock`.
 
 Keep real governing citations in scanned files. If a source file mixes examples and real citations, move the examples to a separate ignored file.
 
