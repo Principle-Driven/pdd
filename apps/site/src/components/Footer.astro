@@ -1,33 +1,13 @@
 ---
 import { siteConfig } from '../../site.config.mjs';
+import type { DocLink } from '../lib/navigation';
+interface Props { previous?: DocLink; next?: DocLink; }
+const { previous, next } = Astro.props;
 ---
-
-<footer>
-  <div class="container footer-grid">
-    <div>
-      <a class="footer-brand" href="/">Principle Driven Development</a>
-      <p>Current engineering judgment without a context handoff.</p>
-    </div>
-    <div class="footer-links">
-      <a href="/method">Method</a>
-      <a href="/blueprint">Blueprint</a>
-      <a href="/principles">Principles</a>
-      <a href="/cli">CLI</a>
-      <a href="/principles/download.md" download>Download all</a>
-      <a href="https://github.com/Principle-Driven/pdd">Source on GitHub ↗</a>
-      <a href={siteConfig.licenseURL}>{siteConfig.license} License ↗</a>
-    </div>
-    <p class="fine">Open for teams, tools, and agents.</p>
-  </div>
+<footer class="doc-footer">
+  {(previous || next) && <nav class="page-pagination" aria-label="Previous and next pages">
+    <div>{previous && <a href={previous.href}><span>← Previous</span><strong>{previous.title}</strong></a>}</div>
+    <div>{next && <a class="pagination-next" href={next.href}><span>Next →</span><strong>{next.title}</strong></a>}</div>
+  </nav>}
+  <div class="footer-meta"><span>Principle Driven Development</span><a href={siteConfig.licenseURL}>{siteConfig.license} License</a><a href={siteConfig.repository}>GitHub ↗</a></div>
 </footer>
-
-<style>
-  footer { padding: 5rem 0 2.2rem; color: #dce5de; background: var(--forest); }
-  .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 3rem; }
-  .footer-brand { font-family: var(--serif); font-size: clamp(1.8rem, 4vw, 3rem); letter-spacing: -0.04em; }
-  footer p { max-width: 440px; margin-top: 0.7rem; color: #aebeb4; }
-  .footer-links { display: grid; grid-template-columns: repeat(2, minmax(100px, 1fr)); gap: 0.8rem; align-content: start; font-size: 0.88rem; font-weight: 650; }
-  .footer-links a:hover { color: var(--signal); }
-  .fine { grid-column: 1 / -1; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.14); font-family: var(--mono); font-size: 0.73rem; letter-spacing: 0.03em; }
-  @media (max-width: 650px) { .footer-grid { grid-template-columns: 1fr; } .fine { grid-column: 1; } }
-</style>
