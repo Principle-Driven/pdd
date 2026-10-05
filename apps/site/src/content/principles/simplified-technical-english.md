@@ -7,7 +7,7 @@ prevents: Agents do not hide requirements in long sentences, weak modal verbs, c
 category: Communication
 version: v1
 published: 2026-08-24
-updated: 2026-08-24
+updated: 2026-10-05
 order: 3
 useWhen: People or agents write technical text that another contributor must understand correctly.
 tradeoff: The writing can feel repetitive, and formal compliance requires the official dictionary and trained review.
@@ -78,3 +78,7 @@ Quoted text, code, identifiers, commands, and external protocol terms keep their
 Add this principle to `AGENTS.md`. Then apply it to the next agent instruction, commit message, and code comment.
 
 Look first for long sentences, changing terms, passive voice, contractions, and weak modal verbs.
+
+## History
+
+- v1 (2026-08-24): Published to prevent ambiguous technical instructions and inconsistent terms across repository artifacts.

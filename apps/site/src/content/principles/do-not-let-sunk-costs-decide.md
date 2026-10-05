@@ -7,7 +7,7 @@ prevents: Agents do not fill the repository with unused drafts, speculative abst
 category: Simplicity
 version: v1
 published: 2026-08-24
-updated: 2026-08-24
+updated: 2026-10-05
 order: 4
 useWhen: A file, feature, abstraction, or draft has no current user and no committed plan.
 tradeoff: A later need can require the team to rebuild deleted work from current requirements.
@@ -55,3 +55,7 @@ Until the repository reaches a recorded removal condition, keep required compati
 ## Start here
 
 Find files and abstractions with no caller, owner, or scheduled use. Delete them and run the repository checks.
+
+## History
+
+- v1 (2026-08-24): Published to prevent unused work from becoming false authority for later changes.

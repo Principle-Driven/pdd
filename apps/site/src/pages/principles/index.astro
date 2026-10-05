@@ -16,7 +16,7 @@ const toc = [{ id: 'available-principles', text: 'Available principles' }, { id:
   <h1>Principle catalog</h1>
   <p class="doc-lead">Start with useful examples of judgment that your codebase can earn.</p>
   <p>Each entry explains the rule, its benefit, the costly failure, and its exceptions. Adopt only the judgment that fits your repository.</p>
-  <div class="page-actions"><a class="button" href="/principles/download.md" download>Download all as Markdown <span aria-hidden="true">↓</span></a><a class="button" href="/example">See a rule in use</a></div>
+  <div class="page-actions"><a class="button" href="/principles/download.md" download="pdd-principles.md">Download catalog as Markdown <span aria-hidden="true">↓</span></a><a class="button" href="/example">See a rule in use</a></div>
 
   <h2 id="available-principles">Available principles</h2>
   <div class="catalog-filters" role="group" aria-label="Filter principles by category">
@@ -27,8 +27,22 @@ const toc = [{ id: 'available-principles', text: 'Available principles' }, { id:
   <div class="principle-grid">{principles.map((principle) => <PrincipleCard principle={principle} />)}</div>
 
   <h2 id="adopt-a-rule">Adopt a rule</h2>
-  <p>Adapt the rule, benefit, costly failure, effects, exceptions, and token to your codebase. Each principle needs evidence and a decision that it changes.</p>
-  <p>Then connect the rule to the agent index, code comments, reviews, and CLI check. <a href="/blueprint">The setup guide</a> explains each part.</p>
+  <p>Each principle needs repository evidence and a decision that it changes. Start with the rules that your codebase has earned.</p>
+  <p>The combined download is a reading copy. For adoption, download the Markdown from each chosen principle's own page.</p>
+  <ol>
+    <li>Read every current principle in your repository.</li>
+    <li>If a current rule covers the decision, use that rule or advance its version.</li>
+    <li>For an independent decision, adapt the rule, benefit, costly failure, effects, and exceptions to your codebase.</li>
+    <li>Choose a token that your repository has never used.</li>
+    <li>If the token changes, update the heading, <code>Token</code> header, filename, and example citations together.</li>
+    <li>Save one definition per file in your configured principle directory.</li>
+    <li>Record your adoption in the dated <code>History</code> section.</li>
+    <li>Add the current pin and file path to your agent index.</li>
+    <li>Cite the pin where code or review decisions depend on the rule.</li>
+    <li>Run <code>pdd check</code>.</li>
+    <li>Add the check to CI.</li>
+  </ol>
+  <p><a href="/blueprint">The setup guide</a> supplies the review rules and explains each part. <a href="/cli#configuration">CLI configuration</a> defines your prefix, principle directory, and agent indexes.</p>
 </BaseLayout>
 
 <script>

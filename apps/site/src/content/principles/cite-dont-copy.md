@@ -7,7 +7,7 @@ prevents: Agents do not leave old rule text in comments, tests, and tool descrip
 category: Governance
 version: v1
 published: 2026-08-24
-updated: 2026-08-24
+updated: 2026-10-05
 order: 5
 useWhen: A comment, test, tool, or review decision depends on a repository principle.
 tradeoff: A meaning change requires a review of every code site that cites the old version.
@@ -48,3 +48,7 @@ Commit messages and merged review threads are history. They do not need citation
 ## Start here
 
 Add a repository search for versioned tokens. After the first principle gains code citations, add a checker.
+
+## History
+
+- v1 (2026-08-24): Published to prevent copied rule text and unversioned citations from hiding dependencies after meaning changes.

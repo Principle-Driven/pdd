@@ -7,7 +7,7 @@ prevents: Agents do not treat domain terms as local labels or add translation la
 category: Modeling
 version: v1
 published: 2026-08-24
-updated: 2026-08-24
+updated: 2026-10-05
 order: 1
 useWhen: The code represents a business domain, product workflow, or shared model.
 tradeoff: A good rename can change many files and require migration work.
@@ -61,3 +61,7 @@ If two bounded contexts use one word differently, name the context at the integr
 ## Start here
 
 List the terms that domain experts and developers use differently. Agree on one name and one short definition for each concept.
+
+## History
+
+- v1 (2026-08-24): Published to prevent conflicting domain terms and unnecessary translation layers inside one model.
