@@ -1,5 +1,5 @@
-# SITE-05 — Show the complete decision system
-Token: SITE-05
+# PDD-05 — Show the complete decision system
+Token: PDD-05
 Version: v1
 
 ## Statement

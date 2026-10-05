@@ -20,8 +20,8 @@ const publishedDate = entry.data.published.toISOString().slice(0, 10);
 const modifiedDate = entry.data.updated.toISOString().slice(0, 10);
 const dateFormat = new Intl.DateTimeFormat('en', { dateStyle: 'medium', timeZone: 'UTC' });
 
-// SITE-01@v1: Each detail page leads with its benefit.
-// SITE-02@v1: The detail panel names the repeated behavior that the rule prevents.
+// PDD-01@v1: Each detail page leads with its benefit.
+// PDD-02@v1: The detail panel names the repeated behavior that the rule prevents.
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.summary} schemaType="TechArticle" publishedDate={publishedDate} modifiedDate={modifiedDate} articleSection={entry.data.category} alternateMarkdown={`/principles/${entry.id}.md`} section="Principles" toc={toc} previous={previous} next={next} sourcePath={`apps/site/src/content/principles/${entry.id}.md`} breadcrumbs={[

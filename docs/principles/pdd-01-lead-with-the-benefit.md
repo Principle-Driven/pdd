@@ -1,5 +1,5 @@
-# SITE-01 — Lead with the benefit
-Token: SITE-01
+# PDD-01 — Lead with the benefit
+Token: PDD-01
 Version: v1
 
 ## Statement

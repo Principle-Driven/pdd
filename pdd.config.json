@@ -1,7 +1,14 @@
 {
-  "prefix": "SITE",
+  "prefix": "PDD",
   "principlesDir": "docs/principles",
   "agentFiles": ["AGENTS.md"],
   "acceptedRiskPrinciple": null,
-  "ignore": []
+  "ignore": [
+    "apps/site/public/starter/**",
+    "apps/site/src/content/principles/**",
+    "apps/site/src/lib/examples.ts",
+    "packages/cli/test/**",
+    "SETUP.md",
+    "skills/pdd-principles/SKILL.md"
+  ]
 }

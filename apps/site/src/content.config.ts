@@ -3,12 +3,13 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 const principles = defineCollection({
+  // PDD-03@v2: The loaded catalog publishes the repository language standard.
   loader: glob({ pattern: '**/*.md', base: './src/content/principles' }),
   schema: z.object({
     token: z.string(),
     title: z.string(),
     summary: z.string(),
-    // SITE-01@v1 and SITE-02@v1: every entry states its outcome and its costly failure.
+    // PDD-01@v1 and PDD-02@v1: every entry states its outcome and its costly failure.
     benefit: z.string(),
     prevents: z.string(),
     category: z.enum(['Reliability', 'Modeling', 'Communication', 'Simplicity', 'Governance', 'Product']),

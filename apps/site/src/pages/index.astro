@@ -1,17 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CodeBlock from '../components/CodeBlock.astro';
+import { introductionCitation as citation, validateAtUse } from '../lib/examples';
 
-// SITE-01@v1: The introduction states the benefit before the token format.
-// SITE-02@v1: The introduction names repeated agent corrections as the costly failure.
-// SITE-04@v1: A new agent finds current judgment in repository evidence.
-// SITE-05@v1: The introduction connects rules, routing, comments, reviews, and CLI enforcement before the catalog.
-const citation = `// PDD-02@v1: This download checks current permission before use.
-// The preview check only gives early feedback.
-async function downloadExport(userId, exportId) {
-  await requireDownloadPermission(userId, exportId);
-  return readExport(exportId);
-}`;
+// PDD-01@v1: The introduction states the benefit before the token format.
+// PDD-02@v1: The introduction names repeated agent corrections as the costly failure.
+// PDD-04@v1: A new agent finds current judgment in repository evidence.
+// PDD-05@v1: The introduction connects rules, routing, comments, reviews, and CLI enforcement before the catalog.
 const toc = [
   { id: 'a-principle-in-code', text: 'A principle in code' },
   { id: 'the-complete-system', text: 'The complete system' },
@@ -33,8 +28,8 @@ const toc = [
   <h2 id="a-principle-in-code">A principle in code</h2>
   <p>A comment cites the rule that a decision depends on. The citation includes the rule’s version.</p>
   <CodeBlock code={citation} lang="javascript" filename="src/exports/download.js" />
-  <div class="token-key"><span><code>PDD-02</code> Principle identifier</span><span><code>@v1</code> Version of the rule</span></div>
-  <p>A new agent follows <code>PDD-02@v1</code> to the full rule. This rule requires a permission check at the operation that uses the export.</p>
+  <div class="token-key"><span><code>{validateAtUse.id}</code> Principle identifier</span><span><code>@v1</code> Version of the rule</span></div>
+  <p>A new agent follows <code>{validateAtUse.v1}</code> to the full rule. This rule requires a permission check at the operation that uses the export.</p>
   <p>After a meaning change to <code>v2</code>, the CLI reports each citation that still uses <code>v1</code>. A contributor reviews the code before updating its citation.</p>
 
   <h2 id="the-complete-system">The complete system</h2>

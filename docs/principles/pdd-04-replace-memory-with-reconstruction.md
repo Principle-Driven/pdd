@@ -1,5 +1,5 @@
-# SITE-04 — Replace memory with reconstruction
-Token: SITE-04
+# PDD-04 — Replace memory with reconstruction
+Token: PDD-04
 Version: v1
 
 ## Statement

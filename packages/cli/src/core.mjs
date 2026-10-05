@@ -378,7 +378,7 @@ async function scanAgentIndexes(root, principles, config) {
 }
 
 export async function scanRepository(rootInput = process.cwd()) {
-  // SITE-05@v1: One scan verifies definitions, indexes, citations, comments, risks, and version sweeps.
+  // PDD-05@v1: One scan verifies definitions, indexes, citations, comments, risks, and version sweeps.
   const root = path.resolve(rootInput);
   const config = await loadConfig(root);
   const principleResult = await readPrinciples(root, config);

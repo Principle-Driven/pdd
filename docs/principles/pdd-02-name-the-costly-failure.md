@@ -1,5 +1,5 @@
-# SITE-02 — Name the costly failure
-Token: SITE-02
+# PDD-02 — Name the costly failure
+Token: PDD-02
 Version: v1
 
 ## Statement

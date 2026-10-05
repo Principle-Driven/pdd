@@ -1,7 +1,6 @@
 ---
 token: PDD-03@v1
 title: Use Simplified Technical English
-# SITE-03@v2: This catalog entry publishes the repository language standard.
 summary: Use ASD-STE100 structural rules to make technical text clear, consistent, and easy to translate.
 benefit: People and agents get one meaning from instructions, commits, comments, reviews, errors, and documentation.
 prevents: Agents do not hide requirements in long sentences, weak modal verbs, changing terms, or vague references.
