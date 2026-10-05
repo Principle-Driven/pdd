@@ -33,7 +33,7 @@ test('packs and installs the public command', async (t) => {
     encoding: 'utf8',
     env: environment,
   });
-  const [packed] = JSON.parse(packOutput);
+  const [packed] = Object.values(JSON.parse(packOutput));
 
   assert.deepEqual(
     packed.files.map((file) => file.path).sort(),
