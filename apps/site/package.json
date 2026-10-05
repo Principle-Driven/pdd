@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build && npm run check:output",
-    "check:output": "node scripts/check-built-site.mjs",
+    "check:output": "node scripts/check-built-site.mjs && node scripts/check-principle-downloads.mjs",
     "preview": "astro preview",
     "check": "astro check"
   },

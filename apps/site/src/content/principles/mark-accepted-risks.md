@@ -7,7 +7,7 @@ prevents: Agents do not reopen the same accepted finding or hide unfinished work
 category: Governance
 version: v1
 published: 2026-08-24
-updated: 2026-08-24
+updated: 2026-10-05
 order: 6
 useWhen: A design deliberately accepts a rare race, weak edge case, information leak, or operating limit.
 tradeoff: Every accepted risk becomes easy to find and open to review.
@@ -48,3 +48,7 @@ There are no exceptions for accepted risks. An unmarked risk has no accepted sta
 ## Start here
 
 Add a CI rule that requires `PDD-06@v1` on every `ACCEPTED-RISK:` marker.
+
+## History
+
+- v1 (2026-08-24): Published to prevent repeated risk investigation and vague comments that disguise unfinished work.

@@ -7,7 +7,7 @@ prevents: Agents do not chase every time-of-check/time-of-use gap with new archi
 category: Reliability
 version: v1
 published: 2026-08-24
-updated: 2026-08-24
+updated: 2026-10-05
 order: 2
 useWhen: A permission, token, preview, cache, or queued job can become invalid before use.
 tradeoff: The use boundary must read the current facts before it acts.
@@ -51,3 +51,7 @@ An immutable fact cannot change. Name that fact before you omit the use-time che
 ## Start here
 
 Name the use boundary. Then list the smallest set of facts that it must check.
+
+## History
+
+- v1 (2026-08-24): Published to prevent repeated timing repairs around artifacts that can become invalid before use.
