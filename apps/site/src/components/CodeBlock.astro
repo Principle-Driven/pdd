@@ -1,0 +1,14 @@
+---
+import { Code } from 'astro:components';
+import type { ComponentProps } from 'astro/types';
+import CopyButton from './CopyButton.astro';
+interface Props { code: string; lang?: ComponentProps<typeof Code>['lang']; filename?: string; }
+const { code, lang = 'text', filename = 'Terminal' } = Astro.props;
+---
+<div class="code-block">
+  <div class="code-caption">
+    <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 8-4 4 4 4m8-8 4 4-4 4m-3-10-2 20" /></svg>{filename}</span>
+    <CopyButton />
+  </div>
+  <Code code={code} lang={lang} themes={{ light: 'github-light', dark: 'github-dark' }} />
+</div>

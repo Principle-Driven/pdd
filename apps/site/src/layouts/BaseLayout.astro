@@ -1,6 +1,11 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Sidebar from '../components/Sidebar.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import { getCollection } from 'astro:content';
+import { byOrder } from '../lib/principles';
+import { getNavigation, type DocLink, type TocItem } from '../lib/navigation';
 import { siteConfig } from '../../site.config.mjs';
 import '../styles/global.css';
 
@@ -21,6 +26,11 @@ interface Props {
   alternateMarkdown?: string;
   breadcrumbs?: Breadcrumb[];
   noindex?: boolean;
+  section?: string;
+  toc?: TocItem[];
+  previous?: DocLink;
+  next?: DocLink;
+  sourcePath?: string;
 }
 
 const {
@@ -35,7 +45,15 @@ const {
   alternateMarkdown,
   breadcrumbs = [],
   noindex = false,
+  section = 'Documentation',
+  toc = [],
+  previous,
+  next,
+  sourcePath = `apps/site/src/pages/${Astro.url.pathname === '/' ? 'index' : Astro.url.pathname.slice(1)}.astro`,
 } = Astro.props;
+
+const groups = getNavigation((await getCollection('principles')).sort(byOrder));
+const sourceURL = `${siteConfig.repository}/blob/main/${sourcePath}`;
 
 const siteURL = Astro.site ?? new URL(siteConfig.url);
 const canonicalURL = new URL(Astro.url.pathname, siteURL);
@@ -121,7 +139,17 @@ const structuredDataJSON = JSON.stringify(structuredData).replaceAll('<', '\\u00
     <meta name="description" content={description} />
     <meta name="author" content={siteConfig.publisher} />
     {noindex && <meta name="robots" content="noindex, follow" />}
-    <meta name="theme-color" content="#173f31" />
+    <meta name="theme-color" content="#ffffff" />
+    <script is:inline>
+      (() => {
+        let theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        try {
+          const saved = localStorage.getItem('pdd-theme');
+          if (saved === 'light' || saved === 'dark') theme = saved;
+        } catch {}
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
     <link rel="apple-touch-icon" href="/favicon-512.png" />
@@ -149,8 +177,16 @@ const structuredDataJSON = JSON.stringify(structuredData).replaceAll('<', '\\u00
     <title>{pageTitle}</title>
   </head>
   <body>
-    <Header />
-    <main><slot /></main>
-    <Footer />
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <Header groups={groups} />
+    <div class="docs-shell">
+      <aside class="site-sidebar"><Sidebar groups={groups} /></aside>
+      <main id="main-content" tabindex="-1">
+        <div class="page-breadcrumb"><a href="/">Docs</a><span aria-hidden="true">/</span><span>{section}</span></div>
+        <article class="doc-content" data-doc-content><slot /></article>
+        <Footer previous={previous} next={next} />
+      </main>
+      <TableOfContents items={toc} sourceURL={sourceURL} />
+    </div>
   </body>
 </html>
