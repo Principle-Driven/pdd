@@ -22,6 +22,7 @@ const COMMON_IGNORES = new Set([
   'package-lock.json',
   'poetry.lock',
   'pnpm-lock.yaml',
+  'uv.lock',
   'yarn.lock',
 ]);
 
@@ -104,8 +105,12 @@ export async function loadConfig(root) {
     throw new Error('pdd.config.json: ignore must be an array');
   }
 
-  if (config.acceptedRiskPrinciple !== null && typeof config.acceptedRiskPrinciple !== 'string') {
-    throw new Error('pdd.config.json: acceptedRiskPrinciple must be a token or null');
+  const riskTokenPattern = new RegExp(`^${escapeRegExp(config.prefix)}-[0-9]+(?:@v[0-9]+)?$`);
+  if (config.acceptedRiskPrinciple !== null && (
+    typeof config.acceptedRiskPrinciple !== 'string'
+    || !riskTokenPattern.test(config.acceptedRiskPrinciple)
+  )) {
+    throw new Error(`pdd.config.json: acceptedRiskPrinciple must be ${config.prefix}-N or ${config.prefix}-N@vM, or null`);
   }
 
   return config;
@@ -352,7 +357,7 @@ function scanRiskMarkers(entries, principles, config) {
   }
 
   if (pinnedVersion !== undefined && Number(pinnedVersion) !== principle.version) {
-    return [diagnostic('PDD203', `acceptedRiskPrinciple ${config.acceptedRiskPrinciple} is stale; review the markers against ${principle.token}`, 'pdd.config.json')];
+    diagnostics.push(diagnostic('PDD203', `acceptedRiskPrinciple ${config.acceptedRiskPrinciple} is stale; review the markers against ${principle.token}`, 'pdd.config.json'));
   }
 
   for (const entry of entries) {

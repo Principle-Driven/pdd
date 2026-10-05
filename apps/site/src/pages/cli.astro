@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CodeBlock from '../components/CodeBlock.astro';
-import { cliConfig as config, cliOutput as output, cliRisk as risk, cliRefsCommand } from '../lib/examples';
+import { cliConfig as config, cliOutput as output, cliRisk as risk, cliRiskConfig, cliRefsCommand } from '../lib/examples';
 import repositoryConfig from '../../../../pdd.config.json';
 
 // PDD-05@v1: The CLI reference shows which repository connections the checker enforces.
@@ -73,7 +73,7 @@ const toc = [
       <tr><td><code>ignore</code></td><td><code>[]</code></td><td>Excludes selected paths from content scans.</td></tr>
     </tbody>
   </table></div>
-  <p>Set <code>acceptedRiskPrinciple</code> to the identifier of your accepted-risk rule, without a version. If your repository has no such rule, set this field to <code>null</code>.</p>
+  <p>Set <code>acceptedRiskPrinciple</code> to your accepted-risk rule's identifier or current pinned token. If your repository has no such rule, set this field to <code>null</code>.</p>
   <p><a href="/starter/pdd.config.json" download>Download the starter configuration</a>.</p>
 
   <h3 id="token-prefix">Token prefix</h3>
@@ -95,6 +95,8 @@ const toc = [
   </table></div>
   <p>Use <code>*</code> within one directory and <code>**</code> across directories. To exclude a directory’s contents, end the pattern with <code>/**</code>.</p>
   <p>Ignored files contribute no citation, title-reference, or accepted-risk checks. Principle file validation and required agent index entries still receive their own checks.</p>
+  <p>The CLI validates <code>pdd.config.json</code> as configuration. It does not scan this file for citations.</p>
+  <p>Content scans also skip <code>Cargo.lock</code>, <code>composer.lock</code>, <code>Gemfile.lock</code>, <code>package-lock.json</code>, <code>poetry.lock</code>, <code>pnpm-lock.yaml</code>, <code>uv.lock</code>, and <code>yarn.lock</code>.</p>
   <div class="callout"><p><strong>Keep real citations in the scanned scope.</strong>If a file mixes tutorial examples with governing citations, move the examples into a separate ignored file.</p></div>
 
   <h3 id="this-repository">This repository</h3>
@@ -122,6 +124,12 @@ const toc = [
 
   <h2 id="accepted-risks">Accepted risks</h2>
   <p>An accepted-risk marker states a known risk, its reason, and the condition for a new decision.</p>
+  <p>CLI version <code>0.1.1</code> accepts an identifier or a pinned token in <code>acceptedRiskPrinciple</code>. A pinned value requires a new review after the rule changes.</p>
+  <p>Add this field to your configuration to select the risk rule:</p>
+  <CodeBlock code={cliRiskConfig} lang="json" filename="pdd.config.json — accepted-risk field" />
+  <p>The value must use the configured prefix and a number. The optional version must use <code>@v</code> followed by digits.</p>
+  <p>Malformed values stop the command with exit code <code>2</code>. Unknown rules and old pins fail <code>check</code> with exit code <code>1</code>.</p>
+  <p>An old configuration pin does not stop checks for markers that lack the current token.</p>
   <CodeBlock code={risk} lang="javascript" filename="src/models/restore.ts" />
   <p>The pinned token connects the local risk to the governing rule. Read <a href="/principles/mark-accepted-risks">Mark Accepted Risks</a> for the full example.</p>
 
