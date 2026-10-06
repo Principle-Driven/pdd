@@ -1,6 +1,6 @@
 # Principle Driven Development CLI
 
-The `pdd` CLI checks the current decision system in a repository.
+The `pdd` CLI installs catalog principles with local tokens and checks the current decision system in a repository.
 It does not load or transfer session memory.
 
 ## Install
@@ -11,10 +11,60 @@ npm install --save-dev @principle-driven/cli
 
 This install pins the CLI version in the repository lock file.
 
+## Install a catalog principle
+
+Version `0.2.0` adds catalog installation. Run `add` after approval under your repository's admission protocol.
+Use `pdd --version` to read the installed version.
+
+```sh
+npx pdd catalog
+npx pdd add validate-at-use
+```
+
+`catalog` lists slugs, titles, and summaries from `principledriven.dev`. `add` selects one principle by its slug.
+
+The command uses your configured prefix, principle directory, and agent indexes. Without configuration, it uses `PDD`, `docs/principles`, and `AGENTS.md`.
+
+For example, a project whose highest token is `SITE-08` receives `SITE-09@v1` in `docs/principles/site-09-validate-at-use.md`.
+
+Existing numbers stay unchanged. The command preserves gaps and reserves numbers found in configured indexes and committed principle filenames in Git history.
+
+The local rule starts at `v1`. Its `Source` header records the catalog page. History records the adoption date and catalog version.
+
+The command adds a pinned entry to every configured agent index. It preserves existing instructions and creates missing indexes with a short reading instruction.
+
+A repeated installation preserves local edits and versions. The command recognizes a prior adoption by its source, filename, or exact title.
+
+Preview the exact files before installation:
+
+```sh
+npx pdd add validate-at-use --dry-run
+npx pdd add validate-at-use ../other-repository --dry-run --json
+```
+
+The JSON preview contains each file's path and content. A preview creates no files or directories.
+
+After installation, adapt the Rule, exceptions, and Rationale to your repository. Cite its local pin where a real decision depends on it.
+Run `pdd check` before committing. Your repository owns later edits and version changes.
+
+Installation needs network access to `principledriven.dev`. Local checks and repeated installations with a recorded source work offline.
+
+The installer rejects paths outside the repository and paths through symbolic links. It prevents concurrent installations and restores earlier writes after a file error.
+
+If an interrupted command leaves `.pdd-add.lock`, confirm that no installation is running. Then remove that file before retrying.
+
+## Run without a local dependency
+
 Run the scoped package directly for a one-time check:
 
 ```sh
 npx --yes @principle-driven/cli check
+```
+
+For a one-time installation, use version `0.2.0` or later:
+
+```sh
+npx --yes @principle-driven/cli@0.2.0 add validate-at-use
 ```
 
 ## Check a repository

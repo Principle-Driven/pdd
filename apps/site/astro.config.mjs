@@ -8,7 +8,7 @@ export default defineConfig({
   trailingSlash: 'never',
   integrations: [
     sitemap({
-      filter: (page) => !page.endsWith('.md') && !page.endsWith('/404'),
+      filter: (page) => !page.endsWith('.md') && !page.endsWith('.json') && !page.endsWith('/404'),
     }),
   ],
 });

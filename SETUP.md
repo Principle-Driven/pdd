@@ -48,6 +48,15 @@ Keep the file short. Leave teaching, lineage, setup instructions, and implementa
 
 Start an adopted rule at `v1`. Replace a catalog token when your registry already uses it.
 
+For an approved catalog rule, CLI version `0.2.0` can assign its local token and update your agent index:
+
+```sh
+npx --yes @principle-driven/cli@0.2.0 add validate-at-use
+```
+
+The command uses your configuration or the defaults shown in section 5. Use `--dry-run` to preview its files.
+After installation, adapt the Rule, exceptions, and Rationale to your repository evidence.
+
 ## 3. Connect the agent index
 
 Copy the [agent index](apps/site/public/starter/AGENTS.md) into your root `AGENTS.md`.
@@ -59,6 +68,8 @@ Add one routing line for each adopted rule:
 ```
 
 The index routes the reader. The Rule carries the authority.
+
+If you used `pdd add`, its routing line already exists. Keep your repository's remaining instructions and change protocol.
 
 For an existing repository with another principle protocol, preserve that protocol. Do not replace its authority rules through a template edit.
 

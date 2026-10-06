@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -37,7 +38,7 @@ test('packs and installs the public command', async (t) => {
 
   assert.deepEqual(
     packed.files.map((file) => file.path).sort(),
-    ['LICENSE', 'README.md', 'package.json', 'src/cli.mjs', 'src/core.mjs'],
+    ['LICENSE', 'README.md', 'package.json', 'src/catalog.mjs', 'src/cli.mjs', 'src/core.mjs', 'src/install.mjs'],
   );
 
   await mkdir(consumer);
@@ -72,4 +73,24 @@ test('packs and installs the public command', async (t) => {
 
   assert.match(help, /pdd check/);
   assert.match(help, /pdd refs/);
+  assert.match(help, /pdd add <slug>/);
+  assert.match(help, /pdd catalog/);
+  assert.equal(execFileSync(binary, ['--version'], { cwd: consumer, encoding: 'utf8' }).trim(), packageMetadata.version);
+
+  const markdown = '# PDD-02 — Portable rule\nToken: PDD-02\nVersion: v1\n\n## Rule\n\nKeep one owner.\n\n## History\n\n- v1 (2026-10-06): Published.\n';
+  const catalog = { schemaVersion: 1, principles: [{
+    slug: 'portable-rule', title: 'Portable rule', summary: 'Give the decision one owner.', version: 'v1',
+    sha256: createHash('sha256').update(markdown).digest('hex'),
+  }] };
+  const fixture = path.join(root, 'catalog-fixture.mjs');
+  await writeFile(fixture, `const catalog = ${JSON.stringify(catalog)};\nconst markdown = ${JSON.stringify(markdown)};\nglobalThis.fetch = async (url) => new Response(url.endsWith('.json') ? JSON.stringify(catalog) : markdown);\n`);
+  const installedCLI = path.join(consumer, 'node_modules/@principle-driven/cli/src/cli.mjs');
+  const installed = execFileSync(process.execPath, ['--import', fixture, installedCLI, 'add', 'portable-rule', '--json'], {
+    cwd: consumer, encoding: 'utf8',
+  });
+  const result = JSON.parse(installed);
+  assert.equal(result.token, 'PDD-01@v1');
+  assert.match(await readFile(path.join(consumer, result.file), 'utf8'), /^# PDD-01 — Portable rule/);
+  const checked = execFileSync(binary, ['check', '--json'], { cwd: consumer, encoding: 'utf8' });
+  assert.equal(JSON.parse(checked).ok, true);
 });

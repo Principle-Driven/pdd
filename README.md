@@ -65,7 +65,7 @@ The package uses the [Agent Skills format](https://agentskills.io/specification)
 
 ## CLI
 
-Install the enforcement layer as a development dependency:
+Install the CLI as a development dependency:
 
 ```sh
 npm install --save-dev @principle-driven/cli
@@ -84,6 +84,16 @@ Use `pdd refs PDD-05@v1` to list this repository’s dependencies on its decisio
 
 Each project can choose its token prefix and ignored paths in [pdd.config.json](pdd.config.json).
 Read the [CLI configuration guide](https://principledriven.dev/cli#configuration) for the available fields and scan limits.
+
+CLI version `0.2.0` installs catalog principles with your local prefix and next number:
+
+```sh
+npx pdd catalog
+npx pdd add validate-at-use
+```
+
+Run `add` after approval under your repository's admission protocol. It saves the rule and updates your configured agent indexes.
+Use `--dry-run` to preview the files. Adapt the local Rule and Rationale, then run `pdd check`.
 
 ## Explore
 
@@ -107,7 +117,7 @@ apps/site/                # Astro website workspace
     ├── content/principles/  # Portable catalog rule files
     ├── pages/               # Method, setup, and catalog pages
     └── components/          # Shared interface components
-packages/cli/             # Principle scanner and tests
+packages/cli/             # Principle installer, scanner, and tests
 skills/pdd-principles/   # Portable principle-management skill
 ```
 
