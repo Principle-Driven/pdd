@@ -3,14 +3,21 @@ token: PDD-15@v1
 title: Write for future readers
 summary: Make repository artifacts explain their current purpose, decisions, and evidence without the original conversation.
 benefit: A new contributor or agent can reconstruct the change from durable repository evidence.
-prevents: Agents do not leave temporary task labels, conversation references, or claims about abandoned plans as the explanation of a change.
+prevents: |-
+  Agents often leave task labels, conversation references, abandoned plans, and unsupported claims in commit messages, pull request descriptions, and code comments.
+  Future agents then use those records to understand the code, even when the information no longer explains what shipped.
+
+  That noise makes Git history harder to search and comments harder to trust.
+  An agent can revive an abandoned plan, repeat an old investigation, or mistake an unsupported claim for a requirement.
+
+  This principle keeps Git records focused on what changed, why, and the evidence that supports it.
+  Comments explain the current code's constraints.
+  Agents can use Git logs to trace decisions and comments to understand the current code, without the original conversation.
 category: Communication
 version: v1
 published: 2026-10-05
-updated: 2026-10-05
+updated: 2026-10-06
 order: 15
-useWhen: A title, comment, commit, review, or document becomes evidence that a later contributor must use.
-tradeoff: Authors must update the explanation after scope changes and distinguish observed results from planned checks.
 ---
 
 ## Rule
@@ -23,52 +30,15 @@ Distinguish observed results, planned checks, and incomplete work. Cite evidence
 
 In comments, state the local contract and its pinned rule. Keep the full rule in its authoritative file.
 
-## Benefit
-
-A later contributor can understand what changed, why it changed, and what evidence supports it.
-
-The repository remains useful after temporary plans and chat context disappear.
-
-## Problem this prevents
-
-A title contains only a temporary task label. A comment refers to a conversation or says that a person requested the behavior.
-
-A pull request description still describes an abandoned approach. Its test claims mix completed checks with plans.
-
-Agents treat these artifacts as current evidence and reconstruct the wrong decision.
-
-## What this changes
-
-- Titles identify the behavior that a reader can inspect.
-- Descriptions reflect the final scope.
-- Comments explain local reasons and constraints.
-- Validation claims state what actually ran and what remains incomplete.
-- Durable links identify necessary evidence.
-
-## Example
-
-A change keeps an active form on its original definition revision. Its title names that behavior.
-
-The description explains the trigger, the preserved answers, and the tests that ran. A local comment identifies the reason for the lookup.
-
-```js
-// PDD-15@v1: The stored revision keeps this draft stable after a definition change.
-const definition = await definitions.load(draft.definitionRevision);
-```
-
-The reader can assess the behavior without a task number or the original chat.
-
-## Exceptions
+### Exceptions
 
 Temporary notes can use local shorthand while they remain temporary. Before they become durable instructions, add the context that future readers need.
 
 Simple code does not need a comment that restates its action. Add an explanation only for a hidden contract or decision.
 
-## Start here
+## Rationale
 
-Read the next pull request description without its conversation. Name any claim that requires missing context.
-
-Rewrite that claim around the final behavior. Separate completed checks from planned checks.
+Agents leave task labels, conversation references, and abandoned plans as durable explanations. Later contributors then reconstruct the wrong decision.
 
 ## History
 

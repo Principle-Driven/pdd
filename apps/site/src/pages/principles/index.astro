@@ -15,7 +15,8 @@ const toc = [{ id: 'available-principles', text: 'Available principles' }, { id:
 <BaseLayout title="Engineering Principle Catalog" description="Download engineering principles for software development with people and coding agents." schemaType="CollectionPage" section="Principle catalog" sourcePath="apps/site/src/pages/principles/index.astro" toc={toc} previous={{ title: 'CLI', href: '/cli' }} next={{ title: principles[0].data.title, href: `/principles/${principles[0].id}` }}>
   <h1>Principle catalog</h1>
   <p class="doc-lead">Start with useful examples of judgment that your codebase can earn.</p>
-  <p>Each entry explains the rule, its benefit, the costly failure, and its exceptions. Adopt only the judgment that fits your repository.</p>
+  <p>Each page helps you recognize a costly behavior and understand the corrective rule. Its download contains the compact agent file.</p>
+  <p>These are candidates for adoption. They do not govern your repository until you adopt them under its own protocol.</p>
   <div class="page-actions"><a class="button" href="/principles/download.md" download="pdd-principles.md">Download catalog as Markdown <span aria-hidden="true">↓</span></a><a class="button" href="/example">See a rule in use</a></div>
 
   <h2 id="available-principles">Available principles</h2>
@@ -32,7 +33,9 @@ const toc = [{ id: 'available-principles', text: 'Available principles' }, { id:
   <ol>
     <li>Read every current principle in your repository.</li>
     <li>If a current rule covers the decision, use that rule or advance its version.</li>
-    <li>For an independent decision, adapt the rule, benefit, costly failure, effects, and exceptions to your codebase.</li>
+    <li>For an independent recurring choice, adapt the <strong>Rule</strong> and its exceptions to your codebase.</li>
+    <li>Record local evidence in a short <strong>Rationale</strong>.</li>
+    <li>Follow your repository's admission protocol before adding a token.</li>
     <li>Choose a token that your repository has never used.</li>
     <li>If the token changes, update the heading, <code>Token</code> header, filename, and example citations together.</li>
     <li>Save one definition per file in your configured principle directory.</li>

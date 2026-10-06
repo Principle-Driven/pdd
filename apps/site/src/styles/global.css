@@ -63,7 +63,7 @@
   .site-header { position: sticky; top: 0; z-index: 20; height: 65px; border-bottom: 1px solid var(--border); background: var(--header-background); backdrop-filter: blur(12px); }
   .header-inner { display: flex; align-items: center; gap: 42px; max-width: 1440px; height: 100%; padding: 0 40px; margin: auto; }
   .brand { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; font-size: 17px; font-weight: 700; letter-spacing: -0.5px; }
-  .brand-mark { font-family: var(--mono); font-size: 21px; letter-spacing: -3px; padding-right: 3px; }
+  .brand-mark { display: block; width: 32px; height: 32px; flex-shrink: 0; border-radius: 5px; }
   .header-navigation { display: flex; gap: 26px; align-items: center; font-size: 13px; font-weight: 500; color: var(--muted); }
   .header-navigation a:hover, .header-navigation .active { color: var(--foreground); }
   .header-actions { display: flex; align-items: center; gap: 9px; margin-left: auto; }
@@ -82,7 +82,6 @@
   .docs-navigation a { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 7px 10px; margin: 1px 0; border-radius: 5px; color: var(--muted); font-size: 13px; line-height: 1.45; }
   .docs-navigation a:hover { background: var(--subtle); color: var(--foreground); }
   .docs-navigation a[aria-current='page'] { background: var(--subtle); color: var(--foreground); font-weight: 550; }
-  .navigation-dot { width: 5px; height: 5px; flex-shrink: 0; border-radius: 50%; background: var(--accent); }
 
   #main-content { min-width: 0; padding: 38px 0 28px; }
   .page-breadcrumb { display: flex; align-items: center; gap: 10px; margin-bottom: 17px; color: var(--muted); font-size: 12px; }
@@ -209,7 +208,6 @@
   .principle-facts div { display: grid; grid-template-columns: 90px 1fr; gap: 12px; }
   .principle-facts dt { font-size: 11px; font-weight: 550; }
   .principle-facts dd { margin: 0; color: var(--muted); }
-  .publication { color: var(--muted); font-size: 11px; }
   .download-list { display: grid; gap: 0; margin: 20px 0; border: 1px solid var(--border); border-radius: 7px; overflow: hidden; }
   .download-link { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 13px 16px; font-size: 12px; }
   .download-link + .download-link { border-top: 1px solid var(--border); }
@@ -235,7 +233,7 @@
   .site-header { height: 57px; }
   .header-inner { padding-inline: 20px; gap: 15px; }
   .brand { font-size: 15px; }
-  .brand-mark { font-size: 19px; }
+  .brand-mark { width: 28px; height: 28px; }
   .header-actions { gap: 3px; }
   .search-trigger { width: 32px; padding: 0; justify-content: center; margin-right: 0; border: 0; background: transparent; }
   .search-trigger > span, .search-trigger kbd, .github-button { display: none; }

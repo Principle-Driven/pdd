@@ -9,7 +9,7 @@ const path = Astro.url.pathname;
 ---
 <header class="site-header">
   <div class="header-inner">
-    <a class="brand" href="/" aria-label="Principle Driven Development home"><span class="brand-mark" aria-hidden="true">[P]</span><span>PDD</span></a>
+    <a class="brand" href="/" aria-label="Principle Driven Development home"><img class="brand-mark" src="/brand-icon.png" width="32" height="32" alt="" decoding="async" /><span>PDD</span></a>
     <nav class="header-navigation" aria-label="Main navigation">
       <a href="/" class:list={{ active: !path.startsWith('/principles') && !path.startsWith('/cli') }}>Documentation</a>
       <a href="/principles" class:list={{ active: path.startsWith('/principles') }}>Principles</a>

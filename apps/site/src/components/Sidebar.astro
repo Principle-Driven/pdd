@@ -10,7 +10,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
       <span class="navigation-title">{group.title}</span>
       <ul>{group.links.map((link) => (
         <li><a href={link.href} aria-current={path === link.href ? 'page' : undefined}>
-          {link.title}{path === link.href && <span class="navigation-dot" aria-hidden="true"></span>}
+          {link.title}
         </a></li>
       ))}</ul>
     </div>

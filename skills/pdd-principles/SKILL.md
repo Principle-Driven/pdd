@@ -18,6 +18,10 @@ Do not use this skill to set up the complete PDD system. Use the repository setu
 
 Do not create a principle for a one-time task, a personal preference, or behavior that a test states completely.
 
+This workflow governs a repository's adopted registry. A public catalog entry is a candidate, not an adopted repository rule.
+
+Obey the target repository's authority and admission protocol. Do not impose the portable format on an existing, different protocol.
+
 ## Reconstruct the Current System
 
 1. Find the repository root.
@@ -75,6 +79,9 @@ Both rules govern the same language boundary and prevent translation inside one 
 3. Keep existing pins unchanged.
 4. Do not add a version-history entry for the editorial edit.
 
+For an authoritative Rule edit, record evidence that the required and rejected choices remain unchanged.
+Supporting examples cannot gain authority through an editorial edit.
+
 If an exception, implication, or requirement changes, classify the work as an advance.
 
 ## Advance an Existing Principle
@@ -109,12 +116,18 @@ Use this procedure:
 4. Use the number after the highest current or historical token.
 5. Start the version at `v1`.
 6. Follow the repository principle template.
-7. State the rule, benefit, costly failure, effects, exceptions, and history.
-8. If an established lineage exists, cite its name and primary source.
+7. Keep the governing file short. Follow the repository's authoritative format.
+8. In the portable format, put Rule first, binding exceptions inside Rule, a short Rationale, and adoption History.
 9. Add the current pin, title, essence, and path to each applicable agent index.
 10. Add a pin only where current code or text depends on the new rule.
 
 Do not add empty sections, speculative effects, or citations without a local dependency.
+
+In the portable format, Implications are optional examples. They cannot add requirements.
+Keep teaching pages, lineage, installation prompts, and implementation logs outside the governing file.
+
+If the repository requires owner approval, obtain that approval before adopting a new token.
+Do not treat a passing checker as admission approval.
 
 ## Make the Complete Change
 

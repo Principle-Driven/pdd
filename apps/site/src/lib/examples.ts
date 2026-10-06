@@ -32,20 +32,14 @@ Version: v1
 ## Rule
 When code uses an artifact, validate the important facts.
 A check from creation or preview does not stay true.
+Name the validation checkpoint and the facts it guarantees.
 
-## Benefit
-One use-time check protects every path to the boundary.
+If a fact cannot change, name that fact before
+you omit its use-time check.
 
-## Problem this prevents
+## Rationale
 Agents add locks and cleanup jobs for each timing gap.
-
-## What this changes
-- The download operation checks current permission.
-- Tests change permission between preview and download.
-
-## Exceptions
-An immutable fact cannot change. Name that fact before
-you omit the use-time check.
+One use-time check replaces those earlier repairs.
 
 ## History
 - v1 (2026-08-24): Adopted after repeated timing fixes.`;

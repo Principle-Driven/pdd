@@ -17,10 +17,9 @@ const principles = defineCollection({
     published: z.coerce.date(),
     updated: z.coerce.date(),
     order: z.number(),
-    useWhen: z.string(),
-    tradeoff: z.string(),
-    lineage: z.string().optional(),
     reference: z.url().optional(),
+    referenceTitle: z.string().optional(),
+    companionSkill: z.object({ name: z.string(), url: z.url() }).optional(),
   }),
 });
 

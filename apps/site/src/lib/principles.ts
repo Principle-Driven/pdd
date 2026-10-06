@@ -12,12 +12,10 @@ export function downloadFilename(entry: Principle) {
 }
 
 export function markdownDownload(entry: Principle) {
-  const { token, title, version, lineage, reference } = entry.data;
+  const { token, title, version } = entry.data;
   const id = token.split('@')[0];
   const body = 'body' in entry && typeof entry.body === 'string' ? entry.body.trim() : '';
-  const lineageLine = lineage ? `Lineage: ${lineage}\n` : '';
-  const referenceLine = reference ? `Reference: ${reference}\n` : '';
 
   // PDD-05@v1: Downloads retain the definition headers that the CLI checks.
-  return `# ${id} — ${title}\nToken: ${id}\nVersion: ${version}\n${lineageLine}${referenceLine}\n${body}\n`;
+  return `# ${id} — ${title}\nToken: ${id}\nVersion: ${version}\n\n${body}\n`;
 }

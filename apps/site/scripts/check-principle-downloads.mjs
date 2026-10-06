@@ -9,13 +9,20 @@ const outputDirectory = fileURLToPath(new URL('../dist/principles/', import.meta
 const files = (await readdir(outputDirectory)).filter((name) => name.endsWith('.md') && name !== 'download.md');
 assert.ok(files.length > 0, 'The build must contain individual principle downloads.');
 
+function decodeHtml(text) {
+  const entities = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'" };
+  return text.replace(/&(?:#([0-9]+)|#x([0-9a-f]+)|(amp|lt|gt|quot|apos));/gi, (_, decimal, hex, name) => {
+    if (decimal || hex) return String.fromCodePoint(parseInt(decimal ?? hex, decimal ? 10 : 16));
+    return entities[name.toLowerCase()];
+  });
+}
+
 // PDD-05@v1: The exported files must pass the CLI after a reader adds them to the agent index.
 const root = await mkdtemp(join(tmpdir(), 'pdd-downloads-'));
 
 try {
   const principlesDirectory = join(root, 'docs/principles');
   await mkdir(principlesDirectory, { recursive: true });
-  await mkdir(join(root, 'examples'));
   const bundle = await readFile(join(outputDirectory, 'download.md'), 'utf8');
   const index = [];
   const filenames = new Set();
@@ -25,6 +32,9 @@ try {
     const slug = name.slice(0, -3);
     const markdown = await readFile(join(outputDirectory, name), 'utf8');
     const html = await readFile(join(outputDirectory, slug, 'index.html'), 'utf8');
+    const preview = html.match(/<code\b[^>]*\bdata-markdown-source(?=[\s=>])[^>]*>([\s\S]*?)<\/code>/)?.[1];
+    assert.ok(preview, `${slug} must show the downloaded Markdown.`);
+    assert.equal(decodeHtml(preview), markdown, `${slug} must preview the exact downloaded file.`);
     const anchor = [...html.matchAll(/<a\b[^>]*>/g)].find((match) => match[0].includes(`href="/principles/${name}"`))?.[0];
     const filename = anchor?.match(/\bdownload="([^"]+)"/)?.[1];
     assert.ok(filename, `${slug} must give its download a filename.`);
@@ -38,14 +48,12 @@ try {
     assert.ok(id && version && heading, `${slug} must export its token, version, and heading.`);
     assert.equal(heading[1], id, `${slug} must use its unversioned token in the heading.`);
     const pin = `${id}@${version}`;
-    assert.equal(html.match(/<span class="token">([^<]+)<\/span>/)?.[1], pin, `${slug} must display the exported pin.`);
+    assert.equal(html.match(/<span\b[^>]*\bclass="token"[^>]*>([^<]+)<\/span>/)?.[1], pin, `${slug} must display the exported pin.`);
     assert.ok(!pins.has(pin), `${slug} repeats a principle pin.`);
     pins.add(pin);
     assert.ok(bundle.includes(markdown.trim()), `${slug} must appear in the combined reading copy.`);
 
     await writeFile(join(principlesDirectory, filename), markdown);
-    const examples = [...markdown.matchAll(/```js\n([\s\S]*?)```/g)].map((match) => match[1]).join('\n');
-    if (examples) await writeFile(join(root, 'examples', `${slug}.js`), examples);
     index.push(`- **${pin} — ${heading[2]}** → \`docs/principles/${filename}\``);
   }
 
@@ -53,7 +61,7 @@ try {
   const result = await scanRepository(root);
   assert.ok(result.ok, `Downloaded principles failed the CLI:\n${result.diagnostics.map((item) => `${item.file}: ${item.code} ${item.message}`).join('\n')}`);
   assert.equal(result.principles.length, files.length, 'The CLI must recognize every individual download.');
-  console.log(`Principle download check: OK (${files.length} files installed and checked with the CLI)`);
+  console.log(`Principle download check: OK (${files.length} exact previews and portable files checked with the existing CLI)`);
 } finally {
   await rm(root, { recursive: true, force: true });
 }

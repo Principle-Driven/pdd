@@ -1,78 +1,48 @@
 ---
 token: PDD-12@v1
-title: Contracts express intent
-summary: Let public requests state the desired domain result without exposing incidental execution steps.
-benefit: The implementation can change while callers keep the same meaning and behavior.
-prevents: Agents do not require clients to reconstruct joins, storage paths, or internal execution plans.
+title: Keep domain decisions in one place
+summary: Keep product decisions consistent by giving each domain rule one owner.
+benefit: Product decisions stay consistent without separate rule implementations in the backend, API layer, and frontend.
+prevents: |-
+  Agents often copy the same product rules into the backend, API layer, and frontend.
+  Each layer then decides the same thing for itself.
+  Every rule change needs several updates, and missed updates make those layers disagree.
+
+  For example, the backend decides whether an order can be cancelled and returns that answer through the API.
+  The frontend uses the answer to show the available action.
+  The backend enforces the same rule when cancellation is requested.
+
+  This principle gives each product rule one authoritative implementation.
+  Other parts of the system call it or use its result instead of maintaining separate versions of the rule.
+
+  The same domain rules can also provide methods that check whether an action is currently available.
+  Agents can call these methods to learn what they can do before they plan or act.
 category: Modeling
 version: v1
 published: 2026-10-05
-updated: 2026-10-05
+updated: 2026-10-06
 order: 12
-useWhen: An API, command, or tool exposes a domain operation to another component or user.
-tradeoff: The implementation must translate intent into execution and document meaningful caller choices.
-lineage: Intention-Revealing Interfaces (Domain-Driven Design)
-reference: https://www.domainlanguage.com/ddd/reference/
 ---
 
 ## Rule
 
-Make public contracts express the desired domain result. Keep incidental storage and execution details inside the implementation.
+Give each domain decision one authoritative implementation. API layers and clients must call it or use its result.
 
-Expose a mechanism only for a meaningful caller choice. Preserve request meaning across internal optimizations.
+Do not copy the decision's rules into each caller.
 
-Use names from the domain. State the result and relevant failure conditions in the contract.
+Let requests express the desired result. Keep database joins and internal execution steps with the owning implementation.
 
-## Benefit
+Expose the result, relevant failure conditions, and meaningful caller choices. Preserve request meaning across internal optimizations.
 
-Callers can request an outcome without understanding the implementation. A new query plan or storage layout does not require new client logic.
+### Exceptions
 
-Tests can protect the public meaning while internal code changes.
+Clients can show previews or immediate feedback. The owning implementation must still make the final domain decision.
 
-## Problem this prevents
+If callers need execution control as a product feature, define that control and its effects in the API.
 
-A server exposes its current joins or storage steps as required request fields. Clients repeat the server's internal decisions.
+## Rationale
 
-Agents add more flags and modes to support the next optimization. Every caller then needs changes for a decision it never owned.
-
-## What this changes
-
-- Requests name domain operations and desired results.
-- The server owns translation into internal steps.
-- Caller options correspond to real behavior choices.
-- Tests protect observable meaning across implementation changes.
-- Errors explain which part of the requested result cannot succeed.
-
-## Example
-
-A client needs orders for the customer on an invoice. It sends the invoice identity and asks for that relationship.
-
-```js
-// PDD-12@v1: This request names the customer relationship that the caller needs.
-const orders = await client.orders.list({ customerOf: { invoiceId } });
-```
-
-The server resolves the customer and chooses its query plan. The client does not supply table names or join instructions.
-
-## Exceptions
-
-A database tool or query language can intentionally expose execution control. That control is part of its product contract.
-
-Consistency, ordering, limits, and delivery guarantees can be meaningful caller choices. Define their effects instead of hiding them as internal details.
-
-## Lineage
-
-Eric Evans' [DDD Reference](https://www.domainlanguage.com/ddd/reference/) describes Intention-Revealing Interfaces.
-
-That pattern names an operation's purpose and effect without requiring the caller to infer its implementation.
-
-This principle applies the same judgment to requests and tool contracts.
-
-## Start here
-
-Find a request field that selects an internal step. Name the domain result that the caller actually needs.
-
-Replace the step with that intent. Keep any option that changes a meaningful caller guarantee.
+Agents repeat domain rules across layers, which creates conflicting decisions and extra maintenance. One authoritative implementation keeps those decisions consistent.
 
 ## History
 
