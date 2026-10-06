@@ -21,7 +21,7 @@ const toc = [
 
   <h2 id="the-decision-system">The decision system</h2>
   <ol>
-    <li><strong>A principle file states the judgment.</strong> It includes the benefit, costly failure, concrete effects, exceptions, and version history.</li>
+    <li><strong>A principle file states the judgment.</strong> Its Rule gives the required choice and binding exceptions.</li>
     <li><strong>The agent index routes each contributor.</strong> Each entry in <code>AGENTS.md</code> links a current token to the full rule.</li>
     <li><strong>Comments cite local dependencies.</strong> A versioned token connects the code to the meaning that its author used.</li>
     <li><strong>Reviews cite current rules.</strong> A “working as designed” decision names the rule that justifies the behavior.</li>
@@ -30,42 +30,46 @@ const toc = [
   <p><a href="/example">The complete example</a> follows one permission rule through all five parts.</p>
 
   <h2 id="write-a-principle">Write a principle</h2>
-  <p>A principle preserves judgment that must guide future decisions. A repeated correction supplies evidence, but it does not automatically become a principle.</p>
+  <p>A principle prevents a recurring bad choice. A repeated correction supplies evidence, but it does not automatically earn a new token.</p>
+  <p>The starter format keeps the agent file short. The website supplies the teaching examples outside that file.</p>
   <div class="table-scroll"><table>
     <thead><tr><th>Part</th><th>What it answers</th></tr></thead>
     <tbody>
-      <tr><td>Rule</td><td>What choice must a contributor make?</td></tr>
-      <tr><td>Benefit</td><td>What work, complexity, or risk does this choice remove?</td></tr>
-      <tr><td>Costly failure</td><td>What repeated behavior earned this rule?</td></tr>
-      <tr><td>Effects</td><td>What changes in code, tests, and reviews?</td></tr>
-      <tr><td>Exceptions</td><td>Which narrow cases need a different choice?</td></tr>
-      <tr><td>History</td><td>When and why did its meaning change?</td></tr>
+      <tr><td>Rule, first</td><td>The required choice, including binding conditions and exceptions.</td></tr>
+      <tr><td>Rationale</td><td>The repeated bad behavior that earned the Rule.</td></tr>
+      <tr><td>Implications, optional</td><td>Sparse examples that add no obligations.</td></tr>
+      <tr><td>History</td><td>Adoption and changes to meaning or authority.</td></tr>
     </tbody>
   </table></div>
   <p>A useful rule changes an actual decision. For example, use-time validation stops an agent from adding coordination code for every timing gap.</p>
-  <p>Use short sentences and one name for each concept. Define necessary technical terms before they carry the explanation.</p>
+  <p>Task plans and implementation logs describe individual changes. Keep them outside the principle registry.</p>
 
   <h2 id="adopt-a-principle">Adopt a principle</h2>
   <ol>
-    <li>Gather evidence from repeated problems or deliberate tradeoffs.</li>
+    <li>Identify a recurring choice with repository evidence.</li>
     <li>Read every current principle.</li>
     <li>If a current rule already states the judgment, use that rule.</li>
     <li>If the proposal changes an existing rule’s judgment, advance that rule.</li>
-    <li>If the judgment governs an independent decision, add a token.</li>
+    <li>If the judgment governs an independent decision, propose a new token.</li>
+    <li>Under the starter protocol, obtain the repository owner's approval before adopting that token.</li>
   </ol>
+  <p>Catalog entries are candidates. Downloading an entry does not make it a governing rule in your repository.</p>
+  <p>These steps concern adopted repository principles. If your repository has another authority or change protocol, follow that protocol.</p>
   <p>The <a href="/blueprint#principle-skill">PDD principle skill</a> applies this procedure in supported coding harnesses.</p>
   <div class="callout"><p><strong>Keep the registry small.</strong>Remove a principle that no longer affects a decision. Version control preserves its history.</p></div>
 
   <h2 id="change-a-principle">Change a principle</h2>
   <ol>
     <li>Change the principle before dependent content or code.</li>
-    <li>If its meaning changes, increment the version.</li>
+    <li>If its meaning or authority changes, increment the version.</li>
     <li>Run <code>pdd check</code> to find old citations.</li>
     <li>Review each dependent site against the new rule.</li>
     <li>Update each citation after its review.</li>
     <li>Include the principle and dependent changes in the same pull request.</li>
   </ol>
-  <p>A spelling correction does not change the rule’s meaning. A new requirement or exception can change it.</p>
+  <p>A spelling correction keeps the version. A new requirement, exception, or transfer of authority requires a new version.</p>
+  <p>Under the starter protocol, a wording edit to the Rule needs evidence that its required and rejected choices stay unchanged.</p>
+  <p>Supporting examples cannot introduce obligations.</p>
 
   <h2 id="how-pdd-fits">How PDD fits</h2>
   <p>PDD uses existing repository tools. It adds conventions that connect current judgment to its dependencies.</p>

@@ -1,53 +1,39 @@
 ---
 token: PDD-06@v1
-title: Mark accepted risks beside the code
+title: Make accepted risks explicit
 summary: Show that a known risk is a deliberate trade, and state when the team must review it again.
 benefit: A future reader can understand the trade without repeating old investigation or treating an oversight as policy.
-prevents: Agents do not reopen the same accepted finding or hide unfinished work behind a vague risk comment.
+prevents: |-
+  A FIXME or XXX comment often marks a problem without explaining its consequence or why it remains.
+  Agents can repeat the investigation or assume that existing code reflects an accepted decision.
+
+  When application requirements permit a risk, agents can accept it as a deliberate tradeoff.
+  They record that choice during planning and preserve it beside the code with a risk marker.
+
+  The marker states the scenario, reason, and review condition.
+  Future agents can judge whether the risk remains acceptable or needs a different approach, even after the original plan or conversation ends.
 category: Governance
 version: v1
 published: 2026-08-24
-updated: 2026-10-05
+updated: 2026-10-06
 order: 6
-useWhen: A design deliberately accepts a rare race, weak edge case, information leak, or operating limit.
-tradeoff: Every accepted risk becomes easy to find and open to review.
 ---
 
 ## Rule
 
 Put an `ACCEPTED-RISK:` marker beside code that accepts a known risk. State the scenario, reason, and review condition.
 
+Carry accepted risks from planning into those markers.
+
 Add this versioned principle token to the marker. One repository search must list every accepted risk.
 
-## Benefit
-
-A future reader can see that the team made a deliberate trade. The reader does not need to repeat the original investigation.
-
-The review condition prevents permanent acceptance after the facts change.
-
-## Problem this prevents
-
-Without a marker, a reader cannot tell a deliberate trade from an unknown defect.
-
-Agents can repeatedly report the same scenario. They can also treat an accidental behavior as approved design.
-
-Vague risk comments create another problem. Teams can use them to hide ordinary unfinished work.
-
-## What this changes
-
-- The scenario states exactly what can go wrong.
-- The reason compares impact and chance with the cost of a fix.
-- The review condition names an observable change.
-- Reviewers can challenge the acceptance.
-- Deferred work stays in the issue tracker.
-
-## Exceptions
+### Exceptions
 
 There are no exceptions for accepted risks. An unmarked risk has no accepted status.
 
-## Start here
+## Rationale
 
-Add a CI rule that requires `PDD-06@v1` on every `ACCEPTED-RISK:` marker.
+Agents repeatedly report accepted findings or mistake accidental behavior for approved design. A local marker makes the trade and its review condition visible.
 
 ## History
 

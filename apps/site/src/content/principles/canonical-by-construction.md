@@ -1,73 +1,44 @@
 ---
 token: PDD-08@v1
 title: Canonical by construction
-summary: Resolve supported references once at the write boundary and store one exact identity.
-benefit: Readers can use exact identities without repeated alias lookup or case handling.
-prevents: Agents do not spread tolerant comparisons and fallback lookup paths through every consumer.
+summary: Store exact identifiers so every part of the system agrees on what each reference means.
+benefit: Every part of the system can use the same stored identifier without its own lookup or case fixes.
+prevents: |-
+  Agents often store display names, old names, or case variants as references to the same object.
+  They then add lookups and repairs everywhere that reads the data.
+  Different parts of the system can disagree about which object a reference identifies.
+
+  Canonical means one agreed, exact form for a stored reference.
+  By construction means the code that saves the data produces that form before storage.
+  Later code matches the stored identifier exactly.
+
+  For example, an import accepts “Customer email” as a field label.
+  Before saving the reference, it resolves that label to the field's exact identifier, customer_email.
+  If the label is unknown or ambiguous, the import refuses the input.
 category: Modeling
 version: v1
 published: 2026-10-05
-updated: 2026-10-05
+updated: 2026-10-06
 order: 8
-useWhen: User input, imports, or integrations can identify the same domain object through different supported references.
-tradeoff: Writers must resolve references and refuse ambiguous or unsupported input before storage.
 ---
 
 ## Rule
 
-At the write boundary, resolve each supported reference to one exact domain identity. Store that identity.
+Store each reference as the exact identifier of its target object.
 
-Refuse unresolved or ambiguous references. Keep alias and case rules in the resolver.
+Before storage, resolve supported labels and aliases to that identifier. Refuse unknown or ambiguous references.
 
-Use exact identities in readers. Do not make each consumer repeat the input rules.
+Keep label, alias, and case rules in one input resolver.
 
-## Benefit
+Code that reads stored references must match their identifiers exactly, without label lookups, case conversion, or fallback searches.
 
-One boundary establishes the storage contract. Queries, permissions, and background jobs can rely on the same identity.
+Preserve external protocols' required case, spelling, and byte order at their boundary. Keep display names and original input separate from the stored reference.
 
-A change to accepted input does not require changes to every consumer.
+Repair invalid stored references through an explicit migration. Define a removal condition for temporary compatibility code.
 
-## Problem this prevents
+## Rationale
 
-Writers store several spellings for the same object. Readers compensate with case conversion, aliases, or fallback queries.
-
-Agents copy those repairs into new paths. Different consumers then disagree about which records identify the same object.
-
-## What this changes
-
-- Input rules have one owner.
-- Stored references use one canonical identity.
-- Ambiguity produces an error before the write.
-- Database comparisons preserve the exact identity contract.
-- Tests cover aliases, unsupported spellings, and ambiguous matches at the boundary.
-
-## Example
-
-An import accepts an object ID or a documented alias. Its resolver returns one object or an error.
-
-```js
-const object = await objects.resolveSupportedReference(input.object);
-if (!object) throw new InvalidObjectReference(input.object);
-
-// PDD-08@v1: Stored records use the resolved object ID.
-await records.create({ objectId: object.id, values: input.values });
-```
-
-The resolver refuses ambiguous matches. A later query uses `objectId` directly and does not search the alias list again.
-
-## Exceptions
-
-External protocols can assign meaning to case, spelling, or byte order. Preserve that meaning at the protocol boundary.
-
-Display names and original input can remain separate fields. They do not replace the canonical identity.
-
-If historical records violate the contract, repair them through an explicit migration. Define a removal condition for any temporary compatibility path.
-
-## Start here
-
-Find a reader that tries several spellings of one reference. Move the supported input rules to its writer.
-
-Before you remove the reader's fallback path, check stored records.
+Several stored forms force each part of the system to repeat input rules. One exact stored identifier removes those repairs.
 
 ## History
 

@@ -1,17 +1,20 @@
 ---
 token: PDD-01@v1
 title: Use Ubiquitous Language
-summary: Use one shared domain model and vocabulary in conversations, documents, tests, interfaces, and code.
-benefit: People and agents can connect the code to Domain-Driven Design and examine its related patterns.
-prevents: Agents do not treat domain terms as local labels or add translation layers inside one model.
+summary: Make product concepts easy to identify through consistent names in customer conversations, interfaces, and code.
+benefit: Customers and teams spend less time clarifying names and more time solving the problem.
+prevents: |-
+  Customers, marketing, product teams, and engineering can use different names for the same product concept.
+
+  For example, “account” can mean a user account, a billing account, or a workspace account.
+  Support then spends time identifying the concept before it can solve the problem.
+
+  Agents add to this confusion when their code and interfaces use names that customers do not recognize.
 category: Modeling
 version: v1
 published: 2026-08-24
-updated: 2026-10-05
+updated: 2026-10-06
 order: 1
-useWhen: The code represents a business domain, product workflow, or shared model.
-tradeoff: A good rename can change many files and require migration work.
-lineage: Domain-Driven Design (DDD)
 ---
 
 ## Rule
@@ -22,45 +25,21 @@ Give each domain concept one stable name. Use that name in every layer.
 
 Keep the established DDD name for this pattern. The name connects the rule to the wider domain model.
 
-## Lineage
+### Exceptions
 
-Ubiquitous Language is a pattern from Domain-Driven Design (DDD).
+Ordinary nouns, verbs, adjectives, and technical terms remain valid in context. Earlier uses do not reserve words or their grammatical forms.
 
-The name helps an agent examine related concepts, such as bounded contexts, entities, value objects, and domain events.
-
-These related concepts are not automatic rules. Before you adopt a concept, make sure that the domain needs it.
-
-## Benefit
-
-People and agents can discuss the same model across every layer. Good names remove many explanatory comments.
-
-The recognized pattern name also gives new agents useful context before they inspect the implementation.
-
-## Problem this prevents
-
-Placeholder names survive after the domain concept becomes clear. Different layers then use different words for the same idea.
-
-Agents treat those words as different concepts. They add translation code, duplicate types, and comments that explain the mismatch.
-
-Generic names also hide the connection to DDD. An agent then misses relevant modeling judgment.
-
-## What this changes
-
-- Domain experts and code use the same vocabulary.
-- One concept keeps one name inside a bounded context.
-- Placeholder names do not survive without a reason.
-- Reviews treat naming as part of correctness.
-- Comments explain hidden constraints, not unclear names.
-
-## Exceptions
+A naming objection needs misleading meaning, inconsistent names for one domain concept, or concrete ambiguity. The verb `run` can apply to both a routine and an action.
 
 External protocols keep their standard terms at the boundary. After the boundary, translate those terms into the Ubiquitous Language.
 
 If two bounded contexts use one word differently, name the context at the integration boundary.
 
-## Start here
+## Rationale
 
-List the terms that domain experts and developers use differently. Agree on one name and one short definition for each concept.
+Different names for one concept force customers and teams to clarify what they mean. Agents can add duplicate types or invent awkward synonyms for ordinary words.
+
+Shared domain names reduce confusion without banning word reuse.
 
 ## History
 

@@ -1,7 +1,8 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { byOrder, downloadFilename, type Principle } from '../../lib/principles';
+import PrincipleFile from '../../components/PrincipleFile.astro';
+import { byOrder, type Principle } from '../../lib/principles';
 import type { DocLink } from '../../lib/navigation';
 
 export async function getStaticPaths() {
@@ -9,20 +10,23 @@ export async function getStaticPaths() {
 }
 interface Props { entry: Principle; }
 const { entry } = Astro.props;
-const { Content, headings } = await render(entry);
+const whyParagraphs = entry.data.prevents.trim().split(/\n\s*\n/);
 const principles = (await getCollection('principles')).sort(byOrder);
 const currentIndex = principles.findIndex((item) => item.id === entry.id);
 const toLink = (principle: Principle): DocLink => ({ title: principle.data.title, href: `/principles/${principle.id}` });
 const previous = currentIndex > 0 ? toLink(principles[currentIndex - 1]) : { title: 'Principle catalog', href: '/principles' };
 const next = currentIndex < principles.length - 1 ? toLink(principles[currentIndex + 1]) : { title: 'Set up your repository', href: '/blueprint' };
-const toc = headings.filter((heading) => heading.depth === 2 || heading.depth === 3).map((heading) => ({ id: heading.slug, text: heading.text, depth: heading.depth }));
+const hasCredits = entry.id === 'simplified-technical-english';
+const toc = [
+  { id: 'why', text: 'Why' },
+  { id: 'installation', text: 'Installation' },
+  ...(hasCredits ? [{ id: 'credits', text: 'Credits' }] : []),
+];
 const publishedDate = entry.data.published.toISOString().slice(0, 10);
 const modifiedDate = entry.data.updated.toISOString().slice(0, 10);
-const dateFormat = new Intl.DateTimeFormat('en', { dateStyle: 'medium', timeZone: 'UTC' });
-
 // PDD-01@v1: Each detail page leads with its benefit.
-// PDD-02@v1: The detail panel names the repeated behavior that the rule prevents.
-// PDD-05@v1: Each download links to the steps that connect a rule to repository checks.
+// PDD-02@v1: Each detail page exposes the repeated behavior that the rule prevents.
+// PDD-05@v1: Shared navigation links each rule to repository setup and CLI checks.
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.summary} schemaType="TechArticle" publishedDate={publishedDate} modifiedDate={modifiedDate} articleSection={entry.data.category} alternateMarkdown={`/principles/${entry.id}.md`} section="Principles" toc={toc} previous={previous} next={next} sourcePath={`apps/site/src/content/principles/${entry.id}.md`} breadcrumbs={[
@@ -31,18 +35,19 @@ const dateFormat = new Intl.DateTimeFormat('en', { dateStyle: 'medium', timeZone
   <div class="principle-meta"><span class="token">{entry.data.token}</span><span>{entry.data.category}</span></div>
   <h1>{entry.data.title}</h1>
   <p class="doc-lead">{entry.data.benefit}</p>
-  <p>{entry.data.summary}</p>
-  <div class="page-actions"><a class="button" href={`/principles/${entry.id}.md`} download={downloadFilename(entry)}>Download Markdown <span aria-hidden="true">↓</span></a></div>
-  <dl class="principle-facts">
-    <div><dt>Use when</dt><dd>{entry.data.useWhen}</dd></div>
-    <div><dt>Prevents</dt><dd>{entry.data.prevents}</dd></div>
-    <div><dt>Tradeoff</dt><dd>{entry.data.tradeoff}</dd></div>
-    {entry.data.lineage && <div><dt>Lineage</dt><dd>{entry.data.lineage}</dd></div>}
-    {entry.data.reference && <div><dt>Reference</dt><dd><a href={entry.data.reference}>Primary source ↗</a></dd></div>}
-  </dl>
-  <Content />
-  <div class="callout"><p><strong>Adopt this rule</strong>Adapt it to your repository evidence. Choose an unused token. <a href="/principles#adopt-a-rule">The adoption steps</a> connect the file to your index, citations, reviews, and CLI check.</p></div>
-  <p class="publication">Published by <a href="https://github.com/Principle-Driven">Principle Driven Development</a> on <time datetime={publishedDate}>{dateFormat.format(entry.data.published)}</time>.
-    {modifiedDate !== publishedDate && <> Updated <time datetime={modifiedDate}>{dateFormat.format(entry.data.updated)}</time>.</>}
-  </p>
+  <h2 id="why">Why</h2>
+  {whyParagraphs.map((paragraph) => <p data-principle-why>{paragraph}</p>)}
+
+  <h2 id="installation">Installation</h2>
+  <PrincipleFile entry={entry} />
+
+  {hasCredits && <>
+    <h2 id="credits">Credits</h2>
+    {entry.data.reference && <p class="further-reading">Based on <a href={entry.data.reference}>{entry.data.referenceTitle} ↗</a>.</p>}
+    {entry.data.companionSkill && <p class="further-reading"><a href={entry.data.companionSkill.url}>{entry.data.companionSkill.name} skill ↗</a> can help agents apply this rule. The skill is optional.</p>}
+  </>}
 </BaseLayout>
+
+<style>
+  .further-reading { color: var(--muted); font-size: 12px; }
+</style>

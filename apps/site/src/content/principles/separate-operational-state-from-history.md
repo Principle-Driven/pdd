@@ -3,59 +3,34 @@ token: PDD-09@v1
 title: Separate operational state from history
 summary: Give current status and clocks an explicit owner instead of inferring them from an audit log.
 benefit: Current behavior stays stable after changes to audit events, retention, or display rules.
-prevents: Agents do not turn queries over audit history into competing definitions of the current state.
+prevents: |-
+  Agents can invent different ways to calculate current state from history.
+  One feature checks the latest event, while another searches for a particular event.
+  Those features can disagree, and changes to audit entries can then change application behavior.
+
+  Current state answers “what is true now?” History answers “what happened?”
+  For example, an order's current status is “shipped.”
+  Its history records “order created,” “payment received,” and “order shipped.”
+
+  When the application decides whether to cancel the order, it reads the current status.
+  Changes to audit history must not alter that status.
+  The application updates current state and its audit entry in one database transaction, so both records stay consistent.
 category: Reliability
 version: v1
 published: 2026-10-05
-updated: 2026-10-05
+updated: 2026-10-06
 order: 9
-useWhen: A system stores current records and a separate audit history of changes.
-tradeoff: State changes and their audit evidence need a clear transaction boundary.
 ---
 
 ## Rule
 
-In an audit-backed system, store current operational state explicitly. Give each status, clock, or cursor one owning writer.
+Store current operational state explicitly. Update it together with its audit entry in one database transaction.
 
-Keep audit history as evidence of changes. Do not infer current state from incidental event order or display text.
+Give each status, clock, or cursor one owning writer. Keep audit history as evidence of changes.
 
-When a change requires both state and audit evidence, write both in the same transaction.
+Do not infer current state from incidental event order or display text.
 
-## Benefit
-
-Readers agree on the current state. A retention policy or audit presentation change does not alter product behavior.
-
-The audit can explain how the system reached that state without becoming an accidental runtime dependency.
-
-## Problem this prevents
-
-A reader finds the latest matching audit event and treats it as the current clock or status.
-
-Another reader uses a different event or filter. Agents add more history queries until the system has several definitions of current truth.
-
-An audit correction or retention change then changes behavior far from the audit code.
-
-## What this changes
-
-- Current status and clocks have named fields and owners.
-- A transaction keeps state and required audit evidence consistent.
-- Readers use the current fields for operational decisions.
-- Audit queries explain past changes.
-- Tests cover the state transition and its required evidence together.
-
-## Example
-
-A record's stage duration starts at `stageEnteredAt`. The writer changes the stage, its clock, and the audit evidence inside one transaction.
-
-```js
-// PDD-09@v1: This transaction changes the stage and its current clock together.
-await tx.records.update(recordId, { stage: "approved", stageEnteredAt: now });
-await tx.audit.append({ recordId, event: "stage_changed", stage: "approved", at: now });
-```
-
-The duration calculation reads `stageEnteredAt`. A later change to the audit event name does not reset that duration.
-
-## Exceptions
+### Exceptions
 
 Intentional [event sourcing](https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing) uses a durable event stream as the source of truth.
 
@@ -63,11 +38,9 @@ That design needs explicit replay rules, event versions, and owned projections. 
 
 A historical report can reconstruct past state from audit evidence. It must identify the time and evidence that it uses.
 
-## Start here
+## Rationale
 
-Find an operational query that reads the latest audit event. Name the current fact that it needs.
-
-Give that fact an explicit owner. Keep its required audit evidence in the same transaction.
+Agents infer current status from different audit events and filters. Audit retention or presentation changes then alter behavior far from the audit code.
 
 ## History
 

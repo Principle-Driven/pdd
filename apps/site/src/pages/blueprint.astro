@@ -14,7 +14,8 @@ const tree = `your-repository/
         └── pdd-01-ubiquitous-language.md`;
 const skillInstall = `npx skills add Principle-Driven/pdd --skill pdd-principles`;
 const skillPrompt = `Use $pdd-principles to classify this principle proposal.
-Implement the correct result.`;
+Follow our repository's authority and change protocol.
+Show the evidence before adopting a new token.`;
 const install = `npm install --save-dev @principle-driven/cli
 npx pdd check`;
 const ci = `- name: Check decision system
@@ -42,13 +43,14 @@ const toc = [
 <BaseLayout title="Set up your repository" description="Set up PDD with principle files, an agent index, code citations, review rules, and CLI enforcement." section="Repository setup" toc={toc} previous={{ title: 'A complete example', href: '/example' }} next={{ title: 'How PDD works', href: '/method' }}>
   <h1>Set up your repository</h1>
   <p class="doc-lead">Give the next developer or agent enough evidence to reconstruct your current judgment.</p>
-  <p>Start with one to three rules that your codebase has earned. The following steps connect those rules to the code that depends on them.</p>
+  <p>Start with one recurring mistake that your agent makes. The following steps turn an earned correction into a rule with discoverable dependencies.</p>
   <div class="callout"><p><strong>Before you start</strong>Identify one repeated correction or deliberate tradeoff. <a href="/example">The complete example</a> shows the system that these steps create.</p></div>
 
   <h2 id="create-the-files">1. Create the files</h2>
   <p>Keep the full rules in one directory. Put the agent index and CLI configuration at the repository root.</p>
   <CodeBlock code={tree} filename="Repository structure" />
   <p>The <a href="#starter-files">starter files</a> supply the template, index, configuration, and change protocol.</p>
+  <p>If your repository already has a principle protocol, preserve its authority rules. The starter format is a proposal for new adopters.</p>
 
   <h2 id="write-one-rule">2. Write one rule</h2>
   <ol>
@@ -56,12 +58,17 @@ const toc = [
     <li>Name the file with its token and title, such as <code>pdd-01-ubiquitous-language.md</code>.</li>
     <li>Choose one short, uppercase prefix for tokens.</li>
     <li>Give the rule a token and version, such as <code>{ubiquitousLanguage.v1}</code>.</li>
-    <li>State the rule, benefit, costly failure, effects, exceptions, and history.</li>
+    <li>Put the required choice and its binding exceptions in <strong>Rule</strong>, first.</li>
+    <li>Explain the repeated bad behavior in a short <strong>Rationale</strong>.</li>
+    <li>Record the adoption evidence in dated <strong>History</strong>.</li>
   </ol>
-  <p>Use <a href="/starter/pdd-01-example.md" download>the complete example file</a> for structure. Adapt each rule until it is true for your codebase.</p>
+  <p>Use <a href="/starter/pdd-01-example.md" download>the complete example file</a> for structure. Optional <strong>Implications</strong> give examples without adding requirements.</p>
+  <p>Before adoption, compare the proposal with every current principle. Reuse or advance the current owner when it already covers the choice.</p>
+  <p>Under the starter protocol, a new token needs an independent recurring choice, repository evidence, and the repository owner's approval.</p>
+  <p>If you find no earned rule, keep the template only. Do not create principles from task plans or implementation logs.</p>
 
   <h3 id="principle-skill">Principle skill</h3>
-  <p>The portable skill compares a proposal with every current rule. It determines whether to use a rule, advance its version, or add a token.</p>
+  <p>The portable skill compares a proposal with every current rule. It follows the target repository's authority and admission protocol.</p>
   <CodeBlock code={skillInstall} lang="shell" />
   <p>The installer detects supported coding harnesses. Use <code>--agent</code> or <code>--global</code> to select a different target.</p>
   <CodeBlock code={skillPrompt} filename="Agent prompt" />

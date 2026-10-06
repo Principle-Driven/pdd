@@ -1,56 +1,44 @@
 ---
 token: PDD-02@v1
 title: Validate at Use
-summary: Check critical facts again at the boundary that uses an artifact.
-benefit: One use-time check can replace many locks, cleanup jobs, and state transitions across the system.
-prevents: Agents do not chase every time-of-check/time-of-use gap with new architecture.
+summary: Check the current facts at the action that depends on them.
+benefit: Stop adding cleanup jobs and locks just to keep an earlier check valid.
+prevents: |-
+  Agents can spend more effort closing permission and form validation gaps than building the action itself.
+  They add locks, status flags, and cleanup paths for every possible change between an initial check and the final database write.
+
+  This principle sets a validation checkpoint at the action that uses those facts.
+  When requirements permit changes after that check, the agent can accept the gap and stop adding safeguards to close it.
+
+  Some banking, financial, and other operations require permissions or data to remain valid at commit.
+  This principle alone does not provide that guarantee.
+  For mixed applications, add local exceptions that name those operations and require validation at commit.
 category: Reliability
 version: v1
 published: 2026-08-24
-updated: 2026-10-05
+updated: 2026-10-06
 order: 2
-useWhen: A permission, token, preview, cache, or queued job can become invalid before use.
-tradeoff: The use boundary must read the current facts before it acts.
-lineage: Time-of-check/time-of-use (TOCTOU)
 ---
 
 ## Rule
 
-When code uses an artifact, validate the important facts. A check from creation or preview does not stay true.
+Validate the relevant current facts where an artifact is used. If an artifact fails that check, refuse it.
 
-Make stale artifacts harmless. The use boundary must refuse an artifact that is no longer valid.
+Name the validation checkpoint and the facts it guarantees. Do not depend on cleanup to preserve an earlier check.
 
-## Benefit
+If requirements permit changes after that checkpoint, do not add safeguards just to prevent those changes.
 
-One use-time check protects every path that reaches the boundary. Earlier code does not need to keep the artifact valid forever.
+If a fact cannot change, name that fact before you omit its check.
 
-Agents can stop closing each timing gap with a lock, cleanup job, or new state machine.
+### Exceptions
 
-## Problem this prevents
+If an operation requires validation at commit, enforce that requirement in addition to this rule.
 
-Code checks a fact at one time and uses the result later. The fact can change between those two actions.
+For mixed requirements, list those operations and their required guarantees as exceptions in the local rule.
 
-This gap is called a time-of-check/time-of-use issue, or TOCTOU issue.
+## Rationale
 
-Agents often fix one gap and then find another. They repeat this work until the design contains unnecessary coordination and state.
-
-A use-time check gives all paths one correctness boundary. Earlier stale data no longer creates a safety problem.
-
-## What this changes
-
-- Consumers check the current facts that control use.
-- Artifacts carry enough identity for a new check.
-- Revocation does not require perfect cleanup.
-- Background jobs check again at a clear batch boundary.
-- Tests change facts between creation and use.
-
-## Exceptions
-
-An immutable fact cannot change. Name that fact before you omit the use-time check.
-
-## Start here
-
-Name the use boundary. Then list the smallest set of facts that it must check.
+Agents add complex safeguards to close every timing gap. A validation checkpoint limits that work to the guarantees the application requires.
 
 ## History
 

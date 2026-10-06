@@ -21,24 +21,29 @@ PDD removes memory from the correctness of engineering decisions. A new contribu
 A principle file is only one part. PDD connects five repository elements:
 
 1. `AGENTS.md` routes each contributor to the applicable rule.
-2. The principle file states the rule, benefit, failure pattern, effects, and exceptions.
+2. The principle file states the required choice and its binding exceptions.
 3. Code comments cite a versioned token where code depends on the rule.
 4. Review decisions cite the same token when behavior works as designed.
-5. The CLI checks every definition, index entry, citation, comment, and version.
+5. The CLI checks definition structure, index entries, and current citations.
 
 If a rule changes meaning, its version changes. The CLI then reports each old pin as a new review item.
 
 ## What a principle contains
 
-Each principle includes:
+The portable starter format contains:
 
-- A direct rule.
-- The useful outcome.
-- The costly failure that it prevents.
-- Concrete changes for code and review.
-- Narrow exceptions.
-- Its established lineage or standard, when one exists.
-- A stable token and version history.
+- Token and version headers.
+- **Rule**, first: the required choice and its binding conditions or exceptions.
+- **Rationale**: a short explanation of the repeated bad behavior.
+- Optional **Implications**: sparse examples that add no obligations.
+- **History**: adoption and changes to meaning or authority.
+
+The website explains when a rule helps. That teaching stays outside the downloaded agent file.
+
+Catalog entries are candidates. Adopt a rule only when it changes a recurring decision with local evidence.
+The starter protocol requires the repository owner's approval for a new token. It keeps task plans and implementation logs outside the registry.
+
+An existing repository keeps its own authority and change protocol. This repository's governing principles are separate from its public catalog.
 
 ## Principle skill
 
@@ -99,7 +104,7 @@ The Astro application has its own workspace in `apps/site/`.
 apps/site/                # Astro website workspace
 ├── public/starter/       # Portable files for adopters
 └── src/
-    ├── content/principles/  # Authoritative catalog entries
+    ├── content/principles/  # Portable catalog rule files
     ├── pages/               # Method, setup, and catalog pages
     └── components/          # Shared interface components
 packages/cli/             # Principle scanner and tests
@@ -144,8 +149,10 @@ Cloudflare creates a production deployment for each push to `main`. It creates a
 
 ## Contribute a principle
 
-Open a pull request that adds one Markdown file to `apps/site/src/content/principles/`.
-Explain the benefit, the costly failure, and the evidence that earned the rule.
+Open a pull request with a compact rule file in `apps/site/src/content/principles/`.
+Set the `benefit` and `prevents` fields for the shared page. Every page uses **Why** and **Installation**.
+Only Simplified Technical English has **Credits**, after **Installation**.
+Explain the benefit, the costly behavior, and the evidence that earned the candidate rule.
 Do not promote a repeated instruction by default. Show the judgment it preserves and the context where it does not apply.
 
 Set `published` and `updated` when you add a catalog entry. Change `updated` when you change its public content.
@@ -154,6 +161,7 @@ Use the structural rules of [ASD-STE100 Simplified Technical English](https://ww
 Define a necessary technical term before it carries the explanation.
 
 Catalog principles are starting points. A team must adapt each one before it governs a codebase.
+Publishing a catalog entry does not adopt it into this repository's governing registry.
 
 ## License
 
