@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PrincipleFile from '../../components/PrincipleFile.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
 import { byOrder, type Principle } from '../../lib/principles';
 import type { DocLink } from '../../lib/navigation';
 
@@ -10,6 +11,7 @@ export async function getStaticPaths() {
 }
 interface Props { entry: Principle; }
 const { entry } = Astro.props;
+const installCommand = `npx --yes @principle-driven/cli@0.2.0 add ${entry.id}`;
 const whyParagraphs = entry.data.prevents.trim().split(/\n\s*\n/);
 const principles = (await getCollection('principles')).sort(byOrder);
 const currentIndex = principles.findIndex((item) => item.id === entry.id);
@@ -39,6 +41,9 @@ const modifiedDate = entry.data.updated.toISOString().slice(0, 10);
   {whyParagraphs.map((paragraph) => <p data-principle-why>{paragraph}</p>)}
 
   <h2 id="installation">Installation</h2>
+  <div data-install-command={installCommand}><CodeBlock code={installCommand} lang="shell" /></div>
+  <p>The CLI uses your prefix, assigns the next local number, and updates your agent index. <a href="/cli#add-a-principle">CLI installation guide ↗</a></p>
+  <p>The Markdown preview uses the catalog token. Your installed file uses its local token.</p>
   <PrincipleFile entry={entry} />
 
   {hasCredits && <>

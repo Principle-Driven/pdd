@@ -4,6 +4,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { scanRepository } from '../../../packages/cli/src/core.mjs';
+import { CATALOG_URL, validateCatalog } from '../../../packages/cli/src/catalog.mjs';
+import { addPrinciple } from '../../../packages/cli/src/install.mjs';
 
 const outputDirectory = fileURLToPath(new URL('../dist/principles/', import.meta.url));
 const files = (await readdir(outputDirectory)).filter((name) => name.endsWith('.md') && name !== 'download.md');
@@ -24,6 +26,9 @@ try {
   const principlesDirectory = join(root, 'docs/principles');
   await mkdir(principlesDirectory, { recursive: true });
   const bundle = await readFile(join(outputDirectory, 'download.md'), 'utf8');
+  const catalogText = await readFile(join(outputDirectory, 'catalog.json'), 'utf8');
+  const catalog = validateCatalog(JSON.parse(catalogText));
+  assert.equal(catalog.length, files.length, 'The CLI catalog must contain every individual download.');
   const index = [];
   const filenames = new Set();
   const pins = new Set();
@@ -34,6 +39,7 @@ try {
     const html = await readFile(join(outputDirectory, slug, 'index.html'), 'utf8');
     const preview = html.match(/<code\b[^>]*\bdata-markdown-source(?=[\s=>])[^>]*>([\s\S]*?)<\/code>/)?.[1];
     assert.ok(preview, `${slug} must show the downloaded Markdown.`);
+    assert.equal(html.match(/\bdata-install-command="([^"]+)"/)?.[1], `npx --yes @principle-driven/cli@0.2.0 add ${slug}`, `${slug} must show its CLI installation command.`);
     assert.equal(decodeHtml(preview), markdown, `${slug} must preview the exact downloaded file.`);
     const anchor = [...html.matchAll(/<a\b[^>]*>/g)].find((match) => match[0].includes(`href="/principles/${name}"`))?.[0];
     const filename = anchor?.match(/\bdownload="([^"]+)"/)?.[1];
@@ -61,7 +67,23 @@ try {
   const result = await scanRepository(root);
   assert.ok(result.ok, `Downloaded principles failed the CLI:\n${result.diagnostics.map((item) => `${item.file}: ${item.code} ${item.message}`).join('\n')}`);
   assert.equal(result.principles.length, files.length, 'The CLI must recognize every individual download.');
-  console.log(`Principle download check: OK (${files.length} exact previews and portable files checked with the existing CLI)`);
+  const adoptionRoot = join(root, 'adoptions');
+  await mkdir(adoptionRoot);
+  await writeFile(join(adoptionRoot, 'pdd.config.json'), JSON.stringify({ prefix: 'SITE' }));
+  const fetchImpl = async (url) => {
+    if (url === CATALOG_URL) return new Response(catalogText);
+    const slug = catalog.find((entry) => url === `https://principledriven.dev/principles/${entry.slug}.md`)?.slug;
+    assert.ok(slug, `Unexpected installer download: ${url}`);
+    return new Response(await readFile(join(outputDirectory, `${slug}.md`), 'utf8'));
+  };
+  for (const [index, entry] of catalog.entries()) {
+    const installed = await addPrinciple(adoptionRoot, entry.slug, { fetchImpl });
+    assert.equal(installed.token, `SITE-${String(index + 1).padStart(2, '0')}@v1`, 'Catalog numbering must not affect local numbering.');
+  }
+  const adopted = await scanRepository(adoptionRoot);
+  assert.ok(adopted.ok, `CLI installations failed the check:\n${JSON.stringify(adopted.diagnostics, null, 2)}`);
+  assert.equal(adopted.principles.length, files.length);
+  console.log(`Principle download check: OK (${files.length} exact previews, catalog hashes, portable files, and CLI installations)`);
 } finally {
   await rm(root, { recursive: true, force: true });
 }

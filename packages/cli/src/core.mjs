@@ -134,7 +134,7 @@ function diagnostic(code, message, file, line) {
   return { code, message, file, line, severity: 'error' };
 }
 
-async function readPrinciples(root, config) {
+export async function readPrinciples(root, config) {
   const files = await principleFiles(root, config);
   const diagnostics = [];
   const principles = [];
