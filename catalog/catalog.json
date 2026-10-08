@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "principles": [
+    {
+      "slug": "ubiquitous-language",
+      "title": "Use Ubiquitous Language",
+      "summary": "Make product concepts easy to identify through consistent names in customer conversations, interfaces, and code.",
+      "version": "v1",
+      "sha256": "d4c95d02eecfb419983ba0f4571d4a22611b278c889b269adf78eb473e642c34",
+      "sourceSha256": "57dcc3f41f978bbb6c75c9bc2855816ad215381f792e9115b16d09d23f2f8628"
+    },
+    {
+      "slug": "validate-at-use",
+      "title": "Validate at Use",
+      "summary": "Check the current facts at the action that depends on them.",
+      "version": "v1",
+      "sha256": "43e846e6f4e88ff9d595f6508280e66fda1af4d39cb72dc401de3f495190f17c",
+      "sourceSha256": "e93b493787e123a30bbcda902a36132995773997a15732eb550a6ee9b6bff74a"
+    },
+    {
+      "slug": "simplified-technical-english",
+      "title": "Use Simplified Technical English",
+      "summary": "Use ASD-STE100 structural rules to make technical text clear, consistent, and easy to translate.",
+      "version": "v1",
+      "sha256": "5493da3e8ea56076a7ec9cc3d62bb308ab09e14dbbe38607a378b8d467dc3782",
+      "sourceSha256": "5db272072857de62c29ad4c88df99e9f7e0f1282896d9c5b767bdfac340af9fe"
+    },
+    {
+      "slug": "do-not-let-sunk-costs-decide",
+      "title": "Avoid Sunk Cost Fallacy",
+      "summary": "Keep future changes aligned with current requirements.",
+      "version": "v1",
+      "sha256": "a1c1bf988daf422c9e99fe6a5f116db648c61d06498bb61444d1a54aa72868bc",
+      "sourceSha256": "ac85f79abd8f7f941f2072ee99761ecc2289219dbfb4f6d8460a6be15a3ca142"
+    },
+    {
+      "slug": "cite-dont-copy",
+      "title": "Cite the rule, do not copy it",
+      "summary": "Keep comments accurate by linking them to one versioned rule instead of repeating that rule across the codebase.",
+      "version": "v1",
+      "sha256": "9a19f0601b867e5ba54a11e90a725413c01034fa726b89366376f12f06ef83d1",
+      "sourceSha256": "a918f94260b82e658a0da12bb0c1ab48f31ecf915462e01a555df04f1c211fc0"
+    },
+    {
+      "slug": "mark-accepted-risks",
+      "title": "Make accepted risks explicit",
+      "summary": "Show that a known risk is a deliberate trade, and state when the team must review it again.",
+      "version": "v1",
+      "sha256": "75456f04c300192a336d4b2664e9cf70f0c0474fffbd97aa642315d4cc8e92b6",
+      "sourceSha256": "e9331f5aee21d9b74064863f7a4fbb8bdf492f92f4209ed0cefdea06dd3bf4dc"
+    },
+    {
+      "slug": "canonical-by-construction",
+      "title": "Canonical by construction",
+      "summary": "Store exact identifiers so every part of the system agrees on what each reference means.",
+      "version": "v1",
+      "sha256": "ba019327ac67ebf716b5d753b818dbbb31631546c411c3e3e2cc2c39639bcbf8",
+      "sourceSha256": "b420c2d28151560d82cc80704f6eccaea11c23e1752751027bd912b1e2d217dc"
+    },
+    {
+      "slug": "separate-operational-state-from-history",
+      "title": "Separate operational state from history",
+      "summary": "Give current status and clocks an explicit owner instead of inferring them from an audit log.",
+      "version": "v1",
+      "sha256": "dc0ddc700361992ac5652678ed99a758ceb4f8689fba20cab311cd9219a42a8c",
+      "sourceSha256": "af3985119cdfeb87800e7f16ee82e008412b01b124dc6daa47e881d0675f24e6"
+    },
+    {
+      "slug": "borrow-infrastructure-own-domain-behavior",
+      "title": "Borrow infrastructure and own domain behavior",
+      "summary": "Use maintained packages for established technical problems and keep product decisions in your code.",
+      "version": "v1",
+      "sha256": "944a2f7f685cd6810928c3089a794c3822d3a2198ce179fbc47838561c2dd587",
+      "sourceSha256": "e1434c21297a00abe8aa178b8d23f29279b846389aeee34ab82ad3269644b44a"
+    },
+    {
+      "slug": "tests-earn-their-cost",
+      "title": "Tests earn their cost",
+      "summary": "Test a concrete failure at the least costly layer that gives sufficient new confidence.",
+      "version": "v1",
+      "sha256": "0dfc4c01a9bffdcd533b390982a1db5b808365963eacef6e78cfe8627846cb6a",
+      "sourceSha256": "4a1c3fb5917d60683bad262d5caf8906d911a58b0bb08a94728296d9ac688cee"
+    },
+    {
+      "slug": "contracts-express-intent",
+      "title": "Keep domain decisions in one place",
+      "summary": "Keep product decisions consistent by giving each domain rule one owner.",
+      "version": "v1",
+      "sha256": "fcde84068daa29a837f6ff9999c203663ae9bf56bb247de2fe945da1ca1ad792",
+      "sourceSha256": "aaf5c74e766f1fc6e3708a342e62a2741e8a9a1e859cee0c759e38eb536564ee"
+    },
+    {
+      "slug": "refuse-before-the-work-exists",
+      "title": "Refuse before the work exists",
+      "summary": "Check predictable limits at the earliest informed boundary and preserve work after a later refusal.",
+      "version": "v1",
+      "sha256": "95f005cc69858571b5b4a50d39fd3cc52abc08ceea6f7a1806ae171e62b27f78",
+      "sourceSha256": "326da71ecda231f5a06558cccdc31790f9c25076940a7ab2dbada74e3d6b29fd"
+    },
+    {
+      "slug": "mark-operational-boundaries",
+      "title": "Mark operational boundaries",
+      "summary": "Record a deliberate capacity limit, its affected workload, a real signal, and the next mechanism.",
+      "version": "v1",
+      "sha256": "632e03791495bc3dc788921f1d81faf25bc482ec68b475d40607678cebfc1ee9",
+      "sourceSha256": "eb018e224f1434717f323af9021cd71aae01136ba51bef0ce3b63a5d1b13c90a"
+    },
+    {
+      "slug": "write-for-future-readers",
+      "title": "Write for future readers",
+      "summary": "Make repository artifacts explain their current purpose, decisions, and evidence without the original conversation.",
+      "version": "v1",
+      "sha256": "2f92266cf12a872f5f6365984d4cff6fe8abce449cf39a180916dab55231f813",
+      "sourceSha256": "cc6fcd452a927f4ab0510ae8f5cf903c8d83f2bd877a0ed4757d7cad4731eb3b"
+    }
+  ],
+  "starterFiles": [
+    {
+      "file": "AGENTS.md",
+      "sha256": "202cd02a288c1329157d9250f3a77df8a767ca66241aa6cec3b07f937d87a350"
+    },
+    {
+      "file": "change-protocol.md",
+      "sha256": "c493467f3bfc6db09cf2d1846b6f81817dd7584817374fb440b8c5588a16c691"
+    },
+    {
+      "file": "check-principles.sh",
+      "sha256": "1375403928555a304fba4d9da434c2dea5fa6426934c8ab454bb3477a27d1026"
+    },
+    {
+      "file": "pdd-01-example.md",
+      "sha256": "61906c4bcb062a1e5731517af6c36232edee636c0ca0eca41f7c32ba069c9cab"
+    },
+    {
+      "file": "pdd.config.json",
+      "sha256": "bfd95ffb3ded62150f5f439f60364127f009abfe0dd2ef971973f07eb7078464"
+    },
+    {
+      "file": "principle-template.md",
+      "sha256": "a3a67e9aa8bc58c31b2be314c104035446808af9c22268b2e4b5a6c5789c6013"
+    }
+  ]
+}

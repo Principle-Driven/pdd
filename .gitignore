@@ -5,6 +5,11 @@ node_modules/
 dist/
 .astro/
 
+# Website copies of toolkit files
+apps/site/src/content/principles/
+apps/site/public/starter/
+apps/site/src/lib/repository-config.json
+
 # Test output
 coverage/
 

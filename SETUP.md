@@ -32,7 +32,7 @@ docs/principles/
   pdd-01-short-name.md
 ```
 
-Copy the [principle template](apps/site/public/starter/principle-template.md) and [change protocol](apps/site/public/starter/change-protocol.md).
+Copy the [principle template](starter/principle-template.md) and [change protocol](starter/change-protocol.md).
 
 Choose one short, uppercase token prefix. Use its lowercase form in filenames.
 
@@ -59,7 +59,7 @@ After installation, adapt the Rule, exceptions, and Rationale to your repository
 
 ## 3. Connect the agent index
 
-Copy the [agent index](apps/site/public/starter/AGENTS.md) into your root `AGENTS.md`.
+Copy the [agent index](starter/AGENTS.md) into your root `AGENTS.md`.
 
 Add one routing line for each adopted rule:
 
@@ -101,7 +101,7 @@ Install the CLI as a development dependency:
 npm install --save-dev @principle-driven/cli
 ```
 
-Copy the [configuration](apps/site/public/starter/pdd.config.json) to the repository root:
+Copy the [configuration](starter/pdd.config.json) to the repository root:
 
 ```json
 {

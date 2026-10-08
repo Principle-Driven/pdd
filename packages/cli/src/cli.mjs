@@ -19,7 +19,7 @@ Usage:
   pdd --version
 
 Commands:
-  catalog  List the principles available from principledriven.dev.
+  catalog  List the principles available from the PDD GitHub repository.
   add      Install one catalog principle with a local token and agent index entries.
   check  Check principle files, agent indexes, citations, comments, and risk markers.
   list   List the current principles.

@@ -5,13 +5,14 @@ import PrincipleFile from '../../components/PrincipleFile.astro';
 import CodeBlock from '../../components/CodeBlock.astro';
 import { byOrder, type Principle } from '../../lib/principles';
 import type { DocLink } from '../../lib/navigation';
+import { siteConfig } from '../../../site.config.mjs';
 
 export async function getStaticPaths() {
   return (await getCollection('principles')).map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 interface Props { entry: Principle; }
 const { entry } = Astro.props;
-const installCommand = `npx --yes @principle-driven/cli@0.2.0 add ${entry.id}`;
+const installCommand = `npx --yes @principle-driven/cli@0.2.1 add ${entry.id}`;
 const whyParagraphs = entry.data.prevents.trim().split(/\n\s*\n/);
 const principles = (await getCollection('principles')).sort(byOrder);
 const currentIndex = principles.findIndex((item) => item.id === entry.id);
@@ -31,7 +32,7 @@ const modifiedDate = entry.data.updated.toISOString().slice(0, 10);
 // PDD-05@v1: Shared navigation links each rule to repository setup and CLI checks.
 ---
 
-<BaseLayout title={entry.data.title} description={entry.data.summary} schemaType="TechArticle" publishedDate={publishedDate} modifiedDate={modifiedDate} articleSection={entry.data.category} alternateMarkdown={`/principles/${entry.id}.md`} section="Principles" toc={toc} previous={previous} next={next} sourcePath={`apps/site/src/content/principles/${entry.id}.md`} breadcrumbs={[
+<BaseLayout title={entry.data.title} description={entry.data.summary} schemaType="TechArticle" publishedDate={publishedDate} modifiedDate={modifiedDate} articleSection={entry.data.category} alternateMarkdown={`/principles/${entry.id}.md`} section="Principles" toc={toc} previous={previous} next={next} sourcePath={`catalog/principles/${entry.id}.md`} sourceRepository={siteConfig.toolkitRepository} breadcrumbs={[
   { name: 'Home', path: '/' }, { name: 'Principles', path: '/principles' }, { name: entry.data.title, path: `/principles/${entry.id}` },
 ]}>
   <div class="principle-meta"><span class="token">{entry.data.token}</span><span>{entry.data.category}</span></div>
