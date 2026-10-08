@@ -1,6 +1,6 @@
 # Agent instructions
 
-The principles below govern the public method, catalog, starter kit, and website.
+The principles below govern the public method, catalog, starter kit, CLI, and agent skill.
 The index line gives the essence. The linked file is authoritative.
 
 Read the full file before you write, review, or depart from content that it covers.

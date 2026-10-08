@@ -23,6 +23,24 @@ for (const name of names) {
   const frontmatter = source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
   assert.ok(frontmatter, `${name} must contain YAML metadata.`);
   const data = parse(frontmatter[1]);
+  // PDD-01@v1 and PDD-02@v1: Catalog entries retain their benefit and failure fields without a website build.
+  for (const field of ['title', 'summary', 'benefit', 'prevents']) {
+    assert.equal(typeof data[field], 'string', `${name} must contain a string ${field} field.`);
+  }
+  assert.ok(['Reliability', 'Modeling', 'Communication', 'Simplicity', 'Governance', 'Product'].includes(data.category), `${name} must use a catalog category.`);
+  for (const field of ['published', 'updated']) {
+    assert.ok(Number.isFinite(new Date(data[field]).getTime()), `${name} must contain a valid ${field} date.`);
+  }
+  for (const field of ['reference', 'referenceTitle']) {
+    if (data[field] !== undefined) assert.equal(typeof data[field], 'string', `${name} must use a string ${field} field.`);
+  }
+  if (data.reference !== undefined) new URL(data.reference);
+  if (data.companionSkill !== undefined) {
+    assert.ok(data.companionSkill && typeof data.companionSkill === 'object' && !Array.isArray(data.companionSkill), `${name} must use an object companionSkill field.`);
+    assert.equal(typeof data.companionSkill.name, 'string', `${name} must use a string companionSkill name.`);
+    assert.equal(typeof data.companionSkill.url, 'string', `${name} must use a string companionSkill URL.`);
+    new URL(data.companionSkill.url);
+  }
   assert.match(data.token, /^[A-Z][A-Z0-9]*-[0-9]+@v[1-9][0-9]*$/);
   const [id, version] = data.token.split('@');
   assert.equal(version, data.version, `${name} must use the same version in both metadata fields.`);

@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://principledriven.dev/sitemap-index.xml
