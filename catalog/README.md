@@ -28,8 +28,9 @@ The public catalog is separate from this repository's governing registry in `doc
 
 5. Commit the source and generated files together.
 
-The build rejects missing, old, or extra generated files. CLI tests install every committed download in a temporary repository.
-The website checks that its downloads match the GitHub files.
+The build checks catalog metadata and rejects missing, old, or extra generated files.
+CLI tests install every committed download in a temporary repository.
+The [website repository](https://github.com/Principle-Driven/principledriven.dev) checks that its downloads match the GitHub files.
 
 ## Download source
 

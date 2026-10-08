@@ -110,14 +110,10 @@ Installation needs access to `raw.githubusercontent.com`. It does not require a 
 
 ## Repository structure
 
-This repository is the public home for the method, website, CLI, starter kit, and agent skill.
-The Astro application has its own workspace in `apps/site/`.
+This repository owns the public catalog, CLI, starter kit, and agent skill.
+The [website repository](https://github.com/Principle-Driven/principledriven.dev) owns the method pages, teaching guide, and website deployment.
 
 ```text
-apps/site/                # Astro website workspace
-└── src/
-    ├── pages/               # Method, setup, and catalog pages
-    └── components/          # Shared interface components
 catalog/principles/       # Authoritative catalog rules and teaching metadata
 catalog/downloads/        # Generated portable files for the CLI
 catalog/catalog.json      # Generated catalog and file hashes
@@ -126,43 +122,28 @@ packages/cli/             # Principle installer, scanner, and tests
 skills/pdd-principles/   # Portable principle-management skill
 ```
 
-## Run locally
+## Develop the toolkit
 
 Install Node.js 24. Use the npm version in `packageManager`. Then run:
 
 ```sh
-npm install
-npm run dev
+npm ci
+npm run check
 ```
 
-The local website opens at `http://localhost:4321`.
+The checks validate catalog metadata, generated downloads, governing principles, and CLI behavior.
+The toolkit does not require a website build.
 
-## Make a production build
+Run the local CLI from this repository:
 
 ```sh
-npm run build
+npm run pdd -- check
+npm run pdd -- catalog
 ```
 
-Astro writes the static website to `apps/site/dist/`.
-Before each website build, the workspace copies catalog and starter files from their authoritative directories.
-These website copies are generated files. Git does not track them.
-
-## Deploy with Cloudflare Pages
-
-Cloudflare Pages can build and deploy this static site directly from `main`.
-
-Connect this repository in the Cloudflare dashboard. Use these build values:
-
-- Production branch: `main`
-- Build command: `npm run build`
-- Build directory: `apps/site/dist`
-- Root directory: leave this field empty
-
-Keep the root directory empty. The root build checks the website, CLI, and principle system before Astro creates the static files.
-
-The `.node-version` file selects Node.js 24. The static website does not need Wrangler or the Cloudflare Astro adapter.
-
-Cloudflare creates a production deployment for each push to `main`. It creates a preview deployment for each pull request.
+The catalog command downloads published entries from GitHub.
+Use `npm run catalog:generate` to update generated files after a local catalog change.
+The release workflow uses `npm run build`, which runs the same toolkit checks.
 
 ## Contribute a principle
 

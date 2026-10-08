@@ -8,9 +8,7 @@
     "catalog/downloads/**",
     "catalog/catalog.json",
     "starter/**",
-    "apps/site/public/starter/**",
-    "apps/site/src/content/principles/**",
-    "apps/site/src/lib/examples.ts",
+    "scripts/test/**",
     "packages/cli/test/**",
     "SETUP.md",
     "skills/pdd-principles/SKILL.md"
