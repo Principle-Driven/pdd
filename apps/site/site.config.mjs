@@ -8,6 +8,7 @@ export const siteConfig = {
   locale: 'en_US',
   publisher: 'Principle Driven Development',
   repository: 'https://github.com/Principle-Driven/pdd',
+  toolkitRepository: 'https://github.com/Principle-Driven/pdd',
   license: 'MIT',
   licenseURL: 'https://github.com/Principle-Driven/pdd/blob/main/LICENSE',
   socialImage: '/social-card.png',

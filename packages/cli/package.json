@@ -1,6 +1,6 @@
 {
   "name": "@principle-driven/cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Install engineering principles with local tokens and check their repository dependencies.",
   "license": "MIT",
   "keywords": [

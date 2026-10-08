@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { scanRepository } from '../../../packages/cli/src/core.mjs';
-import { CATALOG_URL, validateCatalog } from '../../../packages/cli/src/catalog.mjs';
+import { CATALOG_URL, principleDownloadURL, validateCatalog } from '../../../packages/cli/src/catalog.mjs';
 import { addPrinciple } from '../../../packages/cli/src/install.mjs';
 
 const outputDirectory = fileURLToPath(new URL('../dist/principles/', import.meta.url));
@@ -39,7 +39,9 @@ try {
     const html = await readFile(join(outputDirectory, slug, 'index.html'), 'utf8');
     const preview = html.match(/<code\b[^>]*\bdata-markdown-source(?=[\s=>])[^>]*>([\s\S]*?)<\/code>/)?.[1];
     assert.ok(preview, `${slug} must show the downloaded Markdown.`);
-    assert.equal(html.match(/\bdata-install-command="([^"]+)"/)?.[1], `npx --yes @principle-driven/cli@0.2.0 add ${slug}`, `${slug} must show its CLI installation command.`);
+    assert.equal(html.match(/\bdata-install-command="([^"]+)"/)?.[1], `npx --yes @principle-driven/cli@0.2.1 add ${slug}`, `${slug} must show its CLI installation command.`);
+    const githubMarkdown = await readFile(new URL(`../../../catalog/downloads/${slug}.md`, import.meta.url), 'utf8');
+    assert.equal(markdown, githubMarkdown, `${slug} must match the GitHub download.`);
     assert.equal(decodeHtml(preview), markdown, `${slug} must preview the exact downloaded file.`);
     const anchor = [...html.matchAll(/<a\b[^>]*>/g)].find((match) => match[0].includes(`href="/principles/${name}"`))?.[0];
     const filename = anchor?.match(/\bdownload="([^"]+)"/)?.[1];
@@ -72,7 +74,7 @@ try {
   await writeFile(join(adoptionRoot, 'pdd.config.json'), JSON.stringify({ prefix: 'SITE' }));
   const fetchImpl = async (url) => {
     if (url === CATALOG_URL) return new Response(catalogText);
-    const slug = catalog.find((entry) => url === `https://principledriven.dev/principles/${entry.slug}.md`)?.slug;
+    const slug = catalog.find((entry) => url === principleDownloadURL(entry.slug))?.slug;
     assert.ok(slug, `Unexpected installer download: ${url}`);
     return new Response(await readFile(join(outputDirectory, `${slug}.md`), 'utf8'));
   };

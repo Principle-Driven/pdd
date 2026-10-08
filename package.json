@@ -11,11 +11,16 @@
   ],
   "scripts": {
     "dev": "npm run dev --workspace @principle-driven/site",
-    "build": "npm run principles:check && npm run test:cli && npm run build --workspace @principle-driven/site",
+    "build": "npm run catalog:check && npm run principles:check && npm run test:cli && npm run build --workspace @principle-driven/site",
     "preview": "npm run preview --workspace @principle-driven/site",
-    "check": "npm run principles:check && npm run test:cli && npm run check --workspace @principle-driven/site",
+    "check": "npm run catalog:check && npm run principles:check && npm run test:cli && npm run check --workspace @principle-driven/site",
+    "catalog:generate": "node scripts/generate-catalog.mjs",
+    "catalog:check": "node scripts/generate-catalog.mjs --check",
     "principles:check": "node packages/cli/src/cli.mjs check",
     "pdd": "node packages/cli/src/cli.mjs",
     "test:cli": "node --test packages/cli/test/*.test.mjs"
+  },
+  "devDependencies": {
+    "yaml": "2.9.0"
   }
 }

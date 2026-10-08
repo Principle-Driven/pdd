@@ -1,14 +1,19 @@
 import { createHash } from 'node:crypto';
 
-export const CATALOG_ORIGIN = 'https://principledriven.dev';
-export const CATALOG_URL = `${CATALOG_ORIGIN}/principles/catalog.json`;
+export const CATALOG_ORIGIN = 'https://raw.githubusercontent.com/Principle-Driven/pdd/main/catalog';
+export const CATALOG_URL = `${CATALOG_ORIGIN}/catalog.json`;
 export const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 export function principleSource(slug) {
   if (typeof slug !== 'string' || slug.length > 100 || !SLUG_PATTERN.test(slug)) {
     throw new Error('Use a catalog slug, such as validate-at-use. Run pdd catalog to find one.');
   }
-  return `${CATALOG_ORIGIN}/principles/${slug}`;
+  return `https://principledriven.dev/principles/${slug}`;
+}
+
+export function principleDownloadURL(slug) {
+  principleSource(slug);
+  return `${CATALOG_ORIGIN}/downloads/${slug}.md`;
 }
 
 export function validateCatalog(value) {
@@ -55,10 +60,10 @@ export async function loadCatalog({ fetchImpl = globalThis.fetch } = {}) {
 }
 
 export async function downloadPrinciple(entry, { fetchImpl = globalThis.fetch } = {}) {
-  const text = await remoteText(`${principleSource(entry.slug)}.md`, fetchImpl);
+  const text = await remoteText(principleDownloadURL(entry.slug), fetchImpl);
   const hash = createHash('sha256').update(text).digest('hex');
   if (hash !== entry.sha256) {
-    throw new Error('The principle download differs from the catalog. Retry after the website deployment completes.');
+    throw new Error('The principle download differs from the catalog. Retry after the catalog update completes.');
   }
   return text;
 }

@@ -4,10 +4,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/sync-toolkit.mjs --local ../..",
     "dev": "astro dev",
+    "prebuild": "node scripts/sync-toolkit.mjs --local ../..",
     "build": "astro check && astro build && npm run check:output",
     "check:output": "node scripts/check-built-site.mjs && node scripts/check-principle-downloads.mjs",
     "preview": "astro preview",
+    "precheck": "node scripts/sync-toolkit.mjs --local ../..",
     "check": "astro check"
   },
   "dependencies": {

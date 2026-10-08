@@ -21,7 +21,8 @@ npx pdd catalog
 npx pdd add validate-at-use
 ```
 
-`catalog` lists slugs, titles, and summaries from `principledriven.dev`. `add` selects one principle by its slug.
+Version `0.2.1` downloads the catalog from the PDD GitHub repository.
+`catalog` lists slugs, titles, and summaries. `add` selects one principle by its slug.
 
 The command uses your configured prefix, principle directory, and agent indexes. Without configuration, it uses `PDD`, `docs/principles`, and `AGENTS.md`.
 
@@ -47,7 +48,8 @@ The JSON preview contains each file's path and content. A preview creates no fil
 After installation, adapt the Rule, exceptions, and Rationale to your repository. Cite its local pin where a real decision depends on it.
 Run `pdd check` before committing. Your repository owns later edits and version changes.
 
-Installation needs network access to `principledriven.dev`. Local checks and repeated installations with a recorded source work offline.
+Installation needs network access to `raw.githubusercontent.com`. Local checks and repeated installations with a recorded source work offline.
+The public page in the `Source` header is a reference. Installation does not fetch that page.
 
 The installer rejects paths outside the repository and paths through symbolic links. It prevents concurrent installations and restores earlier writes after a file error.
 
@@ -61,10 +63,10 @@ Run the scoped package directly for a one-time check:
 npx --yes @principle-driven/cli check
 ```
 
-For a one-time installation, use version `0.2.0` or later:
+For a one-time installation from GitHub, use version `0.2.1` or later:
 
 ```sh
-npx --yes @principle-driven/cli@0.2.0 add validate-at-use
+npx --yes @principle-driven/cli@0.2.1 add validate-at-use
 ```
 
 ## Check a repository

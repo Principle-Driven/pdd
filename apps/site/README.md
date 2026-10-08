@@ -5,13 +5,15 @@ It keeps the website separate from the CLI, repository principles, and portable 
 
 ## Contents
 
-- `src/content/principles/` contains the public principle catalog.
+- `src/content/principles/` contains generated copies of the public principle catalog.
 - `src/pages/` contains the method, setup, CLI, and catalog pages.
 - `src/layouts/` owns shared metadata and structured data.
-- `public/starter/` contains the files that adopters can download.
+- `public/starter/` contains generated copies of the files that adopters can download.
 - `site.config.mjs` owns the public site identity and canonical URL.
 
-Each catalog entry contains `published` and `updated` dates. Change `updated` when you change the public content.
+The authoritative catalog and starter files live in the root `catalog/` and `starter/` directories.
+The workspace copies these files before development, checks, and builds. Git does not track the website copies.
+Each catalog entry contains `published` and `updated` dates. Change `updated` in the authoritative file when you change the public content.
 
 ## Run the website
 

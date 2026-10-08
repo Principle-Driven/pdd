@@ -31,6 +31,7 @@ interface Props {
   previous?: DocLink;
   next?: DocLink;
   sourcePath?: string;
+  sourceRepository?: string;
 }
 
 const {
@@ -50,10 +51,11 @@ const {
   previous,
   next,
   sourcePath = `apps/site/src/pages/${Astro.url.pathname === '/' ? 'index' : Astro.url.pathname.slice(1)}.astro`,
+  sourceRepository = siteConfig.repository,
 } = Astro.props;
 
 const groups = getNavigation((await getCollection('principles')).sort(byOrder));
-const sourceURL = `${siteConfig.repository}/blob/main/${sourcePath}`;
+const sourceURL = `${sourceRepository}/blob/main/${sourcePath}`;
 
 const siteURL = Astro.site ?? new URL(siteConfig.url);
 const canonicalURL = new URL(Astro.url.pathname, siteURL);

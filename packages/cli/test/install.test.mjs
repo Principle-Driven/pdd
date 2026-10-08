@@ -44,7 +44,7 @@ function fixtureFetch(markdown = source, catalog = catalogFor(markdown)) {
     assert.equal(options.redirect, 'error');
     assert.ok(options.signal instanceof AbortSignal);
     if (url === CATALOG_URL) return new Response(JSON.stringify(catalog));
-    assert.equal(url, `https://principledriven.dev/principles/${slug}.md`);
+    assert.equal(url, `https://raw.githubusercontent.com/Principle-Driven/pdd/main/catalog/downloads/${slug}.md`);
     return new Response(markdown);
   };
 }

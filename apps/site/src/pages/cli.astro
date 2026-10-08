@@ -2,14 +2,14 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CodeBlock from '../components/CodeBlock.astro';
 import { cliConfig as config, cliOutput as output, cliRisk as risk, cliRiskConfig, cliRefsCommand } from '../lib/examples';
-import repositoryConfig from '../../../../pdd.config.json';
+import repositoryConfig from '../lib/repository-config.json';
 
 // PDD-05@v1: The CLI reference shows which repository connections the checker enforces.
 const install = `npm install --save-dev @principle-driven/cli
 npx pdd check`;
 const oneTime = `npx --yes @principle-driven/cli check`;
-const addCommand = `npx --yes @principle-driven/cli@0.2.0 catalog
-npx --yes @principle-driven/cli@0.2.0 add validate-at-use`;
+const addCommand = `npx --yes @principle-driven/cli@0.2.1 catalog
+npx --yes @principle-driven/cli@0.2.1 add validate-at-use`;
 const addPreview = `npx pdd add validate-at-use --dry-run
 npx pdd add validate-at-use ../other-repository --json`;
 const ci = `- name: Check decision system
@@ -70,7 +70,7 @@ const toc = [
   <p>CLI version <code>0.2.0</code> adds catalog installation. Run the command after approval under your repository's admission protocol.</p>
   <p>Use <code>pdd --version</code> to read the installed version.</p>
   <CodeBlock code={addCommand} lang="shell" />
-  <p><code>catalog</code> lists choices from this website. <code>add</code> selects a principle by its slug, such as <code>validate-at-use</code>.</p>
+  <p>CLI version <code>0.2.1</code> downloads the catalog from the PDD GitHub repository. <code>add</code> selects a principle by its slug, such as <code>validate-at-use</code>.</p>
   <p>The CLI uses <code>prefix</code>, <code>principlesDir</code>, and <code>agentFiles</code> from your project configuration. The same defaults apply without a configuration file.</p>
   <p>For example, a project whose highest token is <code>SITE-08</code> receives <code>SITE-09@v1</code> in <code>docs/principles/site-09-validate-at-use.md</code>.</p>
   <p>Existing numbers stay unchanged. The command preserves gaps and reserves numbers from configured indexes and committed principle filenames in Git history.</p>
@@ -81,7 +81,7 @@ const toc = [
   <p><code>--dry-run</code> previews the exact files without writing them. With <code>--json</code>, the preview includes each file's path and content.</p>
   <p>After installation, adapt the Rule, exceptions, and Rationale to your repository. Cite its local pin where a real decision depends on it.</p>
   <p>Run <code>pdd check</code> before committing. Your repository owns later edits and version changes.</p>
-  <p>Installation needs network access to <code>principledriven.dev</code>. Local checks and repeated installations with a recorded source work offline.</p>
+  <p>Installation needs network access to <code>raw.githubusercontent.com</code>. Local checks and repeated installations with a recorded source work offline.</p>
 
   <h2 id="configuration">Configuration</h2>
   <p>Place <code>pdd.config.json</code> at the repository root. The defaults use the prefix <code>PDD</code>, <code>docs/principles</code>, and one root agent index.</p>

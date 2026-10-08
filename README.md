@@ -95,6 +95,9 @@ npx pdd add validate-at-use
 Run `add` after approval under your repository's admission protocol. It saves the rule and updates your configured agent indexes.
 Use `--dry-run` to preview the files. Adapt the local Rule and Rationale, then run `pdd check`.
 
+CLI version `0.2.1` downloads the catalog directly from this GitHub repository.
+Installation needs access to `raw.githubusercontent.com`. It does not require a website deployment.
+
 ## Explore
 
 - [Set up PDD in a repository](SETUP.md)
@@ -112,11 +115,13 @@ The Astro application has its own workspace in `apps/site/`.
 
 ```text
 apps/site/                # Astro website workspace
-├── public/starter/       # Portable files for adopters
 └── src/
-    ├── content/principles/  # Portable catalog rule files
     ├── pages/               # Method, setup, and catalog pages
     └── components/          # Shared interface components
+catalog/principles/       # Authoritative catalog rules and teaching metadata
+catalog/downloads/        # Generated portable files for the CLI
+catalog/catalog.json      # Generated catalog and file hashes
+starter/                  # Portable files for adopters
 packages/cli/             # Principle installer, scanner, and tests
 skills/pdd-principles/   # Portable principle-management skill
 ```
@@ -139,6 +144,8 @@ npm run build
 ```
 
 Astro writes the static website to `apps/site/dist/`.
+Before each website build, the workspace copies catalog and starter files from their authoritative directories.
+These website copies are generated files. Git does not track them.
 
 ## Deploy with Cloudflare Pages
 
@@ -159,13 +166,14 @@ Cloudflare creates a production deployment for each push to `main`. It creates a
 
 ## Contribute a principle
 
-Open a pull request with a compact rule file in `apps/site/src/content/principles/`.
+Open a pull request with a compact rule file in `catalog/principles/`.
 Set the `benefit` and `prevents` fields for the shared page. Every page uses **Why** and **Installation**.
 Only Simplified Technical English has **Credits**, after **Installation**.
 Explain the benefit, the costly behavior, and the evidence that earned the candidate rule.
 Do not promote a repeated instruction by default. Show the judgment it preserves and the context where it does not apply.
 
 Set `published` and `updated` when you add a catalog entry. Change `updated` when you change its public content.
+Run `npm run catalog:generate` after a catalog or starter change. Commit the source and generated files together.
 
 Use the structural rules of [ASD-STE100 Simplified Technical English](https://www.asd-ste100.org/).
 Define a necessary technical term before it carries the explanation.
