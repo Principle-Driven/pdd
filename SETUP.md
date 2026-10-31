@@ -46,7 +46,7 @@ The governing file contains:
 
 Keep the file short. Leave teaching, lineage, setup instructions, and implementation logs outside it.
 
-Start an adopted rule at `v1`. Replace a catalog token when your registry already uses it.
+Start an adopted rule at `v1`. Give it the next unused token in your registry. Do not keep its catalog token.
 
 For an approved catalog rule, CLI version `0.2.0` can assign its local token and update your agent index:
 

@@ -28,11 +28,13 @@ The command uses your configured prefix, principle directory, and agent indexes.
 
 For example, a project whose highest token is `SITE-08` receives `SITE-09@v1` in `docs/principles/site-09-validate-at-use.md`.
 
-Existing numbers stay unchanged. The command preserves gaps and reserves numbers found in configured indexes and committed principle filenames in Git history.
+Existing numbers stay unchanged. The command preserves gaps. It reserves numbers from index bullets in configured indexes and from committed principle filenames in Git history.
+Example tokens in prose and code blocks do not reserve a number.
 
 The local rule starts at `v1`. Its `Source` header records the catalog page. History records the adoption date and catalog version.
 
 The command adds a pinned entry to every configured agent index. It preserves existing instructions and creates missing indexes with a short reading instruction.
+If an index contains the starter placeholder line, the command replaces that line with the new entry.
 
 A repeated installation preserves local edits and versions. The command recognizes a prior adoption by its source, filename, or exact title.
 
