@@ -116,6 +116,16 @@ test('reserves a token still present in an agent index', async (t) => {
   assert.equal((await addPrinciple(root, slug, { fetchImpl: fixtureFetch() })).token, 'PDD-15@v1');
 });
 
+test('fills the starter placeholder and ignores its example token', async (t) => {
+  const root = await repository(t);
+  const starter = fileURLToPath(new URL('../../../starter/AGENTS.md', import.meta.url));
+  await writeFile(path.join(root, 'AGENTS.md'), await readFile(starter, 'utf8'));
+  assert.equal((await addPrinciple(root, slug, { fetchImpl: fixtureFetch() })).token, 'PDD-01@v1');
+  const index = await readFile(path.join(root, 'AGENTS.md'), 'utf8');
+  assert.match(index, /## Principles\n\n- \*\*PDD-01@v1 — Validate at Use\*\* — [^\n]+\n\n## Change rule/);
+  assert.equal((await scanRepository(root)).ok, true);
+});
+
 test('refuses allocation when Git history is damaged instead of reusing an unknown number', async (t) => {
   const root = await repository(t);
   await writeFile(path.join(root, '.git'), 'invalid Git directory reference\n');
@@ -227,7 +237,7 @@ test('refuses symbolic links in either destination and keeps external files unch
 
 test('preserves fenced examples and appends a real Principles section', async (t) => {
   const root = await repository(t);
-  const original = '# Instructions\n\n```md\n## Principles\n\nExample only.\n```\n\nKeep this rule.\n';
+  const original = '# Instructions\n\n```md\n## Principles\n\n- **PDD-07@v1 — Example only**\n```\n\nKeep this rule.\n';
   await writeFile(path.join(root, 'AGENTS.md'), original);
   await addPrinciple(root, slug, { fetchImpl: fixtureFetch() });
   const index = await readFile(path.join(root, 'AGENTS.md'), 'utf8');

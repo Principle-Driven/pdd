@@ -51,14 +51,12 @@ function markdownText(text) {
   return text.replace(/[\\`*_[\]<>]/g, '\\$&');
 }
 
-function indexText(original, bullet) {
-  if (original === null) {
-    return '# Agent instructions\n\nThe principles below govern this repository.\n'
-      + 'Read the linked file before you make a decision that it covers.\n\n## Principles\n\n' + bullet + '\n';
-  }
-  const eol = original.includes('\r\n') ? '\r\n' : '\n';
-  const lines = original.split(/\r?\n/);
-  const headings = [];
+// The starter index routes a placeholder title in brackets. The first installation fills that line.
+const PLACEHOLDER_BULLET = /^- \*\*[A-Z][A-Z0-9]*-[0-9]+@v[0-9]+ — \[[^\]]*\]\*\*/;
+
+function indexLines(text) {
+  const lines = text.split(/\r?\n/);
+  const prose = [];
   let fence = null;
   for (let index = 0; index < lines.length; index++) {
     const marker = lines[index].match(/^ {0,3}(`{3,}|~{3,})/);
@@ -68,14 +66,40 @@ function indexText(original, bullet) {
         && /^ {0,3}(?:`{3,}|~{3,})[\t ]*$/.test(lines[index])) fence = null;
       continue;
     }
-    if (!fence && /^##(?:\s|$)/.test(lines[index])) headings.push(index);
+    if (!fence) prose.push(index);
   }
   if (fence) throw new Error('The agent index has an unclosed code block. Correct it before installation.');
+  return { lines, prose };
+}
+
+// Only index bullets reserve numbers. Example tokens in prose or code blocks do not.
+function indexedNumbers(text, prefix) {
+  const { lines, prose } = indexLines(text);
+  const bullet = new RegExp(`^- \\*\\*${escapeRegExp(prefix)}-([0-9]+)(?:@v[0-9]+)? — `);
+  return prose.flatMap((index) => {
+    const match = lines[index].match(bullet);
+    return match && !PLACEHOLDER_BULLET.test(lines[index]) ? [Number(match[1])] : [];
+  });
+}
+
+function indexText(original, bullet) {
+  if (original === null) {
+    return '# Agent instructions\n\nThe principles below govern this repository.\n'
+      + 'Read the linked file before you make a decision that it covers.\n\n## Principles\n\n' + bullet + '\n';
+  }
+  const eol = original.includes('\r\n') ? '\r\n' : '\n';
+  const { lines, prose } = indexLines(original);
+  const headings = prose.filter((index) => /^##(?:\s|$)/.test(lines[index]));
   const sections = headings.filter((index) => /^## Principles\s*$/.test(lines[index]));
   if (sections.length > 1) throw new Error('The agent index has multiple Principles sections. Keep one section before installation.');
   if (sections.length === 0) return `${original}${original.endsWith(eol) ? eol : eol + eol}## Principles${eol}${eol}${bullet}${eol}`;
   const start = sections[0];
   const end = headings.find((index) => index > start) ?? lines.length;
+  const placeholder = prose.find((index) => index > start && index < end && PLACEHOLDER_BULLET.test(lines[index]));
+  if (placeholder !== undefined) {
+    lines[placeholder] = bullet;
+    return lines.join(eol);
+  }
   let insertion = end;
   while (insertion > start + 1 && lines[insertion - 1] === '') insertion--;
   lines.splice(insertion, 0, ...(insertion === start + 1 ? [''] : []), bullet);
@@ -145,9 +169,8 @@ async function planInstallation(root, slug, options) {
   if (duplicate) return { status: 'already-installed', slug, token: duplicate.token, file: duplicate.file, writes: [] };
 
   const indexes = await Promise.all(agentPaths.map(async (file) => ({ file, before: await existingFile(path.join(root, file)) })));
-  const numberPattern = new RegExp(`\\b${escapeRegExp(config.prefix)}-([0-9]+)(?:@v[0-9]+)?\\b`, 'g');
   const numbers = [0, ...localFiles.map((item) => item.number), ...committedNumbers(root, config.principlesDir, config.prefix),
-    ...indexes.flatMap((index) => [...(index.before?.text ?? '').matchAll(numberPattern)].map((match) => Number(match[1])))];
+    ...indexes.flatMap((index) => indexedNumbers(index.before?.text ?? '', config.prefix))];
   if (numbers.some((number) => !Number.isSafeInteger(number) || number < 0)) throw new Error('Principle numbers must be safe nonnegative integers.');
   const highest = numbers.reduce((maximum, number) => Math.max(maximum, number), 0);
   if (highest >= Number.MAX_SAFE_INTEGER) throw new Error('No safe principle number remains.');
