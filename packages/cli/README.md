@@ -65,10 +65,10 @@ Run the scoped package directly for a one-time check:
 npx --yes @principle-driven/cli check
 ```
 
-For a one-time installation from GitHub, use version `0.2.1` or later:
+For a one-time installation from GitHub, use version `0.2.2` or later:
 
 ```sh
-npx --yes @principle-driven/cli@0.2.1 add validate-at-use
+npx --yes @principle-driven/cli@0.2.2 add validate-at-use
 ```
 
 ## Check a repository

@@ -48,10 +48,10 @@ Keep the file short. Leave teaching, lineage, setup instructions, and implementa
 
 Start an adopted rule at `v1`. Give it the next unused token in your registry. Do not keep its catalog token.
 
-For an approved catalog rule, CLI version `0.2.0` can assign its local token and update your agent index:
+For an approved catalog rule, CLI version `0.2.2` can assign its local token and update your agent index:
 
 ```sh
-npx --yes @principle-driven/cli@0.2.0 add validate-at-use
+npx --yes @principle-driven/cli@0.2.2 add validate-at-use
 ```
 
 The command uses your configuration or the defaults shown in section 5. Use `--dry-run` to preview its files.
