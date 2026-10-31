@@ -164,4 +164,13 @@ Publishing a catalog entry does not adopt it into this repository's governing re
 
 ## License
 
-Principle Driven Development is available under the [MIT License](LICENSE).
+You can copy, change, and distribute the catalog principles, starter kit, and agent skill. You do not have to credit PDD or add a license file to your repository.
+
+These parts are available under the [MIT No Attribution License](LICENSE-MIT-0) (MIT-0):
+
+- `catalog/`
+- `starter/`
+- `skills/pdd-principles/`
+- The principle files and index entries that the CLI writes in your repository
+
+The CLI source and all other files are available under the [MIT License](LICENSE).

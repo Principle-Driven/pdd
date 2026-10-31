@@ -143,4 +143,6 @@ Keep real governing citations in scanned files. If a source file mixes examples 
 
 ## License
 
-The PDD CLI is available under the [MIT License](LICENSE).
+You do not have to credit PDD in your repository. The principle files and index entries that the CLI writes are available under the [MIT No Attribution License](https://github.com/Principle-Driven/pdd/blob/main/LICENSE-MIT-0) (MIT-0).
+
+The CLI source is available under the [MIT License](LICENSE).
